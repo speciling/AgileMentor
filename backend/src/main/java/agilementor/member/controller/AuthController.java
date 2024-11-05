@@ -24,7 +24,17 @@ public class AuthController {
 
     @GetMapping("/login/code/google")
     public String getGoogleAuthCode(@RequestParam(name = "code") String code) {
-        return "redirect:/login/success";
+        String idToken;
+
+        try {
+            idToken = authService.requestIdToken(code);
+            System.out.println("idToken = " + idToken);
+        } catch (Exception e) {
+            // todo: 로그인 실패 페이지 추가
+            return "redirect:/";
+        }
+
+        return "redirect:/dashboard";
     }
 
 }
