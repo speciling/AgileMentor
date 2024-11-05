@@ -1,6 +1,8 @@
 package agilementor.member.controller;
 
+import agilementor.member.dto.ParsedIdToken;
 import agilementor.member.service.AuthService;
+import agilementor.member.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AuthController {
 
     private final AuthService authService;
+    private final MemberService memberService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, MemberService memberService) {
         this.authService = authService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/login")
@@ -28,11 +32,13 @@ public class AuthController {
 
         try {
             idToken = authService.requestIdToken(code);
-            System.out.println("idToken = " + idToken);
         } catch (Exception e) {
             // todo: 로그인 실패 페이지 추가
             return "redirect:/";
         }
+
+        memberService.registerOrUpdateMember(idToken);
+
 
         return "redirect:/dashboard";
     }
