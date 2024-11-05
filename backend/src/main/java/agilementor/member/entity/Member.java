@@ -37,13 +37,7 @@ public class Member {
         this.picture = updatedMember.picture;
     }
 
-    @Override
-    public String toString() {
-        return "Member{" +
-            "memberId=" + memberId +
-            ", email='" + email + '\'' +
-            ", name='" + name + '\'' +
-            ", picture='" + picture + '\'' +
-            '}';
+    public Long getMemberId() {
+        return memberId;
     }
 }

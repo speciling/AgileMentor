@@ -19,12 +19,14 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public void registerOrUpdateMember(String idToken) {
+    public Long registerOrUpdateMember(String idToken) {
         ParsedIdToken parsedIdToken = jwtParser.parseIdToken(idToken);
 
         Member member = memberRepository.findByEmail(parsedIdToken.email()).
             orElseGet(() -> memberRepository.save(parsedIdToken.toEntity()));
 
         member.update(parsedIdToken.toEntity());
+
+        return member.getMemberId();
     }
 }
