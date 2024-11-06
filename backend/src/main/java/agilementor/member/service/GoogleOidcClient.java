@@ -27,10 +27,10 @@ public class GoogleOidcClient {
             .body(body)
             .retrieve()
             .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
-                throw new IllegalArgumentException("카카오 토큰 발급 실패");
+                throw new IllegalArgumentException("구글 id 토큰 발급 실패");
             })
             .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
-                throw new RuntimeException("카카오 인증 서버 에러");
+                throw new RuntimeException("구글 인증 서버 에러");
             })
             .toEntity(GoogleTokenResponse.class)
             .getBody()
