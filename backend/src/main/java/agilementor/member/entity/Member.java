@@ -40,4 +40,16 @@ public class Member {
     public Long getMemberId() {
         return memberId;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
 }
