@@ -1,0 +1,16 @@
+{
+  "extends": "./jsconfig.paths.json",
+  "compilerOptions": {
+    "target": "es6",
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"]
+    },
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "strict": true
+  },
+  "include": ["src"]
+}
