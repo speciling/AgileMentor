@@ -19,10 +19,10 @@ public class AuthClientService {
     private final RestClient restClient;
 
     public AuthClientService(GoogleClientProperties clientProperties,
-        GoogleProviderProperties providerProperties) {
+        GoogleProviderProperties providerProperties, RestClient.Builder restClientBuilder) {
         this.clientProperties = clientProperties;
         this.providerProperties = providerProperties;
-        restClient = RestClient.builder().build();
+        restClient = restClientBuilder.build();
     }
 
     public String getAuthUrl() {
