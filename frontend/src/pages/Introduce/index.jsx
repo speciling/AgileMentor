@@ -83,7 +83,7 @@ const ContentContainer = styled.div`
 
 const IntroText = styled.div`
   margin-top: 50px;
-  width: 700px;
+  width: 740px;
   text-align: center;
   margin-bottom: 30px;
 `;
