@@ -20,9 +20,9 @@ export default function SelectProject() {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [newProjectName, setNewProjectName] = React.useState('');
   const [projects, setProjects] = React.useState([
-    { id: 'project-1', name: 'Project A' },
-    { id: 'project-2', name: 'Project B' },
-    { id: 'project-3', name: 'Project C' },
+    { id: 'project-1', title: 'Project A' },
+    { id: 'project-2', title: 'Project B' },
+    { id: 'project-3', title: 'Project C' },
   ]);
 
   const handleChange = (event) => {
@@ -47,7 +47,7 @@ export default function SelectProject() {
       (max, project) => Math.max(max, parseInt(project.id.split('-')[1], 10)),
       0
     );
-    const newProject = { id: `project-${maxId + 1}`, name: newProjectName };
+    const newProject = { id: `project-${maxId + 1}`, title: newProjectName };
     setProjects([...projects, newProject]);
     setSelectedProject(newProject.id);
     handleDialogClose();
@@ -81,7 +81,7 @@ export default function SelectProject() {
                 <FolderIcon sx={{ fontSize: '1rem' }} />
               </MuiAvatar>
             </MuiListItemAvatar>
-            <ListItemText primary={proj.name} />
+            <ListItemText primary={proj.title} />
           </MenuItem>
         ))}
         <Divider sx={{ mx: -1 }} />
