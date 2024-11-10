@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SelectProject from '../common/SelectProject';
 import MenuContent from '../common/MenuContent';
@@ -77,9 +77,9 @@ export default function SideMenu() {
             {user.email}
           </Typography>
         </Box>
-        <Button size="small" sx={{ color: 'text.secondary', minWidth: 'auto', p: 0.5, ml: 1 }}>
-          <LogoutIcon sx={{ fontSize: '20px' }} />
-        </Button>
+        <IconButton size="small" sx={{ color: 'text.secondary', p: 0.5, ml: 1 }}>
+          <LogoutIcon sx={{ fontSize: '23px' }} />
+        </IconButton>
       </Stack>
     </Drawer>
   );

@@ -14,16 +14,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import mockProjects from '../../../mocks/mockProjects';
 
 export default function SelectProject() {
   const [selectedProject, setSelectedProject] = React.useState('');
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [newProjectName, setNewProjectName] = React.useState('');
-  const [projects, setProjects] = React.useState([
-    { id: 'project-1', name: 'Project A' },
-    { id: 'project-2', name: 'Project B' },
-    { id: 'project-3', name: 'Project C' },
-  ]);
+  const [projects, setProjects] = React.useState(mockProjects);
 
   const handleChange = (event) => {
     const selectedValue = event.target.value;
@@ -47,7 +44,7 @@ export default function SelectProject() {
       (max, project) => Math.max(max, parseInt(project.id.split('-')[1], 10)),
       0
     );
-    const newProject = { id: `project-${maxId + 1}`, name: newProjectName };
+    const newProject = { id: `project-${maxId + 1}`, title: newProjectName };
     setProjects([...projects, newProject]);
     setSelectedProject(newProject.id);
     handleDialogClose();
@@ -81,7 +78,7 @@ export default function SelectProject() {
                 <FolderIcon sx={{ fontSize: '1rem' }} />
               </MuiAvatar>
             </MuiListItemAvatar>
-            <ListItemText primary={proj.name} />
+            <ListItemText primary={proj.title} />
           </MenuItem>
         ))}
         <Divider sx={{ mx: -1 }} />
