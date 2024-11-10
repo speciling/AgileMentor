@@ -30,6 +30,10 @@ public class ProjectMember {
         this.project = project;
         this.member = member;
     }
+
+    public Project getProject() {
+        return project;
+    }
 }
 
 

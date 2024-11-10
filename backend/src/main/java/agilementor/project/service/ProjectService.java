@@ -10,6 +10,7 @@ import agilementor.project.entity.ProjectMember;
 import agilementor.project.repository.ProjectMemberRepository;
 import agilementor.project.repository.ProjectRespository;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,5 +36,13 @@ public class ProjectService {
         projectMemberRepository.save(new ProjectMember(project, member));
 
         return ProjectResponse.from(project);
+    }
+
+    public List<ProjectResponse> getProjectList(Long memberId) {
+
+        List<ProjectMember> projectMemberList = projectMemberRepository.findByMemberId(memberId);
+        return projectMemberList.stream()
+            .map(projectMember -> ProjectResponse.from(projectMember.getProject()))
+            .toList();
     }
 }

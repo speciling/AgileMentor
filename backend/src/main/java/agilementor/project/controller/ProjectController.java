@@ -3,7 +3,9 @@ package agilementor.project.controller;
 import agilementor.project.dto.request.ProjectCreateRequest;
 import agilementor.project.dto.response.ProjectResponse;
 import agilementor.project.service.ProjectService;
+import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,5 +29,11 @@ public class ProjectController {
         @SessionAttribute("memberId") Long memberId) {
 
         return projectService.createProject(memberId, projectCreateRequest);
+    }
+
+    @GetMapping
+    public List<ProjectResponse> getProjectList(@SessionAttribute("memberId") Long memberId) {
+
+        return projectService.getProjectList(memberId);
     }
 }
