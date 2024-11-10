@@ -12,6 +12,9 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
     @Query("SELECT DISTINCT pm FROM ProjectMember pm JOIN FETCH pm.project WHERE pm.member.memberId = :memberId")
     List<ProjectMember> findByMemberId(@Param("memberId") Long memberId);
 
+    @Query("SELECT DISTINCT pm FROM ProjectMember pm JOIN FETCH pm.member WHERE pm.project.projectId = :projectId")
+    List<ProjectMember> findByProjectId(@Param("projectId") Long projectId);
+
     @Query("SELECT DISTINCT pm FROM ProjectMember pm JOIN FETCH pm.project WHERE pm.member.memberId = :memberId AND pm.project.projectId = :projectId")
     Optional<ProjectMember> findByMemberIdAndProjectId(@Param("memberId") Long memberId,
         @Param("projectId") Long projectId);

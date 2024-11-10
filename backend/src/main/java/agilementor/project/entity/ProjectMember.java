@@ -34,6 +34,10 @@ public class ProjectMember {
     public Project getProject() {
         return project;
     }
+
+    public Member getMember() {
+        return member;
+    }
 }
 
 
