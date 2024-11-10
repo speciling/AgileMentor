@@ -1,6 +1,7 @@
 package agilementor.project.service;
 
 import agilementor.common.exception.MemberNotFoundException;
+import agilementor.common.exception.ProjectNotFoundException;
 import agilementor.member.entity.Member;
 import agilementor.member.repository.MemberRepository;
 import agilementor.project.dto.request.ProjectCreateRequest;
@@ -44,5 +45,14 @@ public class ProjectService {
         return projectMemberList.stream()
             .map(projectMember -> ProjectResponse.from(projectMember.getProject()))
             .toList();
+    }
+
+    public ProjectResponse getProject(Long memberId, Long projectId) {
+
+        ProjectMember projectMember = projectMemberRepository
+            .findByMemberIdAndProjectId(memberId, projectId)
+            .orElseThrow(ProjectNotFoundException::new);
+
+        return ProjectResponse.from(projectMember.getProject());
     }
 }
