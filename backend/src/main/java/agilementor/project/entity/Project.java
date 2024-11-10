@@ -30,4 +30,8 @@ public class Project {
     public String getTitle() {
         return title;
     }
+
+    public void update(String title) {
+        this.title = title;
+    }
 }

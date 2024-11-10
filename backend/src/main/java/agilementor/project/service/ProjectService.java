@@ -6,6 +6,7 @@ import agilementor.member.dto.response.MemberGetResponse;
 import agilementor.member.entity.Member;
 import agilementor.member.repository.MemberRepository;
 import agilementor.project.dto.request.ProjectCreateRequest;
+import agilementor.project.dto.request.ProjectUpdateRequest;
 import agilementor.project.dto.response.ProjectResponse;
 import agilementor.project.entity.Project;
 import agilementor.project.entity.ProjectMember;
@@ -71,5 +72,19 @@ public class ProjectService {
         return projectMemberList.stream()
             .map(projectMember -> MemberGetResponse.from(projectMember.getMember()))
             .toList();
+    }
+
+    public ProjectResponse updateProject(Long memberId, Long projectId,
+        ProjectUpdateRequest projectUpdateRequest) {
+
+        ProjectMember projectMember = projectMemberRepository
+            .findByMemberIdAndProjectId(memberId, projectId)
+            .orElseThrow(ProjectNotFoundException::new);
+
+        // todo: 프로젝트 수정 권한 있는지 확인
+
+        Project project = projectMember.getProject();
+        project.update(projectUpdateRequest.title());
+        return ProjectResponse.from(project);
     }
 }
