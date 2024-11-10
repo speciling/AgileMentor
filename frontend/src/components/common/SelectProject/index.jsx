@@ -14,16 +14,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import mockProjects from '../../../mocks/mockProjects';
 
 export default function SelectProject() {
   const [selectedProject, setSelectedProject] = React.useState('');
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [newProjectName, setNewProjectName] = React.useState('');
-  const [projects, setProjects] = React.useState([
-    { id: 'project-1', title: 'Project A' },
-    { id: 'project-2', title: 'Project B' },
-    { id: 'project-3', title: 'Project C' },
-  ]);
+  const [projects, setProjects] = React.useState(mockProjects);
 
   const handleChange = (event) => {
     const selectedValue = event.target.value;
