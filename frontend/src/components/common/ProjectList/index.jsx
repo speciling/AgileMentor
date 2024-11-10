@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, IconButton, Button, Stack } from '@mui/material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import InfoIcon from '@mui/icons-material/Info';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import mockProjects from '../../../mocks/mockProjects';
@@ -36,9 +36,9 @@ const ProjectList = () => (
           - {project.title}
         </Typography>
 
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row" spacing={0.1}>
           <IconButton sx={{ color: '#0eaaf9' }} aria-label="view">
-            <VisibilityIcon fontSize="small" />
+            <InfoIcon fontSize="small" />
           </IconButton>
           <IconButton sx={{ color: '#43a047' }} aria-label="edit">
             <EditIcon fontSize="small" />
