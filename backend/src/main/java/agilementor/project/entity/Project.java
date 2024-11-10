@@ -16,4 +16,18 @@ public class Project {
     @Column(nullable = false)
     private String title;
 
+    protected Project() {
+    }
+
+    public Project(String title) {
+        this.title = title;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 }

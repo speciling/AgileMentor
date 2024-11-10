@@ -23,4 +23,12 @@ public class GlobalExceptionHandler {
             .status(HttpStatus.SERVICE_UNAVAILABLE)
             .body(new ExceptionResponse(ex.getMessage()));
     }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleMemberNotFoundException(
+        MemberNotFoundException exception) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
 }
