@@ -7,6 +7,7 @@ import agilementor.project.dto.response.ProjectResponse;
 import agilementor.project.service.ProjectService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,5 +61,13 @@ public class ProjectController {
         @PathVariable Long projectId, @RequestBody ProjectUpdateRequest projectUpdateRequest) {
 
         return projectService.updateProject(memberId, projectId, projectUpdateRequest);
+    }
+
+    @DeleteMapping("/{projectId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProject(@SessionAttribute("memberId") Long memberId,
+        @PathVariable Long projectId) {
+
+        projectService.deleteProject(memberId, projectId);
     }
 }

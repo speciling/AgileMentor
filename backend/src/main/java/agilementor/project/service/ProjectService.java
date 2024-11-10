@@ -87,4 +87,17 @@ public class ProjectService {
         project.update(projectUpdateRequest.title());
         return ProjectResponse.from(project);
     }
+
+    public void deleteProject(Long memberId, Long projectId) {
+
+        ProjectMember projectMember = projectMemberRepository
+            .findByMemberIdAndProjectId(memberId, projectId)
+            .orElseThrow(ProjectNotFoundException::new);
+
+        // todo: 프로젝트 삭제 권한 있는지 확인
+
+        Project project = projectMember.getProject();
+        projectMemberRepository.deleteAllByProject(project);
+        projectRespository.delete(project);
+    }
 }

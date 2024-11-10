@@ -1,5 +1,6 @@
 package agilementor.project.repository;
 
+import agilementor.project.entity.Project;
 import agilementor.project.entity.ProjectMember;
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +20,5 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
     Optional<ProjectMember> findByMemberIdAndProjectId(@Param("memberId") Long memberId,
         @Param("projectId") Long projectId);
 
+    void deleteAllByProject(Project project);
 }
