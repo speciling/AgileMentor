@@ -34,14 +34,22 @@ const images = [
 
 const BUTTON_SIZE = 111;
 
-const ImageButton = styled(ButtonBase)({
-  position: 'relative',
-  width: BUTTON_SIZE,
-  height: BUTTON_SIZE,
-  margin: 0,
-  '&:hover .MuiImageBackdrop-root': { opacity: 0.15 },
-  '&:hover .MuiImageMarked-root': { opacity: 0 },
-  '&:hover .MuiTypography-root': { border: '2px solid currentColor' },
+const ImageButton = styled(ButtonBase)(({ isFirst, isLast }) => {
+  let borderRadius = 0;
+  if (isFirst) borderRadius = '12px 0 0 12px';
+  else if (isLast) borderRadius = '0 12px 12px 0';
+
+  return {
+    position: 'relative',
+    width: BUTTON_SIZE,
+    height: BUTTON_SIZE,
+    margin: 0,
+    borderRadius,
+    overflow: 'hidden',
+    '&:hover .MuiImageBackdrop-root': { opacity: 0.15 },
+    '&:hover .MuiImageMarked-root': { opacity: 0 },
+    '&:hover .MuiTypography-root': { border: '2px solid currentColor' },
+  };
 });
 
 const ImageSrc = styled('span')({
@@ -79,11 +87,20 @@ const ImageMarked = styled('span')({
 
 export default function ExternalLinkButtons() {
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', width: '100%' }}>
-      {images.map((image) => (
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
+      {images.map((image, index) => (
         <ImageButton
           key={image.title}
           onClick={() => window.open(image.link, '_blank')}
+          isFirst={index === 0}
+          isLast={index === images.length - 1}
         >
           <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
           <ImageBackdrop className="MuiImageBackdrop-root" />
