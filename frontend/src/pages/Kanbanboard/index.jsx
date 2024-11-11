@@ -1,7 +1,10 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import Header from '../../components/features/Header';
-import SideMenu from '../../components/features/SideMenu';
+
+// eslint-disable-next-line import/extensions
+import SideMenu from '../../components/features/SideBar';
+
 import Kanban from '../../components/common/Kanban';
 
 const KanbanboardPage = () => (
@@ -10,7 +13,15 @@ const KanbanboardPage = () => (
       <Header />
     </Box>
 
-    <Box sx={{ position: 'fixed', top: '76px', left: 0, height: 'calc(100vh - 76px)', zIndex: 900 }}>
+    <Box
+      sx={{
+        position: 'fixed',
+        top: '76px',
+        left: 0,
+        height: 'calc(100vh - 76px)',
+        zIndex: 900,
+      }}
+    >
       <SideMenu />
     </Box>
 
@@ -29,7 +40,9 @@ const KanbanboardPage = () => (
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-        <Box sx={{ maxWidth: '60%', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        <Box
+          sx={{ maxWidth: '60%', overflow: 'hidden', textOverflow: 'ellipsis' }}
+        >
           <Typography variant="subtitle1">Project Name:</Typography>
           <Typography
             variant="h4"
@@ -47,7 +60,6 @@ const KanbanboardPage = () => (
       </Box>
 
       <Kanban />
-
     </Box>
   </Box>
 );
