@@ -9,7 +9,7 @@ public record SprintResponse(
     String goal,
     LocalDate startDate,
     LocalDate endDate,
-    boolean isDone
+    boolean isDone,
+    boolean isActivate // 새로운 필드 추가
 ) {
-
 }

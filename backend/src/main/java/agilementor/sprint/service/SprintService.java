@@ -25,7 +25,8 @@ public class SprintService {
             sprintForm.getGoal(),
             sprintForm.getStartDate(),
             sprintForm.getEndDate(),
-            sprintForm.isDone()
+            sprintForm.isDone(),
+            sprintForm.isActivate()
         );
         return sprintRepository.save(sprint).toEntity();
     }
@@ -50,8 +51,7 @@ public class SprintService {
             sprintForm.getTitle(),
             sprintForm.getGoal(),
             sprintForm.getStartDate(),
-            sprintForm.getEndDate(),
-            sprintForm.isDone()
+            sprintForm.getEndDate()
         );
         return sprintRepository.save(sprint).toEntity();
     }
@@ -61,15 +61,24 @@ public class SprintService {
         sprintRepository.delete(sprint);
     }
 
+    public SprintResponse startSprint(Long projectId, Long sprintId, SprintForm sprintForm) {
+        Sprint sprint = getSprintByIdInternal(projectId, sprintId);
+
+        // 스프린트 활성화 및 네 개의 필드 업데이트
+        sprint.start(); // isActivate를 true로 설정
+        sprint.update(
+            sprintForm.getTitle(),
+            sprintForm.getGoal(),
+            sprintForm.getStartDate(),
+            sprintForm.getEndDate()
+        );
+
+        return sprintRepository.save(sprint).toEntity();
+    }
+
     public SprintResponse completeSprint(Long projectId, Long sprintId) {
         Sprint sprint = getSprintByIdInternal(projectId, sprintId);
-        sprint.update(
-            sprint.getTitle(),
-            sprint.getGoal(),
-            sprint.getStartDate(),
-            sprint.getEndDate(),
-            true
-        );
+        sprint.complete();
         return sprintRepository.save(sprint).toEntity();
     }
 

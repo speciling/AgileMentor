@@ -36,18 +36,26 @@ public class Sprint {
     @Column(name = "is_done", nullable = false)
     private boolean isDone;
 
+    @Column(name = "is_activate", nullable = false)
+    private boolean isActivate;
+
     protected Sprint() {
     }
 
     public Sprint(Long projectId, String title, String goal, LocalDate startDate, LocalDate endDate,
-        boolean isDone) {
+        boolean isDone, boolean isActivate) {
         this.projectId = projectId;
         this.title = title;
         this.goal = goal;
         this.startDate = startDate;
         this.endDate = endDate;
         this.isDone = isDone;
+        this.isActivate = isActivate;
     }
+
+    public void start() { this.isActivate = true; }
+
+    public void complete() { this.isDone = true; }
 
     public Long getId() {
         return id;
@@ -77,17 +85,17 @@ public class Sprint {
         return isDone;
     }
 
+    public boolean isActivate() { return isActivate; }
 
-    public void update(String title, String goal, LocalDate startDate, LocalDate endDate,
-        boolean isDone) {
+
+    public void update(String title, String goal, LocalDate startDate, LocalDate endDate) {
         this.title = title;
         this.goal = goal;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.isDone = isDone;
     }
 
     public SprintResponse toEntity() {
-        return new SprintResponse(id, projectId, title, goal, startDate, endDate, isDone);
+        return new SprintResponse(id, projectId, title, goal, startDate, endDate, isDone, isActivate);
     }
 }

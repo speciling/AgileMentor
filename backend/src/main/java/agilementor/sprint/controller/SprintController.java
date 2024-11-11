@@ -50,6 +50,12 @@ public class SprintController {
         sprintService.deleteSprint(projectId, sprintId);
     }
 
+    // startSprint 메서드 수정: 네 개의 필드 업데이트를 위한 SprintForm 추가
+    @PutMapping("/{sprintId}/start")
+    public SprintResponse startSprint(@PathVariable Long projectId, @PathVariable Long sprintId, @RequestBody SprintForm sprintForm) {
+        return sprintService.startSprint(projectId, sprintId, sprintForm);
+    }
+
     @PutMapping("/{sprintId}/complete")
     public SprintResponse completeSprint(@PathVariable Long projectId,
         @PathVariable Long sprintId) {
