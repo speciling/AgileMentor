@@ -12,4 +12,5 @@ public record SprintResponse(
     boolean isDone,
     boolean isActivate // 새로운 필드 추가
 ) {
+
 }

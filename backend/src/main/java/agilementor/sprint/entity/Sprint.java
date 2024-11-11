@@ -53,9 +53,13 @@ public class Sprint {
         this.isActivate = isActivate;
     }
 
-    public void start() { this.isActivate = true; }
+    public void start() {
+        this.isActivate = true;
+    }
 
-    public void complete() { this.isDone = true; }
+    public void complete() {
+        this.isDone = true;
+    }
 
     public Long getId() {
         return id;
@@ -85,7 +89,9 @@ public class Sprint {
         return isDone;
     }
 
-    public boolean isActivate() { return isActivate; }
+    public boolean isActivate() {
+        return isActivate;
+    }
 
 
     public void update(String title, String goal, LocalDate startDate, LocalDate endDate) {
@@ -96,6 +102,7 @@ public class Sprint {
     }
 
     public SprintResponse toEntity() {
-        return new SprintResponse(id, projectId, title, goal, startDate, endDate, isDone, isActivate);
+        return new SprintResponse(id, projectId, title, goal, startDate, endDate, isDone,
+            isActivate);
     }
 }

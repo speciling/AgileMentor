@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AgilementorApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AgilementorApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AgilementorApplication.class, args);
+    }
 
 }

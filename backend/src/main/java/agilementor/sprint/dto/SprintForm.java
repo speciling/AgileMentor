@@ -12,7 +12,8 @@ public class SprintForm {
     private final boolean isActivate;
 
     // 모든 필드를 초기화하는 생성자 추가
-    public SprintForm(String title, String goal, LocalDate startDate, LocalDate endDate, boolean isDone, boolean isActivate) {
+    public SprintForm(String title, String goal, LocalDate startDate, LocalDate endDate,
+        boolean isDone, boolean isActivate) {
         this.title = title;
         this.goal = goal;
         this.startDate = startDate;
