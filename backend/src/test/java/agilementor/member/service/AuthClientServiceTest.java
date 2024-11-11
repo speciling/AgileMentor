@@ -10,6 +10,8 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withServerError;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
+import agilementor.common.exception.ExternalServerErrorException;
+import agilementor.common.exception.SocialLoginFailException;
 import agilementor.member.properties.GoogleClientProperties;
 import agilementor.member.properties.GoogleProviderProperties;
 import java.net.URISyntaxException;
@@ -109,7 +111,7 @@ class AuthClientServiceTest {
     }
 
     @Test
-    @DisplayName("id토큰 발급요청 결과 4xx 에러일 경우 IllegalArgumentException을 발생시킨다.")
+    @DisplayName("id토큰 발급요청 결과 4xx 에러일 경우 SocialLoginFailException을 발생시킨다.")
     void requestIdTokenResult4xxError() {
         // given
         given(clientProperties.clientId()).willReturn(CLIENT_ID);
@@ -124,11 +126,11 @@ class AuthClientServiceTest {
         // when
         // then
         assertThatThrownBy(() -> authClientService.requestIdToken(CODE))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(SocialLoginFailException.class);
     }
 
     @Test
-    @DisplayName("id토큰 발급요청 결과 5xx 에러일 경우 RuntimeException을 발생시킨다.")
+    @DisplayName("id토큰 발급요청 결과 5xx 에러일 경우 ExternalServerErrorException을 발생시킨다.")
     void requestIdTokenResult5xxError() {
         // given
         given(clientProperties.clientId()).willReturn(CLIENT_ID);
@@ -143,7 +145,7 @@ class AuthClientServiceTest {
         // when
         // then
         assertThatThrownBy(() -> authClientService.requestIdToken(CODE))
-            .isInstanceOf(RuntimeException.class);
+            .isInstanceOf(ExternalServerErrorException.class);
     }
 
 

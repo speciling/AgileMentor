@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 // eslint-disable-next-line import/no-unresolved
 import { Common } from '@styles/globalStyle';
+import { SlArrowDown } from 'react-icons/sl';
 
 export const HEADER_HEIGHT = '76px';
 
@@ -11,6 +12,17 @@ const Header = () => (
       <LogoImage src="/image/logo.png" alt="Agile Mentor Logo" />
       <LogoText>Agile Mentor</LogoText>
     </LogoContainer>
+    <NavMenu>
+      <NavItem href="#about">
+        About <SlArrowDownIcon />
+      </NavItem>
+      <NavItem href="#guide">
+        Guide <SlArrowDownIcon />
+      </NavItem>
+      <NavItem href="#blog">
+        Blog <SlArrowDownIcon />
+      </NavItem>
+    </NavMenu>
   </HeaderContainer>
 );
 
@@ -22,9 +34,6 @@ const HeaderContainer = styled.header`
   justify-content: flex-start;
   height: ${HEADER_HEIGHT};
   background-color: ${Common.colors.primary};
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 9999;
-  position: relative;
 `;
 
 const LogoContainer = styled.div`
@@ -44,4 +53,31 @@ const LogoText = styled.h1`
   font-size: 20px;
   font-weight: bold;
   color: #000;
+`;
+
+const NavMenu = styled.nav`
+  display: flex;
+  gap: 70px;
+`;
+
+const NavItem = styled.a`
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+
+  &:hover::after {
+    font-size: 10px;
+    position: absolute;
+    right: -12px;
+    top: 3px;
+    color: blue;
+  }
+`;
+const SlArrowDownIcon = styled(SlArrowDown)`
+  font-size: 12px;
+  color: #0eaaf9;
+  font-weight: bold;
+  stroke-width: 80;
 `;

@@ -2,6 +2,8 @@ package agilementor.member.service;
 
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 
+import agilementor.common.exception.ExternalServerErrorException;
+import agilementor.common.exception.SocialLoginFailException;
 import agilementor.member.dto.GoogleTokenResponse;
 import agilementor.member.properties.GoogleClientProperties;
 import agilementor.member.properties.GoogleProviderProperties;
@@ -49,10 +51,10 @@ public class AuthClientService {
             .body(body)
             .retrieve()
             .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
-                throw new IllegalArgumentException("구글 id 토큰 발급 실패");
+                throw new SocialLoginFailException();
             })
             .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
-                throw new RuntimeException("구글 인증 서버 에러");
+                throw new ExternalServerErrorException();
             })
             .toEntity(GoogleTokenResponse.class)
             .getBody()
