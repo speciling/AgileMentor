@@ -45,7 +45,3 @@ jacocoTestReport {
 		html.required = true
 	}
 }
-
-jar {
-	enabled = false
-}
