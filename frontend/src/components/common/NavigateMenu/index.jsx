@@ -1,24 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaFolder, FaThList, FaBook, FaChartLine } from 'react-icons/fa';
+import { FaRunning, FaThList, FaBook, FaChartLine } from 'react-icons/fa';
 
 const NavigateMenu = () => (
   <Container>
     <Title>이용하기</Title>
     <MenuItem>
-      <FaFolder />
-      <MenuText>내 프로젝트</MenuText>
+      <Icon as={FaRunning} />
+      <MenuText>백로그 및 스프린트</MenuText>
     </MenuItem>
     <MenuItem>
-      <FaThList />
+      <Icon as={FaThList} />
       <MenuText>칸반보드</MenuText>
     </MenuItem>
     <MenuItem>
-      <FaBook />
+      <Icon as={FaBook} />
       <MenuText>애자일 학습하기</MenuText>
     </MenuItem>
     <MenuItem>
-      <FaChartLine />
+      <Icon as={FaChartLine} />
       <MenuText>번다운 차트</MenuText>
     </MenuItem>
   </Container>
@@ -39,6 +39,16 @@ const Title = styled.h3`
   font-weight: bold;
   margin-bottom: 30px;
   color: #151313;
+
+  @media (max-width: 768px) {
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
 `;
 
 const MenuItem = styled.div`
@@ -52,6 +62,29 @@ const MenuItem = styled.div`
 
   &:hover {
     color: #333;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+`;
+
+const Icon = styled.div`
+  font-size: 18px;
+  margin-right: 8px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
   }
 `;
 

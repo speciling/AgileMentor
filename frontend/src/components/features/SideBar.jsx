@@ -54,7 +54,9 @@ export default SideBar;
 
 const SidebarContainer = styled.div`
   background-color: #fff;
-  width: 394px;
+  width: 23vw;
+  max-width: 400px;
+  min-width: 250px;
   min-height: calc(100vh - ${HEADER_HEIGHT});
   display: flex;
   flex-direction: column;
@@ -100,12 +102,12 @@ const IoHomeIcon = styled(IoHome)`
 const NavigateMenuWrapper = styled.div`
   width: 100%;
   padding-left: 20px;
-  flex-grow: 1; /* 여유 공간을 채우도록 설정 */
 `;
 
 const MemberWrapper = styled.div`
   width: 100%;
   padding-left: 20px;
+  margin-bottom: 25px;
 `;
 
 const DividerWrapper = styled.div`
@@ -113,13 +115,14 @@ const DividerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0; /* Divider와 LogoutButtonWrapper 사이에 gap을 없앰 */
+  gap: 0;
 `;
 
 const Divider = styled.div`
   width: 100%;
   height: 2px;
   background-color: #eaeaea;
+  margin-bottom: 25px;
 `;
 
 const LogoutButtonWrapper = styled.div`

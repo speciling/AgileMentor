@@ -1,27 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { FaCrown } from 'react-icons/fa';
+// eslint-disable-next-line import/no-unresolved
+import MinModal from '@components/common/MinModal';
 
-const Member = ({ members }) => (
-  <Container>
-    <Header>
-      <Title>멤버 관리하기</Title>
-      <InviteButton>초대하기</InviteButton>
-    </Header>
-    <MemberList>
-      {members.map((member) => (
-        <MemberItem key={member.id}>
-          <MemberName>
-            {member.name}
-            {member.isAdmin && <CrownIcon />}
-          </MemberName>
-          {!member.isAdmin && <KickButton>추방</KickButton>}
-        </MemberItem>
-      ))}
-    </MemberList>
-  </Container>
-);
+const Member = ({ members }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <Container>
+      <Header>
+        <Title>멤버 관리하기</Title>
+        <InviteButton onClick={openModal}>초대하기</InviteButton>
+      </Header>
+      <MemberList>
+        {members.map((member) => (
+          <MemberItem key={member.id}>
+            <MemberName>
+              {member.name}
+              {member.isAdmin && <CrownIcon />}
+            </MemberName>
+            {!member.isAdmin && <KickButton>추방</KickButton>}
+          </MemberItem>
+        ))}
+      </MemberList>
+
+      {isModalOpen && (
+        <MinModal
+          title="초대하기"
+          description="초대하실 분의 이메일을 입력해 주세요."
+          onCancel={closeModal}
+          onConfirm={closeModal}
+        />
+      )}
+    </Container>
+  );
+};
 
 Member.propTypes = {
   members: PropTypes.arrayOf(
@@ -101,7 +123,7 @@ const MemberName = styled.span`
   }
 `;
 
-const CrownIcon = styled(FaCrown)`
+const CrownIcon = styled.span`
   color: #ffd700;
   margin-left: 5px;
   font-size: 16px;
