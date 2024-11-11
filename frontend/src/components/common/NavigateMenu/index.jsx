@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaFolder, FaThList, FaBook, FaChartLine } from 'react-icons/fa';
+import { FaRunning, FaThList, FaBook, FaChartLine } from 'react-icons/fa';
 
 const NavigateMenu = () => (
   <Container>
     <Title>이용하기</Title>
     <MenuItem>
-      <Icon as={FaFolder} />
-      <MenuText>내 프로젝트</MenuText>
+      <Icon as={FaRunning} />
+      <MenuText>백로그 및 스프린트</MenuText>
     </MenuItem>
     <MenuItem>
       <Icon as={FaThList} />
