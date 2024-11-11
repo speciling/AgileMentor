@@ -1,55 +1,59 @@
 import React from 'react';
-import { Box, Typography, IconButton, Button, Stack } from '@mui/material';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import InfoIcon from '@mui/icons-material/Info';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import styled from 'styled-components';
+import { Info, Edit, Delete } from '@mui/icons-material';
 import mockProjects from '../../../mocks/mockProjects';
 
 const ProjectList = () => (
-  <Box>
-    <Box display="flex" alignItems="center" mb={2}>
-      <Button
-        startIcon={<AddRoundedIcon />}
-        variant="outlined"
-        color="success"
-        sx={{
-          textTransform: 'none',
-          fontWeight: 'bold',
-          mt: 1,
-          width: '100%',
-        }}
-      >
-        Add Project
-      </Button>
-    </Box>
-
+  <Container>
     {mockProjects.map((project) => (
-      <Box
-        key={project.id}
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        mb={1}
-      >
-        <Typography variant="body1" sx={{ fontSize: '1.2rem', color: '#333' }}>
-          - {project.title}
-        </Typography>
+      <ProjectItem key={project.id}>
+        <ProjectTitle>- {project.title}</ProjectTitle>
 
-        <Stack direction="row" spacing={0.1}>
-          <IconButton sx={{ color: '#0eaaf9' }} aria-label="view">
-            <InfoIcon fontSize="small" />
+        <IconGroup>
+          <IconButton color="#0eaaf9" aria-label="view">
+            <Info fontSize="small" />
           </IconButton>
-          <IconButton sx={{ color: '#43a047' }} aria-label="edit">
-            <EditIcon fontSize="small" />
+          <IconButton color="#43a047" aria-label="edit">
+            <Edit fontSize="small" />
           </IconButton>
-          <IconButton sx={{ color: '#e53935' }} aria-label="delete">
-            <DeleteIcon fontSize="small" />
+          <IconButton color="#e53935" aria-label="delete">
+            <Delete fontSize="small" />
           </IconButton>
-        </Stack>
-      </Box>
+        </IconGroup>
+      </ProjectItem>
     ))}
-  </Box>
+  </Container>
 );
 
 export default ProjectList;
+
+const Container = styled.div``;
+
+const ProjectItem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+`;
+
+const ProjectTitle = styled.span`
+  font-size: 1.2rem;
+  color: #333;
+`;
+
+const IconGroup = styled.div`
+  display: flex;
+  gap: 4px;
+`;
+
+const IconButton = styled.button`
+  background: none;
+  border: none;
+  color: ${(props) => props.color};
+  cursor: pointer;
+  padding: 4px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
