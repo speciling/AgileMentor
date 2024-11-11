@@ -54,4 +54,3 @@ export const GlobalStyle = createGlobalStyle`
     src: url(${PaperlogyExtra}) format('truetype');
   }
 `;
-export default GlobalStyle;
