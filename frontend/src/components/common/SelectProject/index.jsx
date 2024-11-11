@@ -40,7 +40,9 @@ export default SelectProject;
 
 const Container = styled.div`
   position: relative;
-  width: 100%;
+  width: 23vw;
+  max-width: 300px;
+  min-width: 150px;
   padding: 10px;
   border: 1px solid #e0e0e0;
   border-radius: 5px;
@@ -49,12 +51,22 @@ const Container = styled.div`
 const Selected = styled.div`
   font-size: 20px;
   font-family: 'PaperlogyBold';
-  padding: 20px;
+  padding: 15px;
   color: #7a7a7a;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+    padding: 10px;
+  }
 `;
 
 const ArrowIcon = styled(SlArrowDown)`
@@ -83,8 +95,19 @@ const Option = styled.li`
   color: #666666;
   cursor: pointer;
   transition: background-color 0.2s;
+  font-size: 18px;
 
   &:hover {
     background-color: #f0f0f0;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 6px;
   }
 `;
