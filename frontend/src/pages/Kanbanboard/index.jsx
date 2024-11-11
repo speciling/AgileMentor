@@ -1,10 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import Header from '../../components/features/Header';
-
-// eslint-disable-next-line import/extensions
-import SideMenu from '../../components/features/SideBar';
-
+import SideBar from '../../components/features/SideBar';
 import Kanban from '../../components/common/Kanban';
 
 const KanbanboardPage = () => (
@@ -16,26 +13,28 @@ const KanbanboardPage = () => (
     <Box
       sx={{
         position: 'fixed',
-        top: '76px',
+        top: '9vh',
         left: 0,
-        height: 'calc(100vh - 76px)',
+        height: 'calc(100vh - 9vh)',
+        width: '23vw',
         zIndex: 900,
       }}
     >
-      <SideMenu />
+      <SideBar />
     </Box>
 
     <Box
       component="main"
       sx={{
         position: 'fixed',
-        top: '76px',
-        left: '240px',
-        width: 'calc(100vw - 240px)',
-        height: 'calc(100vh - 76px)',
-        backgroundColor: '#f5f8ff',
+        top: '9vh',
+        left: '23vw',
+        width: 'calc(100vw - 23vw)',
+        height: 'calc(100vh - 9vh)',
+        backgroundColor: '#FAFAFA',
         padding: 4,
         overflowY: 'auto',
+        overflowX: 'auto',
         color: '#333',
       }}
     >
@@ -48,7 +47,7 @@ const KanbanboardPage = () => (
             variant="h4"
             sx={{
               fontWeight: 'bold',
-              fontSize: '4rem',
+              fontSize: '3.5rem',
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
