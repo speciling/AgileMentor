@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Typography, IconButton, Divider } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import { Box, Typography, Divider } from '@mui/material';
+import CircleIcon from '@mui/icons-material/Circle';
 import mockBacklogs from '../../../mocks/mockBacklogs';
 
 const OngoingTasksList = ({ memberId }) => {
@@ -14,11 +14,8 @@ const OngoingTasksList = ({ memberId }) => {
   return (
     <Box>
       {projects.map((projectId, index) => (
-        <Box key={projectId} mb={1}>
+        <Box key={projectId} mb={1.5}>
           {index > 0 && <Divider sx={{ mb: 1 }} />}
-          <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize:'1.1rem', color: '#333', mb: 1 }}>
-            Project Name: {projectId}
-          </Typography>
           {filteredBacklogs
             .filter((task) => task.project_id === projectId)
             .map((task) => (
@@ -27,14 +24,17 @@ const OngoingTasksList = ({ memberId }) => {
                 display="flex"
                 alignItems="center"
                 justifyContent="space-between"
-                mb={0}
+                mb={1}
               >
-                <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333' }}>
-                  - {task.title}
+                <Box display="flex" alignItems="center">
+                  <CircleIcon sx={{ color: '#0eaaf9', fontSize: '0.5rem', mr: 1 }} />
+                  <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333' }}>
+                    {task.title}
+                  </Typography>
+                </Box>
+                <Typography variant="body2" sx={{ color: '#666', fontSize: '0.8rem' }}>
+                  {projectId}
                 </Typography>
-                <IconButton sx={{ color: '#0eaaf9' }} aria-label="info">
-                  <InfoIcon fontSize="medium" />
-                </IconButton>
               </Box>
             ))}
         </Box>
