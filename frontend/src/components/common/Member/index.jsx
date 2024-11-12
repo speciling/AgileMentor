@@ -58,18 +58,18 @@ Member.propTypes = {
 export default Member;
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 0 2vw 2vh 2vw;
 `;
 
 const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 1.5vh;
 `;
 
 const Title = styled.h3`
-  font-size: 20px;
+  font-size: 2vh;
   font-weight: bold;
   color: #333;
 `;
@@ -78,9 +78,9 @@ const InviteButton = styled.button`
   background-color: #ffd771;
   color: #fff;
   border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 14px;
+  border-radius: 0.5vw;
+  padding: 0.5vh 1vw;
+  font-size: 1.4vh;
   cursor: pointer;
 
   &:hover {
@@ -98,22 +98,22 @@ const MemberItem = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 1vh;
 `;
 
 const MemberName = styled.span`
-  font-size: 16px;
+  font-size: 1.6vh;
   color: #333;
   display: flex;
   align-items: center;
   position: relative;
-  padding-left: 12px;
+  padding-left: 1.2vw;
 
   &::before {
     content: '';
     display: inline-block;
-    width: 6px;
-    height: 6px;
+    width: 0.6vw;
+    height: 0.6vw;
     background-color: #333;
     border-radius: 50%;
     position: absolute;
@@ -125,17 +125,17 @@ const MemberName = styled.span`
 
 const CrownIcon = styled.span`
   color: #ffd700;
-  margin-left: 5px;
-  font-size: 16px;
+  margin-left: 0.5vw;
+  font-size: 1.6vh;
 `;
 
 const KickButton = styled.button`
   background-color: #ffb3b3;
   color: white;
   border: none;
-  border-radius: 10px;
-  padding: 5px 10px;
-  font-size: 14px;
+  border-radius: 1vw;
+  padding: 0.5vh 1vw;
+  font-size: 1.4vh;
   cursor: pointer;
 
   &:hover {
