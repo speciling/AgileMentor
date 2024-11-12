@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import Header from '../../components/features/Header';
-import SideBar from '../../components/features/SideBar';
-import Kanban from '../../components/common/Kanban';
+import Sidebar from '../../components/features/SideBar';
+import BurndownChart from '../../components/common/BurndownChart';
 
-const KanbanboardPage = () => (
+const BurndownPage = () => (
   <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
     <Box sx={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }}>
       <Header />
@@ -20,7 +20,7 @@ const KanbanboardPage = () => (
         zIndex: 900,
       }}
     >
-      <SideBar />
+      <Sidebar />
     </Box>
 
     <Box
@@ -34,14 +34,11 @@ const KanbanboardPage = () => (
         backgroundColor: '#FAFAFA',
         padding: 4,
         overflowY: 'auto',
-        overflowX: 'auto',
         color: '#333',
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-        <Box
-          sx={{ maxWidth: '60%', overflow: 'hidden', textOverflow: 'ellipsis' }}
-        >
+        <Box sx={{ maxWidth: '60%', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           <Typography variant="subtitle1">Project Name:</Typography>
           <Typography
             variant="h4"
@@ -58,9 +55,9 @@ const KanbanboardPage = () => (
         </Box>
       </Box>
 
-      <Kanban />
+      <BurndownChart />
     </Box>
   </Box>
 );
 
-export default KanbanboardPage;
+export default BurndownPage;

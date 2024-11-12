@@ -3,7 +3,7 @@ import styled from 'styled-components';
 // eslint-disable-next-line import/no-unresolved
 import { Common } from '@styles/globalStyle';
 
-export const HEADER_HEIGHT = '76px';
+export const HEADER_HEIGHT = '9vh';
 
 const Header = () => (
   <HeaderContainer>
@@ -22,7 +22,7 @@ const HeaderContainer = styled.header`
   justify-content: flex-start;
   height: ${HEADER_HEIGHT};
   background-color: ${Common.colors.primary};
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0.4vh 0.6vh rgba(0, 0, 0, 0.1); // 그림자 높이도 vh 단위로 변경
   z-index: 9999;
   position: relative;
 `;
@@ -30,18 +30,18 @@ const HeaderContainer = styled.header`
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 300px;
-  margin-right: 300px;
+  margin-left: 20vw; // 화면 너비에 맞춰 여백 설정
+  margin-right: 20vw;
 `;
 
 const LogoImage = styled.img`
-  width: 32px;
-  height: 32px;
-  margin-right: 10px;
+  width: 3vh; // vh 단위로 로고 크기 설정
+  height: 3vh;
+  margin-right: 1vh;
 `;
 
 const LogoText = styled.h1`
-  font-size: 20px;
+  font-size: 2vh; // vh 단위로 폰트 크기 설정
   font-weight: bold;
   color: #000;
 `;

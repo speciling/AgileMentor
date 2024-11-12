@@ -32,7 +32,7 @@ const images = [
   },
 ];
 
-const BUTTON_SIZE = 111;
+const BUTTON_SIZE = '11vh';
 
 const ImageButton = styled(ButtonBase)(({ isFirst, isLast }) => {
   let borderRadius = 0;
