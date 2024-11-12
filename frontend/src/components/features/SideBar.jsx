@@ -8,8 +8,6 @@ import { IoHome } from 'react-icons/io5';
 // eslint-disable-next-line import/no-unresolved
 import NavigateMenu from '@components/common/NavigateMenu';
 // eslint-disable-next-line import/no-unresolved
-import { HEADER_HEIGHT } from '@components/features/Header';
-// eslint-disable-next-line import/no-unresolved
 import LogoutButton from '@components/common/LogoutButton';
 // eslint-disable-next-line import/no-unresolved
 import Member from '@components/common/Member';
@@ -55,17 +53,14 @@ export default SideBar;
 const SidebarContainer = styled.div`
   background-color: #fff;
   width: 23vw;
-  max-width: 400px;
-  min-width: 250px;
-  min-height: calc(100vh - ${HEADER_HEIGHT});
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 2vh;
 `;
 
 const CreateProjectButtonWrapper = styled.div`
-  margin-top: 20px;
+  margin-top: 2vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -81,10 +76,10 @@ const DashboardLink = styled.a`
   display: flex;
   align-items: center;
   align-self: flex-start;
-  margin-top: 15px;
-  margin-left: 20px;
+  margin-top: 1.5vh;
+  margin-left: 2vw;
   color: #5f8f86;
-  font-size: 24px;
+  font-size: 2.4vh;
   text-decoration: none;
   cursor: pointer;
 
@@ -94,20 +89,19 @@ const DashboardLink = styled.a`
 `;
 
 const IoHomeIcon = styled(IoHome)`
-  margin-right: 8px;
-  font-size: 24px;
+  margin-right: 0.8vw;
+  font-size: 2.4vh;
   color: #5f8f86;
 `;
 
 const NavigateMenuWrapper = styled.div`
   width: 100%;
-  padding-left: 20px;
+  padding-left: 2vw;
 `;
 
 const MemberWrapper = styled.div`
   width: 100%;
-  padding-left: 20px;
-  margin-bottom: 25px;
+  padding-left: 2vw;
 `;
 
 const DividerWrapper = styled.div`
@@ -120,15 +114,13 @@ const DividerWrapper = styled.div`
 
 const Divider = styled.div`
   width: 100%;
-  height: 2px;
+  height: 0.2vh;
   background-color: #eaeaea;
-  margin-bottom: 25px;
 `;
 
 const LogoutButtonWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  padding-left: 20px;
-  margin-top: auto;
+  padding-left: 2vw;
 `;
