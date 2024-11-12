@@ -53,7 +53,7 @@ const KanbanboardPage = () => (
             color: '#3A3A3A',
           }}
         >
-          KAN 보드
+          칸반 보드
         </Typography>
       </Box>
 
