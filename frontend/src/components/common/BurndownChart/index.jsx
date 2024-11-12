@@ -19,7 +19,7 @@ const BurndownChart = () => {
     <Box
       sx={{
         height: '65vh',
-        width: '70vw',
+        width: '71vw',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
