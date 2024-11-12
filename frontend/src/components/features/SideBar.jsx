@@ -52,7 +52,7 @@ export default SideBar;
 
 const SidebarContainer = styled.div`
   background-color: #fff;
-  width: 23vw;
+  width: 18vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -116,6 +116,7 @@ const Divider = styled.div`
   width: 100%;
   height: 0.2vh;
   background-color: #eaeaea;
+  margin-bottom: 2vh;
 `;
 
 const LogoutButtonWrapper = styled.div`

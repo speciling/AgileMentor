@@ -58,7 +58,7 @@ Member.propTypes = {
 export default Member;
 
 const Container = styled.div`
-  padding: 0 2vw 2vh 2vw;
+  padding: 0 1vw 1vh 1vw;
 `;
 
 const Header = styled.div`

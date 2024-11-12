@@ -45,20 +45,18 @@ const Button = styled.button`
   border: none;
   border-radius: 1vh;
   padding: 1.2vh 2vw;
-  font-size: 2vh;
+  font-size: 1.8vh;
   font-family: 'PaperlogyBold';
   cursor: pointer;
-  width: 23vw;
-  max-width: 30vw;
-  min-width: 15vw;
+  width: 15vw;
 
   @media (max-width: 768px) {
-    font-size: 1.3vh;
+    font-size: 1.2vh;
     padding: 1vh 1.4vw;
   }
 
   @media (max-width: 480px) {
-    font-size: 1.2vh;
+    font-size: 1vh;
     padding: 0.8vh 1.2vw;
   }
 `;
