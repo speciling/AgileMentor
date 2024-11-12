@@ -43,35 +43,35 @@ const Button = styled.button`
   background-color: #b0c9f8;
   color: #fff;
   border: none;
-  border-radius: 10px;
-  padding: 12px 20px;
-  font-size: 20px;
+  border-radius: 1vh;
+  padding: 1.2vh 2vw;
+  font-size: 2vh;
   font-family: 'PaperlogyBold';
   cursor: pointer;
   width: 23vw;
-  max-width: 300px;
-  min-width: 150px;
+  max-width: 30vw;
+  min-width: 15vw;
 
   @media (max-width: 768px) {
-    font-size: 13px;
-    padding: 10px 14px;
+    font-size: 1.3vh;
+    padding: 1vh 1.4vw;
   }
 
   @media (max-width: 480px) {
-    font-size: 12px;
-    padding: 8px 12px;
+    font-size: 1.2vh;
+    padding: 0.8vh 1.2vw;
   }
 `;
 
 const Icon = styled(FaFolderPlus)`
-  margin-right: 8px;
-  font-size: 20px;
+  margin-right: 0.8vw;
+  font-size: 2vh;
 
   @media (max-width: 768px) {
-    font-size: 13px;
+    font-size: 1.3vh;
   }
 
   @media (max-width: 480px) {
-    font-size: 12px;
+    font-size: 1.2vh;
   }
 `;
