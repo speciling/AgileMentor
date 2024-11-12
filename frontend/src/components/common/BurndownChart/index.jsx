@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Paper, Typography } from '@mui/material';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { LineChart } from '@mui/x-charts';
 import mockSprints from '../../../mocks/mockSprints';
 
@@ -30,7 +31,7 @@ const BurndownChart = () => {
           height: '100%',
           width: '100%',
           borderRadius: 3,
-          padding: 2,
+          padding: 0,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -38,16 +39,16 @@ const BurndownChart = () => {
         }}
         elevation={3}
       >
-        <Typography variant="h6" sx={{ fontSize: '35px' }}>
-            Burndown Chart
+        <Typography variant="h6" sx={{ fontSize: '35px', marginTop: '10px' }}>
+          Burndown Chart
         </Typography>
-        <Box 
-          sx={{ 
-            height: '90%', 
-            width: '90%', 
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center' 
+        <Box
+          sx={{
+            height: '90%',
+            width: '90%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <LineChart
