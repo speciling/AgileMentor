@@ -13,8 +13,8 @@ const DashboardPage = () => (
     <Box
       component="main"
       sx={{
-        left: '23vw',
-        width: 'calc(100vw - 23vw)',
+        left: '18vw',
+        width: 'calc(100vw - 18vw)',
         height: 'calc(100vh - 9vh)',
         backgroundColor: '#FAFAFA',
         overflowY: 'auto',
@@ -67,7 +67,6 @@ const DashboardPage = () => (
               top: 0,
               backgroundColor: '#fff',
               zIndex: 1,
-
               display: 'flex',
               alignItems: 'flex-start',
             }}
@@ -122,38 +121,40 @@ const DashboardPage = () => (
         </Paper>
       </Box>
 
-      <Paper
-        sx={{
-          backgroundColor: '#fff',
-          borderRadius: 3,
-          height: '30vh',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-          padding: '0 2vw',
-        }}
-      >
-        <Box
+      <Box sx={{ display: 'flex', gap: 3, mb: 3, padding: '0 2vw' }}>
+        <Paper
           sx={{
-            p: 2,
-            pb: 0,
-            position: 'sticky',
-            top: 0,
             backgroundColor: '#fff',
-            zIndex: 1,
+            borderRadius: 3,
+            flex: 1,
+            height: '30vh',
             display: 'flex',
-            alignItems: 'flex-start',
+            flexDirection: 'column',
+            overflow: 'hidden',
           }}
         >
-          <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-            애자일 학습하기
-          </Typography>
-          <Divider sx={{ mb: 0 }} />
-        </Box>
-        <Box sx={{ p: 2, pt: 0, overflowY: 'auto', flexGrow: 1 }}>
-          <AgileNotesList />
-        </Box>
-      </Paper>
+          <Box
+            sx={{
+              p: 2,
+              pb: 0,
+              position: 'sticky',
+              top: 0,
+              backgroundColor: '#fff',
+              zIndex: 1,
+              display: 'flex',
+              alignItems: 'flex-start',
+            }}
+          >
+            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
+              애자일 학습하기
+            </Typography>
+            <Divider sx={{ mb: 0 }} />
+          </Box>
+          <Box sx={{ p: 2, pt: 0, overflowY: 'auto', flexGrow: 1 }}>
+            <AgileNotesList />
+          </Box>
+        </Paper>
+      </Box>
     </Box>
   </Box>
 );
