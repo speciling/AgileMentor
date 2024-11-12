@@ -10,8 +10,8 @@ const BurndownPage = () => (
     <Box
       component="main"
       sx={{
-        left: '23vw',
-        width: 'calc(100vw - 23vw)',
+        left: '18vw',
+        width: 'calc(100vw - 18vw)',
         height: 'calc(100vh - 9vh)',
         backgroundColor: '#FAFAFA',
         padding: '0 3vw',
@@ -52,7 +52,7 @@ const BurndownPage = () => (
             color: '#3A3A3A',
           }}
         >
-          KAN 보드
+          번다운 차트
         </Typography>
       </Box>
       <BurndownChart />
