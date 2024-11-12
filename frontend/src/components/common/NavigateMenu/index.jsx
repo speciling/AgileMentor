@@ -28,7 +28,7 @@ export default NavigateMenu;
 
 const Container = styled.div`
   width: 100%;
-  padding: 0 2vw;
+  padding: 0 1vw;
 `;
 
 const Title = styled.h3`

@@ -40,16 +40,14 @@ export default SelectProject;
 
 const Container = styled.div`
   position: relative;
-  width: 23vw;
-  max-width: 30vw;
-  min-width: 15vw;
+  width: 20vw;
   padding: 1vh;
   border: 0.1vw solid #e0e0e0;
   border-radius: 0.5vw;
 `;
 
 const Selected = styled.div`
-  font-size: 2vh;
+  font-size: 1.8vh;
   font-family: 'PaperlogyBold';
   padding: 1.5vh;
   color: #7a7a7a;

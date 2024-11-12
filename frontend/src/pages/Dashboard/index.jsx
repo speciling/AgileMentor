@@ -27,7 +27,7 @@ const DashboardPage = () => (
           flexDirection: 'column',
           alignItems: 'flex-start',
           mb: 3,
-          padding: '0 20px',
+          padding: '0 3vw',
         }}
       >
         <Typography
@@ -36,7 +36,7 @@ const DashboardPage = () => (
             fontWeight: 'bold',
             color: '#333',
             fontSize: '4vh',
-            marginTop: '30px',
+            marginTop: '3vh',
           }}
         >
           임지환님의 프로젝트
@@ -47,7 +47,7 @@ const DashboardPage = () => (
         </Box>
       </Box>
 
-      <Box sx={{ display: 'flex', gap: 3, mb: 3 }}>
+      <Box sx={{ display: 'flex', gap: 3, mb: 3, padding: '0 2vw' }}>
         <Paper
           sx={{
             flex: 1.5,
@@ -67,9 +67,18 @@ const DashboardPage = () => (
               top: 0,
               backgroundColor: '#fff',
               zIndex: 1,
+
+              display: 'flex',
+              alignItems: 'flex-start',
             }}
           >
-            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 'bold',
+                mb: 1,
+              }}
+            >
               내 프로젝트
             </Typography>
             <Divider sx={{ mb: 0 }} />
@@ -98,6 +107,8 @@ const DashboardPage = () => (
               top: 0,
               backgroundColor: '#fff',
               zIndex: 1,
+              display: 'flex',
+              alignItems: 'flex-start',
             }}
           >
             <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
@@ -119,6 +130,7 @@ const DashboardPage = () => (
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
+          padding: '0 2vw',
         }}
       >
         <Box
@@ -129,6 +141,8 @@ const DashboardPage = () => (
             top: 0,
             backgroundColor: '#fff',
             zIndex: 1,
+            display: 'flex',
+            alignItems: 'flex-start',
           }}
         >
           <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
