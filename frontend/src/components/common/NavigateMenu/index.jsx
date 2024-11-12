@@ -28,35 +28,35 @@ export default NavigateMenu;
 
 const Container = styled.div`
   width: 100%;
-  padding: 0 20px 20px 20px;
+  padding: 0 2vw;
 `;
 
 const Title = styled.h3`
   display: flex;
   align-items: center;
   align-self: flex-start;
-  font-size: 24px;
+  font-size: 2.4vh;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 3vh;
   color: #151313;
 
   @media (max-width: 768px) {
-    font-size: 22px;
-    margin-bottom: 24px;
+    font-size: 2.2vh;
+    margin-bottom: 2.4vh;
   }
 
   @media (max-width: 480px) {
-    font-size: 20px;
-    margin-bottom: 20px;
+    font-size: 2vh;
+    margin-bottom: 2vh;
   }
 `;
 
 const MenuItem = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 2vh;
   color: #666;
-  font-size: 18px;
+  font-size: 1.8vh;
   cursor: pointer;
   transition: color 0.3s;
 
@@ -65,29 +65,29 @@ const MenuItem = styled.div`
   }
 
   @media (max-width: 768px) {
-    font-size: 16px;
-    margin-bottom: 16px;
+    font-size: 1.6vh;
+    margin-bottom: 1.6vh;
   }
 
   @media (max-width: 480px) {
-    font-size: 14px;
-    margin-bottom: 12px;
+    font-size: 1.4vh;
+    margin-bottom: 1.2vh;
   }
 `;
 
 const Icon = styled.div`
-  font-size: 18px;
-  margin-right: 8px;
+  font-size: 1.8vh;
+  margin-right: 0.8vw;
 
   @media (max-width: 768px) {
-    font-size: 14px;
+    font-size: 1.4vh;
   }
 
   @media (max-width: 480px) {
-    font-size: 12px;
+    font-size: 1.2vh;
   }
 `;
 
 const MenuText = styled.span`
-  margin-left: 8px;
+  margin-left: 0.8vw;
 `;
