@@ -41,17 +41,17 @@ export default SelectProject;
 const Container = styled.div`
   position: relative;
   width: 23vw;
-  max-width: 300px;
-  min-width: 150px;
-  padding: 10px;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
+  max-width: 30vw;
+  min-width: 15vw;
+  padding: 1vh;
+  border: 0.1vw solid #e0e0e0;
+  border-radius: 0.5vw;
 `;
 
 const Selected = styled.div`
-  font-size: 20px;
+  font-size: 2vh;
   font-family: 'PaperlogyBold';
-  padding: 15px;
+  padding: 1.5vh;
   color: #7a7a7a;
   display: flex;
   justify-content: space-between;
@@ -59,13 +59,13 @@ const Selected = styled.div`
   cursor: pointer;
 
   @media (max-width: 768px) {
-    font-size: 14px;
-    padding: 12px;
+    font-size: 1.4vh;
+    padding: 1.2vh;
   }
 
   @media (max-width: 480px) {
-    font-size: 12px;
-    padding: 10px;
+    font-size: 1.2vh;
+    padding: 1vh;
   }
 `;
 
@@ -81,9 +81,9 @@ const Dropdown = styled.ul`
   left: 0;
   width: 100%;
   background-color: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border: 0.1vw solid #e0e0e0;
+  border-radius: 0.5vw;
+  box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.1);
   z-index: 1;
   list-style-type: none;
   padding: 0;
@@ -91,23 +91,23 @@ const Dropdown = styled.ul`
 `;
 
 const Option = styled.li`
-  padding: 10px;
+  padding: 1vh;
   color: #666666;
   cursor: pointer;
   transition: background-color 0.2s;
-  font-size: 18px;
+  font-size: 1.8vh;
 
   &:hover {
     background-color: #f0f0f0;
   }
 
   @media (max-width: 768px) {
-    font-size: 16px;
-    padding: 8px;
+    font-size: 1.6vh;
+    padding: 0.8vh;
   }
 
   @media (max-width: 480px) {
-    font-size: 14px;
-    padding: 6px;
+    font-size: 1.4vh;
+    padding: 0.6vh;
   }
 `;

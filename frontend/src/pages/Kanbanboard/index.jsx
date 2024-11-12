@@ -1,38 +1,20 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import Header from '../../components/features/Header';
 import SideBar from '../../components/features/SideBar';
 import Kanban from '../../components/common/Kanban';
 
 const KanbanboardPage = () => (
-  <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
-    <Box sx={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }}>
-      <Header />
-    </Box>
-
-    <Box
-      sx={{
-        position: 'fixed',
-        top: '9vh',
-        left: 0,
-        height: 'calc(100vh - 9vh)',
-        width: '23vw',
-        zIndex: 900,
-      }}
-    >
-      <SideBar />
-    </Box>
+  <Box sx={{ display: 'flex', height: '100vh-9vh' }}>
+    <SideBar />
 
     <Box
       component="main"
       sx={{
-        position: 'fixed',
-        top: '9vh',
         left: '23vw',
         width: 'calc(100vw - 23vw)',
         height: 'calc(100vh - 9vh)',
         backgroundColor: '#FAFAFA',
-        padding: 4,
+        padding: '0 20px',
         overflowY: 'auto',
         overflowX: 'auto',
         color: '#333',
