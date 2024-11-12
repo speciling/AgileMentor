@@ -10,8 +10,8 @@ const KanbanboardPage = () => (
     <Box
       component="main"
       sx={{
-        left: '23vw',
-        width: 'calc(100vw - 23vw)',
+        left: '18vw',
+        width: 'calc(100vw - 18vw)',
         height: 'calc(100vh - 9vh)',
         backgroundColor: '#FAFAFA',
         padding: '0 20px',
@@ -20,24 +20,41 @@ const KanbanboardPage = () => (
         color: '#333',
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-        <Box
-          sx={{ maxWidth: '60%', overflow: 'hidden', textOverflow: 'ellipsis' }}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          mb: 3,
+          marginLeft: '5vw',
+          marginTop: '5vh',
+        }}
+      >
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 'bold',
+            fontSize: '3.3vh',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
         >
-          <Typography variant="subtitle1">Project Name:</Typography>
-          <Typography
-            variant="h4"
-            sx={{
-              fontWeight: 'bold',
-              fontSize: '3.5rem',
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            Project B
-          </Typography>
-        </Box>
+          프로젝트 A
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: '2vh',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            marginTop: '0.5vh',
+            color: '#3A3A3A',
+          }}
+        >
+          KAN 보드
+        </Typography>
       </Box>
 
       <Kanban />
