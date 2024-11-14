@@ -23,7 +23,29 @@ $\textbf{\large{\textsf{\color{#FFFF99} 업무 효율성과 협업 능력}}}$을
 <div align="center">
 
 ⚒️**TOOLS**🛠️</br>
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white))![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=Amazon%20Web%20Services&logoColor=white)![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+***FE***</br>
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=ffffff)
+![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=ffffff)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=000000)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=ffffff)
+
+---
+
+***BE***</br>
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=Amazon%20Web%20Services&logoColor=white)
+![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white)
+![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
+
+---
+
+***공통***</br>
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
 </div>
 
 <div align="center">
@@ -94,8 +116,8 @@ $\textbf{\large{\textsf{\color{#FFFF99} 업무 효율성과 협업 능력}}}$을
 
 [`홈페이지`](#홈페이지) 접속 ➨ [`로그인`](#로그인)</br>
 ➨ [`서비스 이용하기`](#서비스-이용하기) ➨ [`사이드 바`](#사이드-바) ➨ [`프로젝트 생성`](#프로젝트-생성) / [`프로젝트 선택`](#프로젝트-선택)</br>
-➨ [`#대시보드`](#대시보드) ➨ [`#백로그 및 스프린트`](#백로그-및-스프린트) / [`#AI 기능`](#AI-기능)</br>
-➨ [`#칸반보드`](#칸반보드) ➨ [`#번다운 차트`](#번다운-차트) ➨ [`#애자일-학습하기`](#애자일-학습하기)
+➨ [`대시보드`](#대시보드) ➨ [`백로그 및 스프린트`](#백로그-및-스프린트) / [`AI 기능`](#AI-기능)</br>
+➨ [`칸반보드`](#칸반보드) ➨ [`번다운 차트`](#번다운-차트) ➨ [`애자일-학습하기`](#애자일-학습하기)
 
 😊이후 저의 **AgileMentor**의 모든 서비스를 즐겨주세요😊
 
