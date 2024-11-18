@@ -65,7 +65,7 @@ public class ProjectService {
         boolean isNotMemberOfProject = projectMemberList.stream()
             .noneMatch(projectMember -> projectMember.getMember().getMemberId().equals(memberId));
 
-        if(isNotMemberOfProject) {
+        if (isNotMemberOfProject) {
             throw new ProjectNotFoundException();
         }
 
