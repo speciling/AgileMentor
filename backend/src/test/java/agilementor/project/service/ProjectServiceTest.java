@@ -68,7 +68,7 @@ class ProjectServiceTest {
     @DisplayName("참가한 프로젝트 목록을 조회할 수 있다.")
     void getProjectList() {
         // given
-        Member member = new Member("email@email.com", "name", "pic.jpg");
+        Member member = getMember();
         Project project1 = new Project("project1");
         Project project2 = new Project("project2");
         ProjectMember projectMember1 = new ProjectMember(project1, member, true);
@@ -89,7 +89,7 @@ class ProjectServiceTest {
     void getProject() {
         // given
         String projectTitle = "title";
-        Member member = new Member("email@email.com", "name", "pic.jpg");
+        Member member = getMember();
         Project project = new Project(projectTitle);
         ProjectMember projectMember = new ProjectMember(project, member, true);
 
@@ -205,7 +205,7 @@ class ProjectServiceTest {
         // given
         String title = "title";
         String newTitle = "newTitle";
-        Member member = new Member("email@email.com", "name", "pic.jpg");
+        Member member = getMember();
         Project project = new Project(title);
         ProjectMember projectMember = new ProjectMember(project, member, true);
         ProjectUpdateRequest projectUpdateRequest = new ProjectUpdateRequest(newTitle);
@@ -254,7 +254,7 @@ class ProjectServiceTest {
         // given
         String title = "title";
         String newTitle = "newTitle";
-        Member member = new Member("email@email.com", "name", "pic.jpg");
+        Member member = getMember();
         Project project = new Project(title);
         ProjectMember projectMember = new ProjectMember(project, member, false);
         ProjectUpdateRequest projectUpdateRequest = new ProjectUpdateRequest(newTitle);
@@ -272,7 +272,7 @@ class ProjectServiceTest {
     @DisplayName("프로젝트를 삭제할 수 있다")
     void deleteProject() {
         // given
-        Member member = new Member("email@email.com", "name", "pic.jpg");
+        Member member = getMember();
         Project project = new Project("title");
         ProjectMember projectMember = new ProjectMember(project, member, true);
 
@@ -317,7 +317,7 @@ class ProjectServiceTest {
     @DisplayName("관리자 권한이 없는 프로젝트를 삭제할 수 없다.")
     void deleteProjectFailIfNotAdmin() {
         // given
-        Member member = new Member("email@email.com", "name", "pic.jpg");
+        Member member = getMember();
         Project project = new Project("title");
         ProjectMember projectMember = new ProjectMember(project, member, false);
 
@@ -328,6 +328,37 @@ class ProjectServiceTest {
         // then
         assertThatThrownBy(() -> projectService.deleteProject(1L, 1L))
             .isInstanceOf(NotProjectAdminException.class);
+    }
+
+    @Test
+    @DisplayName("프로젝트에서 나갈 수 있다.")
+    void leaveProject() {
+        // given
+        Member member = getMember();
+        Project project = new Project("title");
+        ProjectMember projectMember = new ProjectMember(project, member, true);
+
+        given(projectMemberRepository.findByMemberIdAndProjectId(any(), any()))
+            .willReturn(Optional.of(projectMember));
+
+        // when
+        projectService.leaveProject(1L, 1L);
+
+        // then
+        then(projectMemberRepository).should().delete(projectMember);
+    }
+
+    @Test
+    @DisplayName("참가하지 않은 프로젝트에서는 나갈 수 없다.")
+    void leaveProjectFailIfNotParticipating() {
+        // given
+        given(projectMemberRepository.findByMemberIdAndProjectId(any(), any()))
+            .willReturn(Optional.empty());
+
+        // when
+        // then
+        assertThatThrownBy(() -> projectService.leaveProject(1L, 1L))
+            .isInstanceOf(ProjectNotFoundException.class);
     }
 
     private static Member getMember() {
