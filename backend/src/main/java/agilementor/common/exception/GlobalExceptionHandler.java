@@ -10,17 +10,34 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleSocialLoginFailException(
-        SocialLoginFailException ex) {
+        SocialLoginFailException exception) {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body(new ExceptionResponse(ex.getMessage()));
+            .body(new ExceptionResponse(exception.getMessage()));
     }
 
     @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleExternalServerException(
-        ExternalServerErrorException ex) {
+        ExternalServerErrorException exception) {
         return ResponseEntity
             .status(HttpStatus.SERVICE_UNAVAILABLE)
-            .body(new ExceptionResponse(ex.getMessage()));
+            .body(new ExceptionResponse(exception.getMessage()));
     }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleMemberNotFoundException(
+        MemberNotFoundException exception) {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleProjectNotFoundException(
+        ProjectNotFoundException exception) {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
 }
