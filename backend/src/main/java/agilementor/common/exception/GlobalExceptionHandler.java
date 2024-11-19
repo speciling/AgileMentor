@@ -40,4 +40,12 @@ public class GlobalExceptionHandler {
             .body(new ExceptionResponse(exception.getMessage()));
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleNotProjectAdminException(
+        NotProjectAdminException exception) {
+        return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
 }

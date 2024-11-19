@@ -1,6 +1,7 @@
 package agilementor.project.service;
 
 import agilementor.common.exception.MemberNotFoundException;
+import agilementor.common.exception.NotProjectAdminException;
 import agilementor.common.exception.ProjectNotFoundException;
 import agilementor.member.dto.response.MemberGetResponse;
 import agilementor.member.entity.Member;
@@ -81,7 +82,9 @@ public class ProjectService {
             .findByMemberIdAndProjectId(memberId, projectId)
             .orElseThrow(ProjectNotFoundException::new);
 
-        // todo: 프로젝트 수정 권한 있는지 확인
+        if (projectMember.isNotAdmin()) {
+            throw new NotProjectAdminException();
+        }
 
         Project project = projectMember.getProject();
         project.update(projectUpdateRequest.title());
@@ -94,7 +97,9 @@ public class ProjectService {
             .findByMemberIdAndProjectId(memberId, projectId)
             .orElseThrow(ProjectNotFoundException::new);
 
-        // todo: 프로젝트 삭제 권한 있는지 확인
+        if (projectMember.isNotAdmin()) {
+            throw new NotProjectAdminException();
+        }
 
         Project project = projectMember.getProject();
         projectMemberRepository.deleteAllByProject(project);
