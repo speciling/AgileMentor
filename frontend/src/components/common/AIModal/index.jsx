@@ -1,37 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const AIModal = ({ onCancel, onConfirm }) => (
-  <ModalOverlay>
-    <ModalContainer>
-      <ModalTitle>AI 추천</ModalTitle>
+const AIModal = ({ onCancel, onConfirm }) => {
+  const [projectDescription, setProjectDescription] = useState('');
+  const [storyCount, setStoryCount] = useState('');
+  const [sprintCount, setSprintCount] = useState('');
 
-      <InputContainer>
-        <Label>프로젝트 설명</Label>
-        <StyledTextArea placeholder="프로젝트 설명을 적어주세요." />
-      </InputContainer>
+  return (
+    <ModalOverlay>
+      <ModalContainer>
+        <ModalTitle>AI 추천</ModalTitle>
 
-      <InputContainer>
-        <Description>스토리 및 스프린트 개수</Description>
-        <Row>
-          <Label>스토리</Label>
-          <SmallInput type="text" />
-          <Label>개</Label>
+        <InputContainer>
+          <Label>프로젝트 설명</Label>
+          <StyledTextArea
+            placeholder="프로젝트 설명을 적어주세요."
+            value={projectDescription}
+            onChange={(e) => setProjectDescription(e.target.value)}
+          />
+        </InputContainer>
 
-          <Label>스프린트</Label>
-          <SmallInput type="text" />
-          <Label>개</Label>
-        </Row>
-      </InputContainer>
+        <InputContainer>
+          <Description>스토리 및 스프린트 개수</Description>
+          <Row>
+            <Label>스토리</Label>
+            <SmallInput
+              type="number"
+              value={storyCount}
+              onChange={(e) => setStoryCount(e.target.value)}
+            />
+            <Label>개</Label>
 
-      <ButtonContainer>
-        <CancelButton onClick={onCancel}>취소</CancelButton>
-        <ConfirmButton onClick={onConfirm}>완료</ConfirmButton>
-      </ButtonContainer>
-    </ModalContainer>
-  </ModalOverlay>
-);
+            <Label>스프린트</Label>
+            <SmallInput
+              type="number"
+              value={sprintCount}
+              onChange={(e) => setSprintCount(e.target.value)}
+            />
+            <Label>개</Label>
+          </Row>
+        </InputContainer>
+
+        <ButtonContainer>
+          <CancelButton onClick={onCancel}>취소</CancelButton>
+          <ConfirmButton onClick={onConfirm}>완료</ConfirmButton>
+        </ButtonContainer>
+      </ModalContainer>
+    </ModalOverlay>
+  );
+};
 
 AIModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
@@ -102,7 +120,7 @@ const StyledTextArea = styled.textarea`
 `;
 
 const SmallInput = styled.input`
-  width: 50px;
+  width: 70px;
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 5px;
