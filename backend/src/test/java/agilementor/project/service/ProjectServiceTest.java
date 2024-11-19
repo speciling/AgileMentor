@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
+import agilementor.common.exception.NotProjectAdminException;
 import agilementor.common.exception.ProjectNotFoundException;
 import agilementor.member.dto.response.MemberGetResponse;
 import agilementor.member.entity.Member;
@@ -250,7 +251,21 @@ class ProjectServiceTest {
     @Test
     @DisplayName("관리자 권한이 없는 프로젝트 정보를 수정할 수 없다.")
     void updateProjectFailIfNotAdmin() {
-        // todo: 권한 체크 기능 테스트 추가
+        // given
+        String title = "title";
+        String newTitle = "newTitle";
+        Member member = new Member("email@email.com", "name", "pic.jpg");
+        Project project = new Project(title);
+        ProjectMember projectMember = new ProjectMember(project, member, false);
+        ProjectUpdateRequest projectUpdateRequest = new ProjectUpdateRequest(newTitle);
+
+        given(projectMemberRepository.findByMemberIdAndProjectId(any(), any()))
+            .willReturn(Optional.of(projectMember));
+
+        // when
+        // then
+        assertThatThrownBy(() -> projectService.updateProject(1L, 1L, projectUpdateRequest))
+            .isInstanceOf(NotProjectAdminException.class);
     }
 
     @Test
@@ -301,7 +316,18 @@ class ProjectServiceTest {
     @Test
     @DisplayName("관리자 권한이 없는 프로젝트를 삭제할 수 없다.")
     void deleteProjectFailIfNotAdmin() {
-        // todo: 권한 체크 기능 테스트 추가
+        // given
+        Member member = new Member("email@email.com", "name", "pic.jpg");
+        Project project = new Project("title");
+        ProjectMember projectMember = new ProjectMember(project, member, false);
+
+        given(projectMemberRepository.findByMemberIdAndProjectId(any(), any()))
+            .willReturn(Optional.of(projectMember));
+
+        // when
+        // then
+        assertThatThrownBy(() -> projectService.deleteProject(1L, 1L))
+            .isInstanceOf(NotProjectAdminException.class);
     }
 
     private static Member getMember() {
