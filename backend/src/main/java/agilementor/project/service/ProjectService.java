@@ -36,7 +36,7 @@ public class ProjectService {
         Member member = memberRepository.findById(memberId)
             .orElseThrow(MemberNotFoundException::new);
         Project project = projectRespository.save(projectCreateRequest.toEntity());
-        projectMemberRepository.save(new ProjectMember(project, member));
+        projectMemberRepository.save(new ProjectMember(project, member, true));
 
         return ProjectResponse.from(project);
     }

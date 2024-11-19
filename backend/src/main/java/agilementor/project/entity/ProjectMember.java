@@ -23,12 +23,15 @@ public class ProjectMember {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private boolean is_admin;
+
     protected ProjectMember() {
     }
 
-    public ProjectMember(Project project, Member member) {
+    public ProjectMember(Project project, Member member, boolean is_admin) {
         this.project = project;
         this.member = member;
+        this.is_admin = is_admin;
     }
 
     public Project getProject() {

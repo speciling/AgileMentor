@@ -70,8 +70,8 @@ class ProjectServiceTest {
         Member member = new Member("email@email.com", "name", "pic.jpg");
         Project project1 = new Project("project1");
         Project project2 = new Project("project2");
-        ProjectMember projectMember1 = new ProjectMember(project1, member);
-        ProjectMember projectMember2 = new ProjectMember(project2, member);
+        ProjectMember projectMember1 = new ProjectMember(project1, member, true);
+        ProjectMember projectMember2 = new ProjectMember(project2, member, true);
         List<ProjectMember> projectMemberList = List.of(projectMember1, projectMember2);
 
         given(projectMemberRepository.findByMemberId(any())).willReturn(projectMemberList);
@@ -90,7 +90,7 @@ class ProjectServiceTest {
         String projectTitle = "title";
         Member member = new Member("email@email.com", "name", "pic.jpg");
         Project project = new Project(projectTitle);
-        ProjectMember projectMember = new ProjectMember(project, member);
+        ProjectMember projectMember = new ProjectMember(project, member, true);
 
         given(projectMemberRepository.findByMemberIdAndProjectId(any(), any()))
             .willReturn(Optional.of(projectMember));
@@ -137,9 +137,9 @@ class ProjectServiceTest {
         Member member2 = new Member("email2@email.com", "name", "pic.jpg");
         Member member3 = new Member("email3@email.com", "name", "pic.jpg");
         Project project = new Project("project");
-        ProjectMember projectMember1 = new ProjectMember(project, member1);
-        ProjectMember projectMember2 = new ProjectMember(project, member2);
-        ProjectMember projectMember3 = new ProjectMember(project, member3);
+        ProjectMember projectMember1 = new ProjectMember(project, member1, true);
+        ProjectMember projectMember2 = new ProjectMember(project, member2, false);
+        ProjectMember projectMember3 = new ProjectMember(project, member3, false);
         List<ProjectMember> projectMemberList = List.of(projectMember1, projectMember2,
             projectMember3);
 
@@ -180,9 +180,9 @@ class ProjectServiceTest {
         Member member2 = new Member("email2@email.com", "name", "pic.jpg");
         Member member3 = new Member("email3@email.com", "name", "pic.jpg");
         Project project = new Project("project");
-        ProjectMember projectMember1 = new ProjectMember(project, member1);
-        ProjectMember projectMember2 = new ProjectMember(project, member2);
-        ProjectMember projectMember3 = new ProjectMember(project, member3);
+        ProjectMember projectMember1 = new ProjectMember(project, member1, true);
+        ProjectMember projectMember2 = new ProjectMember(project, member2, false);
+        ProjectMember projectMember3 = new ProjectMember(project, member3, false);
         List<ProjectMember> projectMemberList = List.of(projectMember1, projectMember2,
             projectMember3);
 
@@ -206,7 +206,7 @@ class ProjectServiceTest {
         String newTitle = "newTitle";
         Member member = new Member("email@email.com", "name", "pic.jpg");
         Project project = new Project(title);
-        ProjectMember projectMember = new ProjectMember(project, member);
+        ProjectMember projectMember = new ProjectMember(project, member, true);
         ProjectUpdateRequest projectUpdateRequest = new ProjectUpdateRequest(newTitle);
 
         given(projectMemberRepository.findByMemberIdAndProjectId(any(), any()))
@@ -259,7 +259,7 @@ class ProjectServiceTest {
         // given
         Member member = new Member("email@email.com", "name", "pic.jpg");
         Project project = new Project("title");
-        ProjectMember projectMember = new ProjectMember(project, member);
+        ProjectMember projectMember = new ProjectMember(project, member, true);
 
         given(projectMemberRepository.findByMemberIdAndProjectId(any(), any()))
             .willReturn(Optional.of(projectMember));
