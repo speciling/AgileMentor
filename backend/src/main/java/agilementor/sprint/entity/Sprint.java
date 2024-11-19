@@ -101,7 +101,7 @@ public class Sprint {
         this.endDate = endDate;
     }
 
-    public SprintResponse toEntity() {
+    public SprintResponse toSprintResponse() {
         return new SprintResponse(id, projectId, title, goal, startDate, endDate, isDone,
             isActivate);
     }

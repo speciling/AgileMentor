@@ -28,20 +28,20 @@ public class SprintService {
             sprintForm.isDone(),
             sprintForm.isActivate()
         );
-        return sprintRepository.save(sprint).toEntity();
+        return sprintRepository.save(sprint).toSprintResponse();
     }
 
     public List<SprintResponse> getAllSprints(Long projectId) {
         List<Sprint> sprints = sprintRepository.findByProjectId(projectId);
         return sprints.stream()
-            .map(Sprint::toEntity)
+            .map(Sprint::toSprintResponse)
             .collect(Collectors.toList());
     }
 
     public SprintResponse getSprintById(Long projectId, Long sprintId) {
         Sprint sprint = sprintRepository.findByProjectIdAndId(projectId, sprintId)
             .orElseThrow(() -> new IllegalArgumentException("Sprint not found"));
-        return sprint.toEntity();
+        return sprint.toSprintResponse();
     }
 
     public SprintResponse updateSprint(Long projectId, Long sprintId, SprintForm sprintForm) {
@@ -53,7 +53,7 @@ public class SprintService {
             sprintForm.getStartDate(),
             sprintForm.getEndDate()
         );
-        return sprintRepository.save(sprint).toEntity();
+        return sprintRepository.save(sprint).toSprintResponse();
     }
 
     public void deleteSprint(Long projectId, Long sprintId) {
@@ -73,13 +73,13 @@ public class SprintService {
             sprintForm.getEndDate()
         );
 
-        return sprintRepository.save(sprint).toEntity();
+        return sprintRepository.save(sprint).toSprintResponse();
     }
 
     public SprintResponse completeSprint(Long projectId, Long sprintId) {
         Sprint sprint = getSprintByIdInternal(projectId, sprintId);
         sprint.complete();
-        return sprintRepository.save(sprint).toEntity();
+        return sprintRepository.save(sprint).toSprintResponse();
     }
 
     private Sprint getSprintByIdInternal(Long projectId, Long sprintId) {
