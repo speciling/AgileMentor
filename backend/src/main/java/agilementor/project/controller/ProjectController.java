@@ -70,4 +70,12 @@ public class ProjectController {
 
         projectService.deleteProject(memberId, projectId);
     }
+
+    @PostMapping("/{projectId}/leave")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void leaveProject(@SessionAttribute("memberId") Long memberId,
+        @PathVariable Long projectId) {
+
+        projectService.leaveProject(memberId, projectId);
+    }
 }

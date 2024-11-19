@@ -52,9 +52,7 @@ public class ProjectService {
 
     public ProjectResponse getProject(Long memberId, Long projectId) {
 
-        ProjectMember projectMember = projectMemberRepository
-            .findByMemberIdAndProjectId(memberId, projectId)
-            .orElseThrow(ProjectNotFoundException::new);
+        ProjectMember projectMember = getProjectMember(memberId, projectId);
 
         return ProjectResponse.from(projectMember.getProject());
     }
@@ -78,9 +76,7 @@ public class ProjectService {
     public ProjectResponse updateProject(Long memberId, Long projectId,
         ProjectUpdateRequest projectUpdateRequest) {
 
-        ProjectMember projectMember = projectMemberRepository
-            .findByMemberIdAndProjectId(memberId, projectId)
-            .orElseThrow(ProjectNotFoundException::new);
+        ProjectMember projectMember = getProjectMember(memberId, projectId);
 
         if (projectMember.isNotAdmin()) {
             throw new NotProjectAdminException();
@@ -93,9 +89,7 @@ public class ProjectService {
 
     public void deleteProject(Long memberId, Long projectId) {
 
-        ProjectMember projectMember = projectMemberRepository
-            .findByMemberIdAndProjectId(memberId, projectId)
-            .orElseThrow(ProjectNotFoundException::new);
+        ProjectMember projectMember = getProjectMember(memberId, projectId);
 
         if (projectMember.isNotAdmin()) {
             throw new NotProjectAdminException();
@@ -104,5 +98,18 @@ public class ProjectService {
         Project project = projectMember.getProject();
         projectMemberRepository.deleteAllByProject(project);
         projectRespository.delete(project);
+    }
+
+    public void leaveProject(Long memberId, Long projectId) {
+
+        ProjectMember projectMember = getProjectMember(memberId, projectId);
+
+        projectMemberRepository.delete(projectMember);
+    }
+
+    private ProjectMember getProjectMember(Long memberId, Long projectId) {
+        return projectMemberRepository
+            .findByMemberIdAndProjectId(memberId, projectId)
+            .orElseThrow(ProjectNotFoundException::new);
     }
 }
