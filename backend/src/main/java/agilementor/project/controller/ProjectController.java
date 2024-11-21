@@ -1,6 +1,5 @@
 package agilementor.project.controller;
 
-import agilementor.member.dto.response.MemberGetResponse;
 import agilementor.project.dto.request.ProjectCreateRequest;
 import agilementor.project.dto.request.ProjectUpdateRequest;
 import agilementor.project.dto.response.ProjectResponse;
@@ -47,13 +46,6 @@ public class ProjectController {
         @PathVariable Long projectId) {
 
         return projectService.getProject(memberId, projectId);
-    }
-
-    @GetMapping("/{projectId}/members")
-    public List<MemberGetResponse> getProjectMemberList(@SessionAttribute("memberId") Long memberId,
-        @PathVariable Long projectId) {
-
-        return projectService.getProjectMemberList(memberId, projectId);
     }
 
     @PutMapping("/{projectId}")

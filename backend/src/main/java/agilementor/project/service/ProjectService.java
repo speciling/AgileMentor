@@ -3,7 +3,6 @@ package agilementor.project.service;
 import agilementor.common.exception.MemberNotFoundException;
 import agilementor.common.exception.NotProjectAdminException;
 import agilementor.common.exception.ProjectNotFoundException;
-import agilementor.member.dto.response.MemberGetResponse;
 import agilementor.member.entity.Member;
 import agilementor.member.repository.MemberRepository;
 import agilementor.project.dto.request.ProjectCreateRequest;
@@ -55,22 +54,6 @@ public class ProjectService {
         ProjectMember projectMember = getProjectMember(memberId, projectId);
 
         return ProjectResponse.from(projectMember.getProject());
-    }
-
-    public List<MemberGetResponse> getProjectMemberList(Long memberId, Long projectId) {
-
-        List<ProjectMember> projectMemberList = projectMemberRepository.findByProjectId(projectId);
-
-        boolean isNotMemberOfProject = projectMemberList.stream()
-            .noneMatch(projectMember -> projectMember.getMember().getMemberId().equals(memberId));
-
-        if (isNotMemberOfProject) {
-            throw new ProjectNotFoundException();
-        }
-
-        return projectMemberList.stream()
-            .map(projectMember -> MemberGetResponse.from(projectMember.getMember()))
-            .toList();
     }
 
     public ProjectResponse updateProject(Long memberId, Long projectId,
