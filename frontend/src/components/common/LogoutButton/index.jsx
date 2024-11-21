@@ -5,7 +5,7 @@ import { FiLogOut } from 'react-icons/fi';
 const LogoutButton = () => (
   <Button>
     <LogoutIcon />
-    로그아웃
+    프로젝트 나가기
   </Button>
 );
 

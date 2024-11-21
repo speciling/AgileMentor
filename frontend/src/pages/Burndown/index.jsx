@@ -1,12 +1,9 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import Sidebar from '../../components/features/SideBar';
 import BurndownChart from '../../components/common/BurndownChart';
 
 const BurndownPage = () => (
   <Box sx={{ display: 'flex', height: '100vh-9vh' }}>
-    <Sidebar />
-
     <Box
       component="main"
       sx={{
