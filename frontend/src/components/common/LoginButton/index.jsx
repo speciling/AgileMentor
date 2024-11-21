@@ -1,11 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const GoogleLoginButton = () => (
-  <GoogleButton>
-    <GoogleImage src="/image/google_login.png" alt="Google logo" />
-  </GoogleButton>
-);
+const GoogleLoginButton = () => {
+  const handleLoginClick = () => {
+    const googleOAuthURL = // api URL
+      (window.location.href = googleOAuthURL);
+  };
+
+  return (
+    <GoogleButton onClick={handleLoginClick}>
+      <GoogleImage src="/image/google_login.png" alt="Google logo" />
+    </GoogleButton>
+  );
+};
 
 export default GoogleLoginButton;
 
@@ -23,6 +30,6 @@ const GoogleButton = styled.button`
 `;
 
 const GoogleImage = styled.img`
-  width: 140 px;
+  width: 140px;
   height: 40px;
 `;

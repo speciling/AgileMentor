@@ -15,11 +15,13 @@ const IntroducePage = () => (
     <ContentContainer>
       <IntroText>
         <Title>
-          애자일 방식으로 팀의 효율성과 협업을 극대화하는 전문가 멘토링 서비스
+          애자일 방식으로 팀의 효율성과 협업을 극대화하는 애자일 학습 및
+          프로젝트 관리 도구
         </Title>
         <Subtitle>
-          Agile Mentor는 전문가 멘토링을 통해 팀이 애자일 방법론을 효율적으로
-          적용하여 업무 효율성과 협업 능력을 극대화할 수 있도록 지원합니다.
+          Agile Mentor는 애자일 학습 및 프로젝트 관리 도구를 통해 팀이 애자일
+          방법론을 효율적으로 적용하여 업무 효율성과 협업 능력을 극대화할 수
+          있도록 지원합니다.
         </Subtitle>
         <GoogleLoginButton />
       </IntroText>
@@ -61,7 +63,6 @@ const IntroducePage = () => (
 
 export default IntroducePage;
 
-// 스타일 컴포넌트
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
