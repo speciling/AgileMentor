@@ -1,15 +1,15 @@
-import './App.css';
-// eslint-disable-next-line import/no-unresolved
-import Header from '@components/features/Header';
-// eslint-disable-next-line import/no-unresolved
-import SideBar from '@components/features/SideBar';
+import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './routes';
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <SideBar />
-    </div>
+    <Router>
+      <div className="App">
+        <AppRoutes />
+      </div>
+    </Router>
   );
 }
 
