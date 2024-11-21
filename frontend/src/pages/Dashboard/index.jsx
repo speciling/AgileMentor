@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Typography, Paper, Divider } from '@mui/material';
-import SideBar from '../../components/features/SideBar';
 import ExternalLinkButtons from '../../components/common/ExternalLinkButtons';
 import ProjectList from '../../components/common/ProjectList';
 import OngoingTasksList from '../../components/common/OngoingTasksList';
@@ -8,8 +7,6 @@ import AgileNotesList from '../../components/common/AgileNotesList';
 
 const DashboardPage = () => (
   <Box sx={{ display: 'flex', height: '100vh-9vh' }}>
-    <SideBar />
-
     <Box
       component="main"
       sx={{

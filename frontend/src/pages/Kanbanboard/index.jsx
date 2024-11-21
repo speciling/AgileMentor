@@ -1,12 +1,9 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import SideBar from '../../components/features/SideBar';
 import Kanban from '../../components/common/Kanban';
 
 const KanbanboardPage = () => (
   <Box sx={{ display: 'flex', height: '100vh-9vh' }}>
-    <SideBar />
-
     <Box
       component="main"
       sx={{
