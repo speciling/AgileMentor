@@ -9,5 +9,6 @@ module.exports = override(
     '@features': path.resolve(__dirname, 'src/components/features'),
     '@styles': path.resolve(__dirname, 'src/styles'),
     '@pages': path.resolve(__dirname, 'src/pages'),
+    '@routes': path.resolve(__dirname, 'src/routes'),
   }),
 );
