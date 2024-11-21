@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const GoogleLoginButton = () => {
   const handleLoginClick = () => {
-    const googleOAuthURL = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=1000456040851-jok3h21lkl27qmm4v2ci41e6tnrr1k1u.apps.googleusercontent.com&scope=email%20profile%20openid&redirect_uri=https://api.agilementor.kr/api/auth/login/code/google`;
-    window.location.href = googleOAuthURL;
+    const googleOAuthURL = // api URL
+      (window.location.href = googleOAuthURL);
   };
 
   return (
