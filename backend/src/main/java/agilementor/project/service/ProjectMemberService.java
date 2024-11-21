@@ -59,7 +59,7 @@ public class ProjectMemberService {
         }
 
         ProjectMember targetProjectMember = projectMemberList.stream()
-            .filter(projectMember -> projectMember.getMember().getMemberId().equals(loginMemberId))
+            .filter(projectMember -> projectMember.getMember().getMemberId().equals(targetMemberId))
             .findFirst()
             .orElseThrow(MemberNotFoundException::new);
 
