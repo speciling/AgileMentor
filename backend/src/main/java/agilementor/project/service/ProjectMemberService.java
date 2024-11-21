@@ -1,5 +1,8 @@
 package agilementor.project.service;
 
+import agilementor.common.exception.KickOneselfException;
+import agilementor.common.exception.MemberNotFoundException;
+import agilementor.common.exception.NotProjectAdminException;
 import agilementor.common.exception.ProjectNotFoundException;
 import agilementor.member.dto.response.MemberGetResponse;
 import agilementor.project.entity.ProjectMember;
@@ -34,4 +37,32 @@ public class ProjectMemberService {
             .toList();
     }
 
+    public void kickMember(Long loginMemberId, Long projectId, Long targetMemberId) {
+
+        List<ProjectMember> projectMemberList = projectMemberRepository.findByProjectId(projectId);
+
+        if (projectMemberList.isEmpty()) {
+            throw new ProjectNotFoundException();
+        }
+
+        ProjectMember loginProjectMember = projectMemberList.stream()
+            .filter(projectMember -> projectMember.getMember().getMemberId().equals(loginMemberId))
+            .findFirst()
+            .orElseThrow(MemberNotFoundException::new);
+
+        if (loginProjectMember.isNotAdmin()) {
+            throw new NotProjectAdminException();
+        }
+
+        if (loginMemberId.equals(targetMemberId)) {
+            throw new KickOneselfException();
+        }
+
+        ProjectMember targetProjectMember = projectMemberList.stream()
+            .filter(projectMember -> projectMember.getMember().getMemberId().equals(loginMemberId))
+            .findFirst()
+            .orElseThrow(MemberNotFoundException::new);
+
+        projectMemberRepository.delete(targetProjectMember);
+    }
 }
