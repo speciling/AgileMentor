@@ -5,7 +5,8 @@ import { SlArrowDown } from 'react-icons/sl';
 const SelectProject = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState('프로젝트 선택하기');
-  const projects = ['프로젝트 A', '프로젝트 B', '프로젝트 C'];
+
+  const { projects } = useProjects();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
