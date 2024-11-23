@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaFolderPlus } from 'react-icons/fa';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import axios from 'axios';
 // eslint-disable-next-line import/no-unresolved
 import MinModal from '@components/common/MinModal';
+import { useProjects } from '../../../provider/projectContext';
 
 const CreateProjectButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [projectTitle, setProjectTitle] = useState('');
+  const { projects, setProjects } = useProjects();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -13,6 +18,36 @@ const CreateProjectButton = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setProjectTitle('');
+  };
+
+  const handleConfirm = () => {
+    if (projectTitle.trim() === '') {
+      alert('프로젝트 이름을 입력해 주세요.');
+      return;
+    }
+
+    axios
+      .post(
+        'https://api.agilementor.kr/api/projects',
+        { title: projectTitle },
+        {
+          headers: {
+            Cookie: document.cookie,
+          },
+          withCredentials: true,
+        },
+      )
+      .then((response) => {
+        if (response.status === 201) {
+          const newProject = response.data;
+          setProjects([...projects, newProject]);
+          closeModal();
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   return (
@@ -26,8 +61,10 @@ const CreateProjectButton = () => {
         <MinModal
           title="프로젝트 생성"
           description="프로젝트 이름"
+          value={projectTitle}
+          onChange={(e) => setProjectTitle(e.target.value)}
           onCancel={closeModal}
-          onConfirm={closeModal}
+          onConfirm={handleConfirm}
         />
       )}
     </>

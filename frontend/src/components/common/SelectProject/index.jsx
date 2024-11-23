@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SlArrowDown } from 'react-icons/sl';
+import { useProjects } from '../../../provider/projectContext';
 
 const SelectProject = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState('프로젝트 선택하기');
-  const projects = ['프로젝트 A', '프로젝트 B', '프로젝트 C'];
+  const { projects } = useProjects(); // 프로젝트 데이터 가져오기
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const handleSelect = (project) => {
-    setSelectedProject(project);
+    setSelectedProject(project.title);
     setIsOpen(false);
   };
 
@@ -24,10 +25,12 @@ const SelectProject = () => {
       </Selected>
       {isOpen && (
         <Dropdown>
-          {projects.map((project, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Option key={index} onClick={() => handleSelect(project)}>
-              {project}
+          {projects.map((project) => (
+            <Option
+              key={project.projectId}
+              onClick={() => handleSelect(project)}
+            >
+              {project.title}
             </Option>
           ))}
         </Dropdown>

@@ -1,18 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import axios from 'axios';
+import { IoHome } from 'react-icons/io5';
 // eslint-disable-next-line import/no-unresolved
 import CreateProjectButton from '@components/common/NewProject/index';
 // eslint-disable-next-line import/no-unresolved
 import SelectProject from '@components/common/SelectProject';
-import { IoHome } from 'react-icons/io5';
 // eslint-disable-next-line import/no-unresolved
 import NavigateMenu from '@components/common/NavigateMenu';
 // eslint-disable-next-line import/no-unresolved
 import LogoutButton from '@components/common/LogoutButton';
 // eslint-disable-next-line import/no-unresolved
 import Member from '@components/common/Member';
+// eslint-disable-next-line import/no-unresolved
+import { useProjects } from '../../provider/projectContext';
 
 const SideBar = () => {
+  const { setProjects } = useProjects();
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get(
+          'https://api.agilementor.kr/api/projects',
+          {
+            headers: {
+              Cookie: document.cookie,
+            },
+            withCredentials: true,
+          },
+        );
+        setProjects(response.data);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    };
+
+    fetchProjects();
+  }, [setProjects]);
+
   const members = [
     { id: 1, name: '지연우', isAdmin: true },
     { id: 2, name: '오 탐', isAdmin: false },
