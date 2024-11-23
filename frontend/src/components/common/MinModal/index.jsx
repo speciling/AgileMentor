@@ -2,12 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const MinModal = ({ title, description, onCancel, onConfirm }) => (
+const MinModal = ({
+  title,
+  description,
+  onCancel,
+  onConfirm,
+  value,
+  onChange,
+}) => (
   <ModalOverlay>
     <ModalContainer>
       <ModalTitle>{title}</ModalTitle>
       <ModalDescription>{description}</ModalDescription>
-      <Input type="email" placeholder="입력해 주세요." />
+      <Input
+        type="text"
+        value={value}
+        onChange={onChange}
+        placeholder="입력해 주세요."
+      />
       <ButtonContainer>
         <CancelButton onClick={onCancel}>취소</CancelButton>
         <ConfirmButton onClick={onConfirm}>완료</ConfirmButton>
@@ -21,6 +33,8 @@ MinModal.propTypes = {
   description: PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default MinModal;
@@ -50,14 +64,11 @@ const ModalContainer = styled.div`
 
 const ModalTitle = styled.h2`
   font-size: 26px;
-  font-weight: 'bold';
+  font-weight: bold;
   margin-bottom: 25px;
 `;
 
 const ModalDescription = styled.p`
-  display: flex;
-  align-items: first-start;
-  font-weight: 'bold';
   font-size: 14px;
   color: #666;
   margin-bottom: 20px;
