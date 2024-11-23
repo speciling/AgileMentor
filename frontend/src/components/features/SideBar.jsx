@@ -16,6 +16,10 @@ import Member from '@components/common/Member';
 // eslint-disable-next-line import/no-unresolved
 import { useProjects } from '../../provider/projectContext';
 
+// eslint-disable-next-line import/no-unresolved
+import SettingButton from '@components/common/SettingButton';
+// eslint-disable-next-line import/no-unresolved
+
 const SideBar = () => {
   const { setProjects } = useProjects();
 
@@ -66,6 +70,9 @@ const SideBar = () => {
         <Member members={members} />
       </MemberWrapper>
       <DividerWrapper>
+        <SettingButtonWrapper>
+          <SettingButton onClick={() => console.log('클릭됨')} />
+        </SettingButtonWrapper>
         <Divider />
         <LogoutButtonWrapper>
           <LogoutButton />
@@ -151,4 +158,11 @@ const LogoutButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   padding-left: 2vw;
+`;
+
+const SettingButtonWrapper = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2vh;
 `;

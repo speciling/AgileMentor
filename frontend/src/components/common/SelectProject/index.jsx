@@ -6,7 +6,8 @@ import { useProjects } from '../../../provider/projectContext';
 const SelectProject = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState('프로젝트 선택하기');
-  const { projects } = useProjects(); // 프로젝트 데이터 가져오기
+
+  const { projects } = useProjects();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
