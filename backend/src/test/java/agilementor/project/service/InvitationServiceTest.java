@@ -123,4 +123,63 @@ class InvitationServiceTest {
         assertThatThrownBy(() -> invitationService.acceptInvitation(loginMemberId, invitationId))
             .isInstanceOf(InvalidInvitationException.class);
     }
+
+    @Test
+    @DisplayName("초대를 거절할 수 있다.")
+    void declineInvitation() {
+        // given
+        Long invitationId = 1L;
+        Long inviteeId = 1L;
+
+        Project project = new Project("title");
+        Member invitor = new Member("invitor@email.com", "invitor", "pic.jpg");
+        Member invitee = new Member("invitee@email.com", "피초대자", "pic.jpg");
+        ReflectionTestUtils.setField(invitee, "memberId", inviteeId);
+        Invitation invitation = new Invitation(project, invitee, invitor);
+
+        given(invitationRepository.findById(invitationId)).willReturn(Optional.of(invitation));
+
+        // when
+        invitationService.declineInvitation(inviteeId, invitationId);
+
+        // then
+        then(invitationRepository).should().delete(any());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 id의 초대를 거절할 수 없다.")
+    void declineInvitationFailIfNotExisting() {
+        // given
+        Long invitationId = 1L;
+        Long inviteeId = 1L;
+
+        given(invitationRepository.findById(invitationId)).willReturn(Optional.empty());
+
+        // when
+        // then
+        assertThatThrownBy(() -> invitationService.declineInvitation(inviteeId, invitationId))
+            .isInstanceOf(InvalidInvitationException.class);
+    }
+
+    @Test
+    @DisplayName("자신이 초대 대상이 아닌 초대를 거절할 수 없다.")
+    void declineInvitationFailIfNotInvitee() {
+        // given
+        Long invitationId = 1L;
+        Long inviteeId = 1L;
+        Long loginMemberId = 2L;
+
+        Project project = new Project("title");
+        Member invitor = new Member("invitor@email.com", "invitor", "pic.jpg");
+        Member invitee = new Member("invitee@email.com", "피초대자", "pic.jpg");
+        ReflectionTestUtils.setField(invitee, "memberId", inviteeId);
+        Invitation invitation = new Invitation(project, invitee, invitor);
+
+        given(invitationRepository.findById(invitationId)).willReturn(Optional.of(invitation));
+
+        // when
+        // then
+        assertThatThrownBy(() -> invitationService.declineInvitation(loginMemberId, invitationId))
+            .isInstanceOf(InvalidInvitationException.class);
+    }
 }
