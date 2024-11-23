@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
-    boolean existsByMemberAndProject(Member member, Project project);
+    boolean existsByProjectAndInvitee(Project project, Member invitee);
 }

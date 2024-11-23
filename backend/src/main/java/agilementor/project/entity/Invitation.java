@@ -20,15 +20,20 @@ public class Invitation {
     private Project project;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "invitee_id")
+    private Member invitee;
+
+    @ManyToOne
+    @JoinColumn(name = "invitor_id")
+    private Member invitor;
 
     protected Invitation() {
     }
 
-    public Invitation(Project project, Member member) {
+    public Invitation(Project project, Member invitee, Member invitor) {
         this.project = project;
-        this.member = member;
+        this.invitee = invitee;
+        this.invitor = invitor;
     }
 
     public Long getInvitationId() {
@@ -39,7 +44,7 @@ public class Invitation {
         return project;
     }
 
-    public Member getMember() {
-        return member;
+    public Member getInvitee() {
+        return invitee;
     }
 }

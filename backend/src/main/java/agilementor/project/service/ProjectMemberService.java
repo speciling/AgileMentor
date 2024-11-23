@@ -108,15 +108,17 @@ public class ProjectMemberService {
             .orElseThrow(ProjectNotFoundException::new);
 
         boolean isAlreadyInvited = invitationRepository
-            .existsByMemberAndProject(target.get(), project);
+            .existsByProjectAndInvitee(project, target.get());
 
         if (isAlreadyInvited) {
             // 이미 초대된 회원일 경우에도 아무 작업 안 하고 성공 응답.
             return;
         }
 
+        Member invitor = memberRepository.findById(loginMemberId)
+            .orElseThrow(MemberNotFoundException::new);
 
-        Invitation invitation = new Invitation(project, target.get());
+        Invitation invitation = new Invitation(project, target.get(), invitor);
         invitationRepository.save(invitation);
     }
 

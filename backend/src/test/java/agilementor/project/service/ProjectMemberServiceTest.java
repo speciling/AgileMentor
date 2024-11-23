@@ -185,7 +185,9 @@ class ProjectMemberServiceTest {
 
         List<ProjectMember> projectMemberList = createProjectMemberList();
         Member targetMember = new Member(OTHER_MEMBER_EMAIL, "새 회원", "pic.jpg");
+        Member invitor = new Member("admin@email.com", "관리자", "pic.jpg");
         ReflectionTestUtils.setField(targetMember, "memberId", OTHER_MEMBER_ID);
+        ReflectionTestUtils.setField(invitor, "memberId", ADMIN_MEMBER_ID);
         Project project = new Project("title");
 
         given(projectMemberRepository.findByProjectId(PROJECT_ID)).willReturn(projectMemberList);
@@ -193,8 +195,10 @@ class ProjectMemberServiceTest {
             .willReturn(Optional.of(targetMember));
         given(projectRespository.findById(PROJECT_ID))
             .willReturn(Optional.of(project));
-        given(invitationRepository.existsByMemberAndProject(targetMember, project))
+        given(invitationRepository.existsByProjectAndInvitee(project, targetMember))
             .willReturn(false);
+        given(memberRepository.findById(ADMIN_MEMBER_ID))
+            .willReturn(Optional.of(invitor));
 
         // when
         projectMemberService.inviteMember(ADMIN_MEMBER_ID, PROJECT_ID, inviteRequest);
@@ -289,7 +293,7 @@ class ProjectMemberServiceTest {
             .willReturn(Optional.of(targetMember));
         given(projectRespository.findById(PROJECT_ID))
             .willReturn(Optional.of(project));
-        given(invitationRepository.existsByMemberAndProject(targetMember, project))
+        given(invitationRepository.existsByProjectAndInvitee(project, targetMember))
             .willReturn(true);
 
         // When
