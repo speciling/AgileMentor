@@ -16,15 +16,15 @@ public class Invitation {
     private Long invitationId;
 
     @ManyToOne
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
     @ManyToOne
-    @JoinColumn(name = "invitee_id")
+    @JoinColumn(name = "invitee_id", nullable = false)
     private Member invitee;
 
     @ManyToOne
-    @JoinColumn(name = "invitor_id")
+    @JoinColumn(name = "invitor_id", nullable = false)
     private Member invitor;
 
     protected Invitation() {

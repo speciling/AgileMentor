@@ -12,6 +12,6 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
     boolean existsByProjectAndInvitee(Project project, Member invitee);
 
-    @Query("SELECT DISTINCT i FROM Invitation i JOIN FETCH i.project, i.invitor WHERE i.invitee.memberId = :memberId")
+    @Query("SELECT DISTINCT i FROM Invitation i JOIN FETCH i.project JOIN FETCH i.invitor WHERE i.invitee.memberId = :memberId")
     List<Invitation> findByInviteeId(@Param("memberId") Long memberId);
 }
