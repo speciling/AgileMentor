@@ -47,4 +47,8 @@ public class Invitation {
     public Member getInvitee() {
         return invitee;
     }
+
+    public Member getInvitor() {
+        return invitor;
+    }
 }
