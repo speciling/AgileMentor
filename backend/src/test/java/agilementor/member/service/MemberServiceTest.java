@@ -1,21 +1,23 @@
 package agilementor.member.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 import agilementor.member.dto.ParsedIdToken;
+import agilementor.member.dto.response.MemberGetResponse;
 import agilementor.member.entity.Member;
 import agilementor.member.repository.MemberRepository;
 import agilementor.member.util.JwtParser;
 import java.util.Optional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
@@ -58,9 +60,33 @@ class MemberServiceTest {
         memberService.registerOrUpdateMember("token");
 
         // then
-        Assertions.assertThat(member.getEmail()).isEqualTo(parsedIdToken.email());
-        Assertions.assertThat(member.getName()).isEqualTo(parsedIdToken.name());
-        Assertions.assertThat(member.getPicture()).isEqualTo(parsedIdToken.picture());
+        assertThat(member.getEmail()).isEqualTo(parsedIdToken.email());
+        assertThat(member.getName()).isEqualTo(parsedIdToken.name());
+        assertThat(member.getPicture()).isEqualTo(parsedIdToken.picture());
+    }
+
+    @Test
+    @DisplayName("회원 정보를 확인할 수 있다.")
+    void getMember() {
+        // given
+        Long memberId = 1L;
+        String email = "testEmail@agilementor.kr";
+        String name = "이름";
+        String picture = "https://test.agilementor.kr/pic.jpg";
+
+        Member member = new Member(email, name, picture);
+        ReflectionTestUtils.setField(member, "memberId", memberId);
+
+        given(memberRepository.findById(memberId)).willReturn(Optional.of(member));
+
+        // when
+        MemberGetResponse memberGetResponse = memberService.getMember(memberId);
+
+        // then
+        assertThat(memberGetResponse.memberId()).isEqualTo(memberId);
+        assertThat(memberGetResponse.email()).isEqualTo(email);
+        assertThat(memberGetResponse.name()).isEqualTo(name);
+        assertThat(memberGetResponse.picture()).isEqualTo(picture);
     }
 
 }
