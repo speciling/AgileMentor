@@ -5,16 +5,23 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.never;
 
+import agilementor.common.exception.AlreadyJoinedMemberException;
 import agilementor.common.exception.KickOneselfException;
 import agilementor.common.exception.MemberNotFoundException;
 import agilementor.common.exception.NotProjectAdminException;
 import agilementor.common.exception.ProjectNotFoundException;
 import agilementor.member.entity.Member;
+import agilementor.member.repository.MemberRepository;
+import agilementor.project.dto.request.ProjectInviteRequest;
 import agilementor.project.entity.Project;
 import agilementor.project.entity.ProjectMember;
+import agilementor.project.repository.InvitationRepository;
 import agilementor.project.repository.ProjectMemberRepository;
+import agilementor.project.repository.ProjectRespository;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +34,16 @@ import org.springframework.test.util.ReflectionTestUtils;
 class ProjectMemberServiceTest {
 
     @Mock
+    private MemberRepository memberRepository;
+
+    @Mock
+    private ProjectRespository projectRespository;
+
+    @Mock
     private ProjectMemberRepository projectMemberRepository;
+
+    @Mock
+    private InvitationRepository invitationRepository;
 
     @InjectMocks
     private ProjectMemberService projectMemberService;
@@ -38,6 +54,8 @@ class ProjectMemberServiceTest {
     private static Long OTHER_MEMBER_ID = 10L;
     private static Long PROJECT_ID = 1L;
     private static Long OTHER_PROJECT_ID = 2L;
+    private static String OTHER_MEMBER_EMAIL = "otherMember@email.com";
+    private static String MEMBER_EMAIL_1 = "member@email.com";
 
     @Test
     @DisplayName("프로젝트에 참가한 회원 목록을 조회할 수 있다.")
@@ -159,9 +177,131 @@ class ProjectMemberServiceTest {
             .isInstanceOf(MemberNotFoundException.class);
     }
 
+    @Test
+    @DisplayName("프로젝트 관리자는 프로젝트에 새로운 회원을 초대할 수 있다.")
+    void inviteMember() {
+        // given
+        ProjectInviteRequest inviteRequest = new ProjectInviteRequest(OTHER_MEMBER_EMAIL);
+
+        List<ProjectMember> projectMemberList = createProjectMemberList();
+        Member targetMember = new Member(OTHER_MEMBER_EMAIL, "새 회원", "pic.jpg");
+        ReflectionTestUtils.setField(targetMember, "memberId", OTHER_MEMBER_ID);
+        Project project = new Project("title");
+
+        given(projectMemberRepository.findByProjectId(PROJECT_ID)).willReturn(projectMemberList);
+        given(memberRepository.findByEmail(OTHER_MEMBER_EMAIL))
+            .willReturn(Optional.of(targetMember));
+        given(projectRespository.findById(PROJECT_ID))
+            .willReturn(Optional.of(project));
+        given(invitationRepository.existsByMemberAndProject(targetMember, project))
+            .willReturn(false);
+
+        // when
+        projectMemberService.inviteMember(ADMIN_MEMBER_ID, PROJECT_ID, inviteRequest);
+
+        // then
+        then(invitationRepository).should().save(any());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 프로젝트에 새로운 회원을 초대할 수 없다.")
+    void inviteMemberFailIfNotExisting() {
+        // given
+        ProjectInviteRequest inviteRequest = new ProjectInviteRequest(OTHER_MEMBER_EMAIL);
+
+        given(projectMemberRepository.findByProjectId(PROJECT_ID)).willReturn(List.of());
+
+        // when
+        // then
+        assertThatThrownBy(
+            () -> projectMemberService.inviteMember(ADMIN_MEMBER_ID, PROJECT_ID, inviteRequest))
+            .isInstanceOf(ProjectNotFoundException.class);
+    }
+
+    @Test
+    @DisplayName("프로젝트 관리자가 아니면 프로젝트에 새로운 회원을 초대할 수 없다.")
+    void inviteMemberFailIfNotAdmin() {
+        // given
+        List<ProjectMember> projectMemberList = createProjectMemberList();
+
+        ProjectInviteRequest inviteRequest = new ProjectInviteRequest(OTHER_MEMBER_EMAIL);
+
+        given(projectMemberRepository.findByProjectId(PROJECT_ID)).willReturn(projectMemberList);
+
+        // when
+        // then
+        assertThatThrownBy(
+            () -> projectMemberService.inviteMember(MEMBER_ID_1, PROJECT_ID, inviteRequest))
+            .isInstanceOf(NotProjectAdminException.class);
+    }
+
+    @Test
+    @DisplayName("프로젝트에 이미 참가한 회원을 초대할 수 없다.")
+    void inviteMemberFailIfAlreadyJoined() {
+        // given
+        List<ProjectMember> projectMemberList = createProjectMemberList();
+
+        ProjectInviteRequest inviteRequest = new ProjectInviteRequest(MEMBER_EMAIL_1);
+
+        given(projectMemberRepository.findByProjectId(PROJECT_ID)).willReturn(projectMemberList);
+
+        // when
+        // then
+        assertThatThrownBy(
+            () -> projectMemberService.inviteMember(ADMIN_MEMBER_ID, PROJECT_ID, inviteRequest))
+            .isInstanceOf(AlreadyJoinedMemberException.class);
+    }
+
+    @Test
+    @DisplayName("잘못된 이메일로 초대하면 아무 작업도 하지 않는다.")
+    void inviteMemberFailIfUnknownEmail() {
+        // given
+        String unknownEmail = "unknown@email.com";
+
+        List<ProjectMember> projectMemberList = createProjectMemberList();
+
+        ProjectInviteRequest inviteRequest = new ProjectInviteRequest(unknownEmail);
+
+        given(projectMemberRepository.findByProjectId(PROJECT_ID)).willReturn(projectMemberList);
+        given(memberRepository.findByEmail(unknownEmail))
+            .willReturn(Optional.empty());
+
+        // when
+        projectMemberService.inviteMember(ADMIN_MEMBER_ID, PROJECT_ID, inviteRequest);
+
+        // then
+        then(invitationRepository).should(never()).save(any());
+    }
+
+    @Test
+    @DisplayName("이미 초대된 회원을 다시 초대하면 아무 작업도 하지 않는다.")
+    void inviteMemberFailIfAlreadyInvited() {
+        // Given
+
+        ProjectInviteRequest inviteRequest = new ProjectInviteRequest(OTHER_MEMBER_EMAIL);
+        Member targetMember = new Member(OTHER_MEMBER_EMAIL, "새 회원", "pic.jpg");
+        ReflectionTestUtils.setField(targetMember, "memberId", OTHER_MEMBER_ID);
+        List<ProjectMember> projectMemberList = createProjectMemberList();
+        Project project = new Project("title");
+
+        given(projectMemberRepository.findByProjectId(PROJECT_ID)).willReturn(projectMemberList);
+        given(memberRepository.findByEmail(OTHER_MEMBER_EMAIL))
+            .willReturn(Optional.of(targetMember));
+        given(projectRespository.findById(PROJECT_ID))
+            .willReturn(Optional.of(project));
+        given(invitationRepository.existsByMemberAndProject(targetMember, project))
+            .willReturn(true);
+
+        // When
+        projectMemberService.inviteMember(ADMIN_MEMBER_ID, PROJECT_ID, inviteRequest);
+
+        // Then
+        then(invitationRepository).should(never()).save(any());
+    }
+
     private List<ProjectMember> createProjectMemberList() {
-        Member member1 = new Member("email1@email.com", "name", "pic.jpg");
-        Member member2 = new Member("email2@email.com", "name", "pic.jpg");
+        Member member1 = new Member("admin@email.com", "name", "pic.jpg");
+        Member member2 = new Member(MEMBER_EMAIL_1, "name", "pic.jpg");
         Member member3 = new Member("email3@email.com", "name", "pic.jpg");
         Project project = new Project("project");
         ProjectMember projectMember1 = new ProjectMember(project, member1, true);
