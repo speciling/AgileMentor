@@ -2,6 +2,7 @@ package agilementor.project.controller;
 
 import agilementor.member.dto.response.MemberGetResponse;
 import agilementor.project.dto.request.ProjectInviteRequest;
+import agilementor.project.dto.response.ProejctMemberResponse;
 import agilementor.project.service.ProjectMemberService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class ProjectMemberController {
     }
 
     @GetMapping("/members")
-    public List<MemberGetResponse> getProjectMemberList(@SessionAttribute("memberId") Long memberId,
+    public List<ProejctMemberResponse> getProjectMemberList(@SessionAttribute("memberId") Long memberId,
         @PathVariable Long projectId) {
 
         return projectMemberService.getProjectMemberList(memberId, projectId);

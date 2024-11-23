@@ -5,10 +5,10 @@ import agilementor.common.exception.KickOneselfException;
 import agilementor.common.exception.MemberNotFoundException;
 import agilementor.common.exception.NotProjectAdminException;
 import agilementor.common.exception.ProjectNotFoundException;
-import agilementor.member.dto.response.MemberGetResponse;
 import agilementor.member.entity.Member;
 import agilementor.member.repository.MemberRepository;
 import agilementor.project.dto.request.ProjectInviteRequest;
+import agilementor.project.dto.response.ProejctMemberResponse;
 import agilementor.project.entity.Invitation;
 import agilementor.project.entity.Project;
 import agilementor.project.entity.ProjectMember;
@@ -38,7 +38,7 @@ public class ProjectMemberService {
         this.invitationRepository = invitationRepository;
     }
 
-    public List<MemberGetResponse> getProjectMemberList(Long memberId, Long projectId) {
+    public List<ProejctMemberResponse> getProjectMemberList(Long memberId, Long projectId) {
 
         List<ProjectMember> projectMemberList = projectMemberRepository.findByProjectId(projectId);
 
@@ -50,7 +50,7 @@ public class ProjectMemberService {
         }
 
         return projectMemberList.stream()
-            .map(projectMember -> MemberGetResponse.from(projectMember.getMember()))
+            .map(ProejctMemberResponse::from)
             .toList();
     }
 

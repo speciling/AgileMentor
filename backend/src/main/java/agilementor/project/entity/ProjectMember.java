@@ -42,6 +42,10 @@ public class ProjectMember {
         return member;
     }
 
+    public boolean isAdmin() {
+        return is_admin;
+    }
+
     public boolean isNotAdmin() {
         return !is_admin;
     }
