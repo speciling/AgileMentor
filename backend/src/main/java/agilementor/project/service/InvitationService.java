@@ -44,4 +44,15 @@ public class InvitationService {
 
         invitationRepository.delete(invitation);
     }
+
+    public void declineInvitation(Long memberId, Long invitationId) {
+        Invitation invitation = invitationRepository.findById(invitationId)
+            .orElseThrow(InvalidInvitationException::new);
+
+        if (!invitation.getInvitee().getMemberId().equals(memberId)) {
+            throw new InvalidInvitationException();
+        }
+
+        invitationRepository.delete(invitation);
+    }
 }

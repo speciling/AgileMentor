@@ -36,4 +36,12 @@ public class InvitationController {
 
         invitationService.acceptInvitation(memberId, invitationId);
     }
+
+    @PostMapping("/{invitationId}/decline")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void declineInvitation(@PathVariable Long invitationId,
+        @SessionAttribute("memberId") Long memberId) {
+
+        invitationService.declineInvitation(memberId, invitationId);
+    }
 }
