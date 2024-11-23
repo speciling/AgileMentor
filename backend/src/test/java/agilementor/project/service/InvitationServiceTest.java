@@ -1,20 +1,23 @@
 package agilementor.project.service;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 
+import agilementor.common.exception.InvalidInvitationException;
 import agilementor.member.entity.Member;
 import agilementor.project.dto.response.InvitationGetResponse;
 import agilementor.project.entity.Invitation;
 import agilementor.project.entity.Project;
 import agilementor.project.repository.InvitationRepository;
+import agilementor.project.repository.ProjectMemberRepository;
 import java.util.List;
-import org.assertj.core.api.Assertions;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -25,6 +28,9 @@ class InvitationServiceTest {
 
     @Mock
     private InvitationRepository invitationRepository;
+
+    @Mock
+    private ProjectMemberRepository projectMemberRepository;
 
     @InjectMocks
     private InvitationService invitationService;
@@ -44,8 +50,7 @@ class InvitationServiceTest {
         Invitation invitation = new Invitation(project, invitee, invitor);
         ReflectionTestUtils.setField(invitation, "invitationId", invitationId);
 
-        given(invitationRepository.findByInviteeId(inviteeId))
-            .willReturn(List.of(invitation));
+        given(invitationRepository.findByInviteeId(inviteeId)).willReturn(List.of(invitation));
 
         // when
         List<InvitationGetResponse> invitationList = invitationService.getInvitationList(inviteeId);
@@ -57,5 +62,65 @@ class InvitationServiceTest {
         assertThat(invitationGetResponse.invitationId()).isEqualTo(invitationId);
         assertThat(invitationGetResponse.projectTitle()).isEqualTo(projectTitle);
         assertThat(invitationGetResponse.invitorName()).isEqualTo(invitorName);
+    }
+
+    @Test
+    @DisplayName("초대를 수락할 수 있다.")
+    void acceptInvitation() {
+        // given
+        Long invitationId = 1L;
+        Long inviteeId = 1L;
+
+        Project project = new Project("title");
+        Member invitor = new Member("invitor@email.com", "invitor", "pic.jpg");
+        Member invitee = new Member("invitee@email.com", "피초대자", "pic.jpg");
+        ReflectionTestUtils.setField(invitee, "memberId", inviteeId);
+        Invitation invitation = new Invitation(project, invitee, invitor);
+
+        given(invitationRepository.findById(invitationId)).willReturn(Optional.of(invitation));
+
+        // when
+        invitationService.acceptInvitation(inviteeId, invitationId);
+
+        // then
+        then(projectMemberRepository).should().save(any());
+        then(invitationRepository).should().delete(any());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 id의 초대를 수락할 수 없다.")
+    void acceptInvitationFailIfNotExisting() {
+        // given
+        Long invitationId = 1L;
+        Long inviteeId = 1L;
+
+        given(invitationRepository.findById(invitationId)).willReturn(Optional.empty());
+
+        // when
+        // then
+        assertThatThrownBy(() -> invitationService.acceptInvitation(inviteeId, invitationId))
+            .isInstanceOf(InvalidInvitationException.class);
+    }
+
+    @Test
+    @DisplayName("자신이 초대 대상이 아닌 초대를 수락할 수 없다.")
+    void acceptInvitationFailIfNotInvitee() {
+        // given
+        Long invitationId = 1L;
+        Long inviteeId = 1L;
+        Long loginMemberId = 2L;
+
+        Project project = new Project("title");
+        Member invitor = new Member("invitor@email.com", "invitor", "pic.jpg");
+        Member invitee = new Member("invitee@email.com", "피초대자", "pic.jpg");
+        ReflectionTestUtils.setField(invitee, "memberId", inviteeId);
+        Invitation invitation = new Invitation(project, invitee, invitor);
+
+        given(invitationRepository.findById(invitationId)).willReturn(Optional.of(invitation));
+
+        // when
+        // then
+        assertThatThrownBy(() -> invitationService.acceptInvitation(loginMemberId, invitationId))
+            .isInstanceOf(InvalidInvitationException.class);
     }
 }
