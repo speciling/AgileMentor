@@ -57,8 +57,16 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ExceptionResponse> handleAlreadyJoinedMemberExceptionException(
+    public ResponseEntity<ExceptionResponse> handleAlreadyJoinedMemberException(
         AlreadyJoinedMemberException exception) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleInvitationNotFoundException(
+        InvalidInvitationException exception) {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(new ExceptionResponse(exception.getMessage()));
