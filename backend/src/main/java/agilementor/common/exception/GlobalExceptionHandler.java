@@ -40,4 +40,35 @@ public class GlobalExceptionHandler {
             .body(new ExceptionResponse(exception.getMessage()));
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleNotProjectAdminException(
+        NotProjectAdminException exception) {
+        return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleKickOneselfException(
+        KickOneselfException exception) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleAlreadyJoinedMemberException(
+        AlreadyJoinedMemberException exception) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleInvitationNotFoundException(
+        InvalidInvitationException exception) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
 }
