@@ -46,7 +46,8 @@ public class Sprint {
     protected Sprint() {
     }
 
-    public Sprint(Project project, String title, String goal, LocalDate startDate, LocalDate endDate,
+    public Sprint(Project project, String title, String goal, LocalDate startDate,
+        LocalDate endDate,
         boolean isDone, boolean isActivate) {
         this.project = project;
         this.title = title;
@@ -73,6 +74,7 @@ public class Sprint {
         this.isActivate = true;
         this.startDate = LocalDate.now(); // 현재 날짜로 설정
     }
+
     // complete 메서드: isDone을 true로 설정하고 endDate를 현재 날짜로 설정
     public void complete() {
         this.isDone = true;
@@ -115,19 +117,30 @@ public class Sprint {
     public void update(String title, String goal, LocalDate endDate, boolean isActivate) {
         if (isActivate) {
             // 활성화 상태에서는 title, goal, endDate만 변경 가능
-            if (title != null) this.title = title;
-            if (goal != null) this.goal = goal;
-            if (endDate != null) this.endDate = endDate;
+            if (title != null) {
+                this.title = title;
+            }
+            if (goal != null) {
+                this.goal = goal;
+            }
+            if (endDate != null) {
+                this.endDate = endDate;
+            }
         } else {
             // 비활성화 상태에서는 title과 goal만 변경 가능
-            if (title != null) this.title = title;
-            if (goal != null) this.goal = goal;
+            if (title != null) {
+                this.title = title;
+            }
+            if (goal != null) {
+                this.goal = goal;
+            }
         }
     }
 
 
     public SprintResponse toSprintResponse() {
-        return new SprintResponse(id, project.getProjectId(), title, goal, startDate, endDate, isDone,
+        return new SprintResponse(id, project.getProjectId(), title, goal, startDate, endDate,
+            isDone,
             isActivate);
     }
 }
