@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @RestController
 @RequestMapping("/api/projects/{projectId}/sprints")
@@ -23,43 +24,51 @@ public class SprintController {
         this.sprintService = sprintService;
     }
 
+
+
     @PostMapping
-    public SprintResponse createSprint(@PathVariable Long projectId,
-        @RequestBody SprintForm sprintForm) {
-        return sprintService.createSprint(projectId, sprintForm);
+    public SprintResponse createSprint(@SessionAttribute(name = "memberId", required = false) Long memberId,
+        @PathVariable Long projectId) {
+        return sprintService.createSprint(memberId, projectId);
     }
 
     @GetMapping
-    public List<SprintResponse> getAllSprints(@PathVariable Long projectId) {
-        return sprintService.getAllSprints(projectId);
+    public List<SprintResponse> getAllSprints(@SessionAttribute(name = "memberId", required = false) Long memberId,
+        @PathVariable Long projectId) {
+        return sprintService.getAllSprints(memberId, projectId);
     }
 
     @GetMapping("/{sprintId}")
-    public SprintResponse getSprintById(@PathVariable Long projectId, @PathVariable Long sprintId) {
-        return sprintService.getSprintById(projectId, sprintId);
+    public SprintResponse getSprintById(@SessionAttribute(name = "memberId", required = false) Long memberId,
+        @PathVariable Long projectId, @PathVariable Long sprintId) {
+        return sprintService.getSprintById(memberId, projectId, sprintId);
     }
 
     @PutMapping("/{sprintId}")
-    public SprintResponse updateSprint(@PathVariable Long projectId, @PathVariable Long sprintId,
+    public SprintResponse updateSprint(@SessionAttribute(name = "memberId", required = false) Long memberId,
+        @PathVariable Long projectId, @PathVariable Long sprintId,
         @RequestBody SprintForm sprintForm) {
-        return sprintService.updateSprint(projectId, sprintId, sprintForm);
+        return sprintService.updateSprint(memberId, projectId, sprintId, sprintForm);
     }
 
     @DeleteMapping("/{sprintId}")
-    public void deleteSprint(@PathVariable Long projectId, @PathVariable Long sprintId) {
-        sprintService.deleteSprint(projectId, sprintId);
+    public void deleteSprint(@SessionAttribute(name = "memberId", required = false) Long memberId,
+        @PathVariable Long projectId, @PathVariable Long sprintId) {
+        sprintService.deleteSprint(memberId, projectId, sprintId);
     }
 
     // startSprint 메서드 수정: 네 개의 필드 업데이트를 위한 SprintForm 추가
     @PutMapping("/{sprintId}/start")
-    public SprintResponse startSprint(@PathVariable Long projectId, @PathVariable Long sprintId,
+    public SprintResponse startSprint(@SessionAttribute(name = "memberId", required = false) Long memberId,
+        @PathVariable Long projectId, @PathVariable Long sprintId,
         @RequestBody SprintForm sprintForm) {
-        return sprintService.startSprint(projectId, sprintId, sprintForm);
+        return sprintService.startSprint(memberId, projectId, sprintId, sprintForm);
     }
 
     @PutMapping("/{sprintId}/complete")
-    public SprintResponse completeSprint(@PathVariable Long projectId,
+    public SprintResponse completeSprint(@SessionAttribute(name = "memberId", required = false) Long memberId,
+        @PathVariable Long projectId,
         @PathVariable Long sprintId) {
-        return sprintService.completeSprint(projectId, sprintId);
+        return sprintService.completeSprint(memberId, projectId, sprintId);
     }
 }
