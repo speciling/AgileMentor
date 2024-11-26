@@ -1,11 +1,14 @@
 package agilementor.sprint.entity;
 
+import agilementor.project.entity.Project;
 import agilementor.sprint.dto.SprintResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
@@ -18,8 +21,9 @@ public class Sprint {
     @Column(name = "sprint_id")
     private Long id;
 
-    @Column(name = "project_id", nullable = false)
-    private Long projectId;
+    @ManyToOne // Many Sprints can belong to one Project
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project; // Project 객체로 연관관계 설정
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -42,9 +46,10 @@ public class Sprint {
     protected Sprint() {
     }
 
-    public Sprint(Long projectId, String title, String goal, LocalDate startDate, LocalDate endDate,
+    public Sprint(Project project, String title, String goal, LocalDate startDate,
+        LocalDate endDate,
         boolean isDone, boolean isActivate) {
-        this.projectId = projectId;
+        this.project = project;
         this.title = title;
         this.goal = goal;
         this.startDate = startDate;
@@ -53,20 +58,36 @@ public class Sprint {
         this.isActivate = isActivate;
     }
 
-    public void start() {
-        this.isActivate = true;
+    // 추가된 간단한 생성자
+    public Sprint(Project project, String title) {
+        this.project = project;
+        this.title = title;
+        this.goal = null; // 기본값 null
+        this.startDate = null; // 기본값 null
+        this.endDate = null; // 기본값 null
+        this.isDone = false; // 기본값 false
+        this.isActivate = false; // 기본값 false
     }
 
+    // start 메서드: isActivate를 true로 설정하고 startDate를 현재 날짜로 설정
+    public void start() {
+        this.isActivate = true;
+        this.startDate = LocalDate.now(); // 현재 날짜로 설정
+    }
+
+    // complete 메서드: isDone을 true로 설정하고 endDate를 현재 날짜로 설정
     public void complete() {
         this.isDone = true;
+        this.isActivate = false;
+        this.endDate = LocalDate.now(); // 현재 날짜로 설정
     }
 
     public Long getId() {
         return id;
     }
 
-    public Long getProjectId() {
-        return projectId;
+    public Project getProject() {
+        return project;
     }
 
     public String getTitle() {
@@ -94,15 +115,19 @@ public class Sprint {
     }
 
 
-    public void update(String title, String goal, LocalDate startDate, LocalDate endDate) {
+    public void update(String title, String goal, LocalDate endDate, boolean isActivate) {
         this.title = title;
         this.goal = goal;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        if (isActivate) {
+            // 활성화 상태에서만 endDate 변경 가능
+            this.endDate = endDate;
+        }
     }
 
+
     public SprintResponse toSprintResponse() {
-        return new SprintResponse(id, projectId, title, goal, startDate, endDate, isDone,
+        return new SprintResponse(id, project.getProjectId(), title, goal, startDate, endDate,
+            isDone,
             isActivate);
     }
 }
