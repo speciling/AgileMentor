@@ -5,18 +5,21 @@ import { useProjects } from '../../../provider/projectContext';
 
 const SelectProject = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState('프로젝트 선택하기');
 
-  const { projects } = useProjects();
+  const { projects, selectedProjectId, setSelectedProjectId } = useProjects();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const handleSelect = (project) => {
-    setSelectedProject(project.title);
+    setSelectedProjectId(project.projectId);
     setIsOpen(false);
   };
+
+  const selectedProject =
+    projects.find((project) => project.projectId === selectedProjectId)
+      ?.title || '프로젝트 선택하기';
 
   return (
     <Container>
