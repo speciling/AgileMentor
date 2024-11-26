@@ -62,7 +62,7 @@ class SprintServiceTest {
         sprint = new Sprint(project, "Sprint 1");
         ReflectionTestUtils.setField(sprint, "id", sprintId);
 
-        projectMember = new ProjectMember(project, new Member("test@example.com", "Test User", "pic.jpg"));
+        projectMember = new ProjectMember(project, new Member("test@example.com", "Test User", "pic.jpg"), true);
         ReflectionTestUtils.setField(projectMember.getMember(), "memberId", memberId);
     }
 
