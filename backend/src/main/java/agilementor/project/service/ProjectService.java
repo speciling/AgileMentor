@@ -1,8 +1,8 @@
 package agilementor.project.service;
 
 import agilementor.common.exception.MemberNotFoundException;
+import agilementor.common.exception.NotProjectAdminException;
 import agilementor.common.exception.ProjectNotFoundException;
-import agilementor.member.dto.response.MemberGetResponse;
 import agilementor.member.entity.Member;
 import agilementor.member.repository.MemberRepository;
 import agilementor.project.dto.request.ProjectCreateRequest;
@@ -36,7 +36,7 @@ public class ProjectService {
         Member member = memberRepository.findById(memberId)
             .orElseThrow(MemberNotFoundException::new);
         Project project = projectRespository.save(projectCreateRequest.toEntity());
-        projectMemberRepository.save(new ProjectMember(project, member));
+        projectMemberRepository.save(new ProjectMember(project, member, true));
 
         return ProjectResponse.from(project);
     }
@@ -51,37 +51,19 @@ public class ProjectService {
 
     public ProjectResponse getProject(Long memberId, Long projectId) {
 
-        ProjectMember projectMember = projectMemberRepository
-            .findByMemberIdAndProjectId(memberId, projectId)
-            .orElseThrow(ProjectNotFoundException::new);
+        ProjectMember projectMember = getProjectMember(memberId, projectId);
 
         return ProjectResponse.from(projectMember.getProject());
-    }
-
-    public List<MemberGetResponse> getProjectMemberList(Long memberId, Long projectId) {
-
-        List<ProjectMember> projectMemberList = projectMemberRepository.findByProjectId(projectId);
-
-        boolean isNotMemberOfProject = projectMemberList.stream()
-            .noneMatch(projectMember -> projectMember.getMember().getMemberId().equals(memberId));
-
-        if (isNotMemberOfProject) {
-            throw new ProjectNotFoundException();
-        }
-
-        return projectMemberList.stream()
-            .map(projectMember -> MemberGetResponse.from(projectMember.getMember()))
-            .toList();
     }
 
     public ProjectResponse updateProject(Long memberId, Long projectId,
         ProjectUpdateRequest projectUpdateRequest) {
 
-        ProjectMember projectMember = projectMemberRepository
-            .findByMemberIdAndProjectId(memberId, projectId)
-            .orElseThrow(ProjectNotFoundException::new);
+        ProjectMember projectMember = getProjectMember(memberId, projectId);
 
-        // todo: 프로젝트 수정 권한 있는지 확인
+        if (projectMember.isNotAdmin()) {
+            throw new NotProjectAdminException();
+        }
 
         Project project = projectMember.getProject();
         project.update(projectUpdateRequest.title());
@@ -90,14 +72,27 @@ public class ProjectService {
 
     public void deleteProject(Long memberId, Long projectId) {
 
-        ProjectMember projectMember = projectMemberRepository
-            .findByMemberIdAndProjectId(memberId, projectId)
-            .orElseThrow(ProjectNotFoundException::new);
+        ProjectMember projectMember = getProjectMember(memberId, projectId);
 
-        // todo: 프로젝트 삭제 권한 있는지 확인
+        if (projectMember.isNotAdmin()) {
+            throw new NotProjectAdminException();
+        }
 
         Project project = projectMember.getProject();
         projectMemberRepository.deleteAllByProject(project);
         projectRespository.delete(project);
+    }
+
+    public void leaveProject(Long memberId, Long projectId) {
+
+        ProjectMember projectMember = getProjectMember(memberId, projectId);
+
+        projectMemberRepository.delete(projectMember);
+    }
+
+    private ProjectMember getProjectMember(Long memberId, Long projectId) {
+        return projectMemberRepository
+            .findByMemberIdAndProjectId(memberId, projectId)
+            .orElseThrow(ProjectNotFoundException::new);
     }
 }

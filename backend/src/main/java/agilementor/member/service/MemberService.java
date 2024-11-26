@@ -1,6 +1,8 @@
 package agilementor.member.service;
 
+import agilementor.common.exception.MemberNotFoundException;
 import agilementor.member.dto.ParsedIdToken;
+import agilementor.member.dto.response.MemberGetResponse;
 import agilementor.member.entity.Member;
 import agilementor.member.repository.MemberRepository;
 import agilementor.member.util.JwtParser;
@@ -28,5 +30,11 @@ public class MemberService {
         member.update(parsedIdToken.toEntity());
 
         return member.getMemberId();
+    }
+
+    public MemberGetResponse getMember(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(MemberNotFoundException::new);
+        return MemberGetResponse.from(member);
     }
 }
