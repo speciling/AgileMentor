@@ -78,6 +78,7 @@ public class Sprint {
     // complete 메서드: isDone을 true로 설정하고 endDate를 현재 날짜로 설정
     public void complete() {
         this.isDone = true;
+        this.isActivate = false;
         this.endDate = LocalDate.now(); // 현재 날짜로 설정
     }
 
@@ -115,25 +116,11 @@ public class Sprint {
 
 
     public void update(String title, String goal, LocalDate endDate, boolean isActivate) {
+        this.title = title;
+        this.goal = goal;
         if (isActivate) {
-            // 활성화 상태에서는 title, goal, endDate만 변경 가능
-            if (title != null) {
-                this.title = title;
-            }
-            if (goal != null) {
-                this.goal = goal;
-            }
-            if (endDate != null) {
-                this.endDate = endDate;
-            }
-        } else {
-            // 비활성화 상태에서는 title과 goal만 변경 가능
-            if (title != null) {
-                this.title = title;
-            }
-            if (goal != null) {
-                this.goal = goal;
-            }
+            // 활성화 상태에서만 endDate 변경 가능
+            this.endDate = endDate;
         }
     }
 

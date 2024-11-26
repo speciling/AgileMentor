@@ -56,4 +56,12 @@ public class GlobalExceptionHandler {
             .body(new ExceptionResponse(exception.getMessage()));
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleTitleNullException(
+        TitleNullException exception) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
 }

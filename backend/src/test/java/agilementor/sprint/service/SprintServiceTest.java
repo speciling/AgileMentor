@@ -3,6 +3,7 @@ package agilementor.sprint.service;
 import agilementor.common.exception.EndDateNullException;
 import agilementor.common.exception.ProjectNotFoundException;
 import agilementor.common.exception.SprintNotFoundException;
+import agilementor.common.exception.TitleNullException;
 import agilementor.member.entity.Member;
 import agilementor.project.entity.Project;
 import agilementor.project.entity.ProjectMember;
@@ -170,6 +171,32 @@ class SprintServiceTest {
         // when & then
         assertThatThrownBy(() -> sprintService.startSprint(memberId, projectId, sprintId, form))
             .isInstanceOf(EndDateNullException.class);
+    }
+
+    @Test
+    @DisplayName("제목이 없을 경우 업데이트에서 예외를 발생시킨다.")
+    void updateSprintThrowsExceptionWhenTitleIsNull() {
+        // given
+        SprintForm form = new SprintForm(null, "Goal", LocalDate.now(), LocalDate.now().plusDays(7), false, false);
+        given(projectMemberRepository.findByMemberIdAndProjectId(any(), any())).willReturn(Optional.of(projectMember));
+        given(sprintRepository.findByProject_ProjectIdAndId(any(), any())).willReturn(Optional.of(sprint));
+
+        // when & then
+        assertThatThrownBy(() -> sprintService.updateSprint(memberId, projectId, sprintId, form))
+            .isInstanceOf(TitleNullException.class);
+    }
+
+    @Test
+    @DisplayName("제목이 없을 경우 스프린트 시작에서 예외를 발생시킨다.")
+    void startSprintThrowsExceptionWhenTitleIsNull() {
+        // given
+        SprintForm form = new SprintForm(null, "Goal", LocalDate.now(), LocalDate.now().plusDays(7), false, true);
+        given(projectMemberRepository.findByMemberIdAndProjectId(any(), any())).willReturn(Optional.of(projectMember));
+        given(sprintRepository.findByProject_ProjectIdAndId(any(), any())).willReturn(Optional.of(sprint));
+
+        // when & then
+        assertThatThrownBy(() -> sprintService.startSprint(memberId, projectId, sprintId, form))
+            .isInstanceOf(TitleNullException.class);
     }
 
     @Test

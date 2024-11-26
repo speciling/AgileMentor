@@ -3,6 +3,7 @@ package agilementor.sprint.service;
 import agilementor.common.exception.EndDateNullException;
 import agilementor.common.exception.ProjectNotFoundException;
 import agilementor.common.exception.SprintNotFoundException;
+import agilementor.common.exception.TitleNullException;
 import agilementor.project.entity.Project;
 import agilementor.project.repository.ProjectMemberRepository;
 import agilementor.project.repository.ProjectRespository;
@@ -80,6 +81,10 @@ public class SprintService {
         validateProjectMember(memberId, projectId);
         // 스프린트 조회
         Sprint sprint = validateSprintExists(projectId, sprintId);
+        // 제목을 입력하지 않으면 예외 발생
+        if (sprintForm.getTitle() == null) {
+            throw new TitleNullException();
+        }
         // 업데이트 로직
         sprint.update(
             sprintForm.getTitle(),
@@ -106,6 +111,10 @@ public class SprintService {
         validateProjectMember(memberId, projectId);
         // 스프린트 조회
         Sprint sprint = validateSprintExists(projectId, sprintId);
+        // 제목을 입력하지 않으면 예외 발생
+        if (sprintForm.getTitle() == null) {
+            throw new TitleNullException();
+        }
         // 종료 날짜를 입력하지 않으면 예외 발생
         if (sprintForm.getEndDate() == null) {
             throw new EndDateNullException();
