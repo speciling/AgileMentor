@@ -6,34 +6,30 @@ import Story from '@components/common/Story/index';
 import Sprint from '@components/common/Sprint/index';
 // eslint-disable-next-line import/no-unresolved
 import Backlog from '@components/common/Backlog/index';
-// eslint-disable-next-line import/extensions, import/no-unresolved
 import { useProjects } from '../../provider/projectContext';
 
 const BacklogAndSprintPage = () => {
-  const { projects } = useProjects();
-  const [selectedProject, setSelectedProject] = useState(
-    projects.length > 0 ? projects[0].title : '프로젝트 선택하기',
-  );
+  const { projects, selectedProjectId } = useProjects();
   const [showOnlyMyTasks, setShowOnlyMyTasks] = useState(false);
+
+  const selectedProjectTitle =
+    projects.find((project) => project.projectId === selectedProjectId)
+      ?.title || '프로젝트 선택하기';
 
   const toggleMyTasks = () => {
     setShowOnlyMyTasks((prev) => !prev);
-  };
-
-  const handleProjectSelect = (projectTitle) => {
-    setSelectedProject(projectTitle);
   };
 
   return (
     <PageContainer>
       <MainContent>
         <HeaderContainer>
-          <Title>{selectedProject}</Title>
+          <Title>{selectedProjectTitle}</Title>
           <Subtitle>백로그 및 스프린트</Subtitle>
         </HeaderContainer>
         <ContentContainer>
           <StoryContainer>
-            <Story onProjectSelect={handleProjectSelect} projects={projects} />
+            <Story projects={projects} />
           </StoryContainer>
           <SprintSection>
             <ButtonContainer>
@@ -63,7 +59,6 @@ const BacklogAndSprintPage = () => {
 
 export default BacklogAndSprintPage;
 
-// Styled Components
 const PageContainer = styled.div`
   display: flex;
   height: calc(100vh - 9vh);
