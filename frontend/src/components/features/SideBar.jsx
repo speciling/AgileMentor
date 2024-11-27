@@ -15,10 +15,12 @@ import LogoutButton from '@components/common/LogoutButton';
 import Member from '@components/common/Member';
 // eslint-disable-next-line import/no-unresolved
 import SettingButton from '@components/common/SettingButton';
+import { useNavigate } from 'react-router-dom';
 import { useProjects } from '../../provider/projectContext';
 
 const SideBar = () => {
   const { setProjects, projects } = useProjects();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -57,7 +59,7 @@ const SideBar = () => {
       <SelectProjectWrapper>
         <SelectProject projects={projects} />
       </SelectProjectWrapper>
-      <DashboardLink href="#">
+      <DashboardLink onClick={() => navigate('/dashboard')}>
         <IoHomeIcon />
         대시보드
       </DashboardLink>
