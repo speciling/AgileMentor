@@ -5,9 +5,13 @@ const ProjectContext = createContext();
 // eslint-disable-next-line react/prop-types
 export const ProjectProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
+
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <ProjectContext.Provider value={{ projects, setProjects }}>
+    <ProjectContext.Provider
+      // eslint-disable-next-line react/jsx-no-constructed-context-values
+      value={{ projects, setProjects, selectedProjectId, setSelectedProjectId }}
+    >
       {children}
     </ProjectContext.Provider>
   );
