@@ -71,6 +71,14 @@ public class GlobalExceptionHandler {
             .status(HttpStatus.BAD_REQUEST)
             .body(new ExceptionResponse(exception.getMessage()));
     }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleInvalidSessionException(
+        InvalidSessionException exception) {
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
   
     @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleSprintNotFoundException(

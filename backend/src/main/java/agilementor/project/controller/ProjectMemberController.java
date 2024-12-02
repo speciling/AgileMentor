@@ -41,7 +41,7 @@ public class ProjectMemberController {
         projectMemberService.kickMember(loginMemberId, projectId, memberId);
     }
 
-    @PostMapping("/invitaions")
+    @PostMapping("/invitations")
     @ResponseStatus(HttpStatus.OK)
     public void inviteMember(@SessionAttribute("memberId") Long loginMemberId,
         @PathVariable Long projectId, @RequestBody ProjectInviteRequest projectInviteRequest) {
