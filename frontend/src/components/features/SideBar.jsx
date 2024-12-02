@@ -14,14 +14,13 @@ import LogoutButton from '@components/common/LogoutButton';
 // eslint-disable-next-line import/no-unresolved
 import Member from '@components/common/Member';
 // eslint-disable-next-line import/no-unresolved
+import SettingButton from '@components/common/SettingButton';
+import { useNavigate } from 'react-router-dom';
 import { useProjects } from '../../provider/projectContext';
 
-// eslint-disable-next-line import/no-unresolved
-import SettingButton from '@components/common/SettingButton';
-// eslint-disable-next-line import/no-unresolved
-
 const SideBar = () => {
-  const { setProjects } = useProjects();
+  const { setProjects, projects } = useProjects();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -38,6 +37,7 @@ const SideBar = () => {
         setProjects(response.data);
       } catch (error) {
         console.error('Error fetching projects:', error);
+        alert('프로젝트 목록을 가져오는 중 오류가 발생했습니다.');
       }
     };
 
@@ -57,9 +57,9 @@ const SideBar = () => {
         <CreateProjectButton />
       </CreateProjectButtonWrapper>
       <SelectProjectWrapper>
-        <SelectProject />
+        <SelectProject projects={projects} />
       </SelectProjectWrapper>
-      <DashboardLink>
+      <DashboardLink onClick={() => navigate('/dashboard')}>
         <IoHomeIcon />
         대시보드
       </DashboardLink>

@@ -79,4 +79,29 @@ public class GlobalExceptionHandler {
             .status(HttpStatus.UNAUTHORIZED)
             .body(new ExceptionResponse(exception.getMessage()));
     }
+  
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleSprintNotFoundException(
+        SprintNotFoundException exception) {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleEndDateNullException(
+        EndDateNullException exception) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleTitleNullException(
+        TitleNullException exception) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
 }

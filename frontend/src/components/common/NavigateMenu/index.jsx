@@ -1,28 +1,33 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaRunning, FaThList, FaBook, FaChartLine } from 'react-icons/fa';
 
-const NavigateMenu = () => (
-  <Container>
-    <Title>이용하기</Title>
-    <MenuItem>
-      <Icon as={FaRunning} />
-      <MenuText>백로그 및 스프린트</MenuText>
-    </MenuItem>
-    <MenuItem>
-      <Icon as={FaThList} />
-      <MenuText>칸반보드</MenuText>
-    </MenuItem>
-    <MenuItem>
-      <Icon as={FaBook} />
-      <MenuText>애자일 학습하기</MenuText>
-    </MenuItem>
-    <MenuItem>
-      <Icon as={FaChartLine} />
-      <MenuText>번다운 차트</MenuText>
-    </MenuItem>
-  </Container>
-);
+const NavigateMenu = () => {
+  const navigate = useNavigate();
+
+  return (
+    <Container>
+      <Title>이용하기</Title>
+      <MenuItem onClick={() => navigate('/backlogandsprint')}>
+        <Icon as={FaRunning} />
+        <MenuText>백로그 및 스프린트</MenuText>
+      </MenuItem>
+      <MenuItem onClick={() => navigate('/kanbanboard')}>
+        <Icon as={FaThList} />
+        <MenuText>칸반보드</MenuText>
+      </MenuItem>
+      <MenuItem>
+        <Icon as={FaBook} />
+        <MenuText>애자일 학습하기</MenuText>
+      </MenuItem>
+      <MenuItem onClick={() => navigate('/burndown')}>
+        <Icon as={FaChartLine} />
+        <MenuText>번다운 차트</MenuText>
+      </MenuItem>
+    </Container>
+  );
+};
 
 export default NavigateMenu;
 
