@@ -6,7 +6,6 @@ import agilementor.backlog.dto.response.BacklogCreateResponse;
 import agilementor.backlog.dto.response.BacklogGetResponse;
 import agilementor.backlog.dto.response.BacklogUpdateResponse;
 import agilementor.backlog.entity.Backlog;
-import agilementor.backlog.entity.Status;
 import agilementor.backlog.entity.Story;
 import agilementor.backlog.repository.BacklogRepository;
 import agilementor.backlog.repository.StoryRepository;
@@ -23,9 +22,9 @@ import agilementor.project.repository.ProjectMemberRepository;
 import agilementor.sprint.entity.Sprint;
 import agilementor.sprint.repository.SprintRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -164,11 +163,7 @@ public class BacklogService {
 
         Project project = findProject(memberId, projectId);
 
-        List<Sprint> sprintList = sprintRepository.findByProject_ProjectId(projectId);
-
-        Sprint activeSprint = sprintList.stream()
-            .filter(Sprint::isActivate)
-            .findFirst()
+        Sprint activeSprint = sprintRepository.findByProjectAndIsActivateTrue(project)
             .orElseThrow(SprintNotFoundException::new);
 
         List<Backlog> backlogList = backlogRepository.findByProjectAndSprint(project, activeSprint);
@@ -185,4 +180,23 @@ public class BacklogService {
         return projectMember.getProject();
     }
 
+    public List<BacklogGetResponse> getTasks(Long memberId) {
+
+        List<ProjectMember> projectMemberList = projectMemberRepository.findByMemberId(memberId);
+
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(MemberNotFoundException::new);
+
+        Stream<Sprint> activeSprints = projectMemberList.stream()
+            .map(projectMember -> sprintRepository
+                .findByProjectAndIsActivateTrue(projectMember.getProject()))
+            .filter(Optional::isPresent)
+            .map(Optional::get);
+
+        return activeSprints
+            .map(sprint -> backlogRepository.findByAssigneeAndSprint(member, sprint))
+            .flatMap(List::stream)
+            .map(BacklogGetResponse::from)
+            .toList();
+    }
 }
