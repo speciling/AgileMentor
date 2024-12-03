@@ -54,12 +54,13 @@ public class BacklogService {
         Long sprintId = backlogCreateRequest.sprintId();
         Long storyId = backlogCreateRequest.storyId();
         Long assigneeId = backlogCreateRequest.memberId();
+        Project project = findProject(memberId, projectId);
         Backlog backlog = backlogCreateRequest.toEntity();
 
-        backlog.setProject(findProject(memberId, projectId));
+        backlog.setProject(project);
 
         if (sprintId != null) {
-            Sprint sprint = sprintRepository.findById(sprintId)
+            Sprint sprint = sprintRepository.findByIdAndProject(sprintId, project)
                 .orElseThrow(SprintNotFoundException::new);
             backlog.setSprint(sprint);
         }
@@ -112,7 +113,7 @@ public class BacklogService {
     public BacklogUpdateResponse updateBacklog(Long memberId, Long projectId, Long backlogId,
         BacklogUpdateRequest backlogUpdateRequest) {
 
-        findProject(memberId, projectId);
+        Project project = findProject(memberId, projectId);
 
         Long sprintId = backlogUpdateRequest.sprintId();
         Long storyId = backlogUpdateRequest.storyId();
@@ -124,7 +125,7 @@ public class BacklogService {
             backlogUpdateRequest.status(), backlogUpdateRequest.priority());
 
         if (sprintId != null) {
-            Sprint sprint = sprintRepository.findById(sprintId)
+            Sprint sprint = sprintRepository.findByIdAndProject(sprintId, project)
                 .orElseThrow(SprintNotFoundException::new);
             backlog.setSprint(sprint);
         } else {

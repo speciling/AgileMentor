@@ -19,6 +19,9 @@ public interface SprintRepository extends JpaRepository<Sprint, Long> {
     // 프로젝트 ID로 스프린트 개수를 카운트
     long countByProject_ProjectId(Long projectId);
 
+    // 특정 스프린트 조회
+    Optional<Sprint> findByIdAndProject(Long id, Project project);
+
     // 활성 스프린트 조회
     Optional<Sprint> findByProjectAndIsActivateTrue(Project project);
 }
