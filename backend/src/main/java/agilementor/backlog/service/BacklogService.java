@@ -2,7 +2,9 @@ package agilementor.backlog.service;
 
 import agilementor.backlog.dto.request.BacklogCreateRequest;
 import agilementor.backlog.dto.response.BacklogCreateResponse;
+import agilementor.backlog.dto.response.BacklogGetResponse;
 import agilementor.backlog.entity.Backlog;
+import agilementor.backlog.entity.Status;
 import agilementor.backlog.entity.Story;
 import agilementor.backlog.repository.BacklogRepository;
 import agilementor.backlog.repository.StoryRepository;
@@ -12,11 +14,13 @@ import agilementor.common.exception.SprintNotFoundException;
 import agilementor.common.exception.StoryNotFoundException;
 import agilementor.member.entity.Member;
 import agilementor.member.repository.MemberRepository;
+import agilementor.project.entity.Project;
 import agilementor.project.entity.ProjectMember;
 import agilementor.project.repository.ProjectMemberRepository;
 import agilementor.sprint.entity.Sprint;
 import agilementor.sprint.repository.SprintRepository;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -48,11 +52,7 @@ public class BacklogService {
         Long assigneeId = backlogCreateRequest.memberId();
         Backlog backlog = backlogCreateRequest.toEntity();
 
-        ProjectMember projectMember = projectMemberRepository
-            .findByMemberIdAndProjectId(memberId, projectId)
-            .orElseThrow(ProjectNotFoundException::new);
-
-        backlog.setProject(projectMember.getProject());
+        backlog.setProject(findProject(memberId, projectId));
 
         if (sprintId != null) {
             Sprint sprint = sprintRepository.findById(sprintId)
@@ -75,5 +75,30 @@ public class BacklogService {
         Backlog savedBacklog = backlogRepository.save(backlog);
 
         return BacklogCreateResponse.from(savedBacklog);
+    }
+
+    public List<BacklogGetResponse> getBacklogList(Long memberId, Long projectId) {
+
+        Project project = findProject(memberId, projectId);
+
+        List<Backlog> backlogList = backlogRepository.findByProject(project);
+
+        return backlogList.stream()
+            .filter(backlog -> {
+                if (backlog.isDone()) {
+                    Sprint sprint = backlog.getSprint();
+                    return sprint != null && !sprint.isDone();
+                }
+                return true;
+            })
+            .map(BacklogGetResponse::from)
+            .toList();
+    }
+
+    private Project findProject(Long memberId, Long projectId) {
+        ProjectMember projectMember = projectMemberRepository
+            .findByMemberIdAndProjectId(memberId, projectId)
+            .orElseThrow(ProjectNotFoundException::new);
+        return projectMember.getProject();
     }
 }

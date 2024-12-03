@@ -108,4 +108,8 @@ public class Backlog {
     public void setAssignee(Member assignee) {
         this.assignee = assignee;
     }
+
+    public boolean isDone() {
+        return status.equals(Status.DONE);
+    }
 }
