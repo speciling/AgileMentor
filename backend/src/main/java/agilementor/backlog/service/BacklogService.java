@@ -150,6 +150,15 @@ public class BacklogService {
         return BacklogUpdateResponse.from(backlog);
     }
 
+    public void deleteBacklog(Long memberId, Long projectId, Long backlogId) {
+        findProject(memberId, projectId);
+
+        Backlog backlog = backlogRepository.findById(backlogId)
+            .orElseThrow(BacklogNotFoundException::new);
+
+        backlogRepository.delete(backlog);
+    }
+
     private Project findProject(Long memberId, Long projectId) {
         ProjectMember projectMember = projectMemberRepository
             .findByMemberIdAndProjectId(memberId, projectId)

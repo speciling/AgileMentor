@@ -8,12 +8,15 @@ import agilementor.backlog.dto.response.BacklogUpdateResponse;
 import agilementor.backlog.service.BacklogService;
 import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -55,5 +58,13 @@ public class BacklogController {
         @Valid @RequestBody BacklogUpdateRequest backlogUpdateRequest) {
 
         return backlogService.updateBacklog(memberId, projectId, backlogId, backlogUpdateRequest);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{backlogId}")
+    public void deleteBacklog(@PathVariable Long projectId,
+        @PathVariable Long backlogId, @SessionAttribute("memberId") Long memberId) {
+
+        backlogService.deleteBacklog(memberId, projectId, backlogId);
     }
 }
