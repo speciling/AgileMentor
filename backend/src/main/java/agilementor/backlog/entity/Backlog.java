@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Backlog {
@@ -48,7 +49,8 @@ public class Backlog {
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
-    protected Backlog() {}
+    protected Backlog() {
+    }
 
     public Backlog(String title, String description, Priority priority) {
         this.title = title;
@@ -111,5 +113,12 @@ public class Backlog {
 
     public boolean isDone() {
         return status.equals(Status.DONE);
+    }
+
+    public void update(String title, String description, Status status, Priority priority) {
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.priority = priority;
     }
 }

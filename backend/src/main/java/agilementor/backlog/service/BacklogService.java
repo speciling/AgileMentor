@@ -1,8 +1,10 @@
 package agilementor.backlog.service;
 
 import agilementor.backlog.dto.request.BacklogCreateRequest;
+import agilementor.backlog.dto.request.BacklogUpdateRequest;
 import agilementor.backlog.dto.response.BacklogCreateResponse;
 import agilementor.backlog.dto.response.BacklogGetResponse;
+import agilementor.backlog.dto.response.BacklogUpdateResponse;
 import agilementor.backlog.entity.Backlog;
 import agilementor.backlog.entity.Status;
 import agilementor.backlog.entity.Story;
@@ -21,6 +23,7 @@ import agilementor.project.repository.ProjectMemberRepository;
 import agilementor.sprint.entity.Sprint;
 import agilementor.sprint.repository.SprintRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -106,10 +109,52 @@ public class BacklogService {
         return BacklogGetResponse.from(backlog);
     }
 
+    public BacklogUpdateResponse updateBacklog(Long memberId, Long projectId, Long backlogId,
+        BacklogUpdateRequest backlogUpdateRequest) {
+
+        findProject(memberId, projectId);
+
+        Long sprintId = backlogUpdateRequest.sprintId();
+        Long storyId = backlogUpdateRequest.storyId();
+        Long assigneeId = backlogUpdateRequest.memberId();
+        Backlog backlog = backlogRepository.findById(backlogId)
+            .orElseThrow(BacklogNotFoundException::new);
+
+        backlog.update(backlogUpdateRequest.title(), backlogUpdateRequest.description(),
+            backlogUpdateRequest.status(), backlogUpdateRequest.priority());
+
+        if (sprintId != null) {
+            Sprint sprint = sprintRepository.findById(sprintId)
+                .orElseThrow(SprintNotFoundException::new);
+            backlog.setSprint(sprint);
+        } else {
+            backlog.setSprint(null);
+        }
+
+        if (storyId != null) {
+            Story story = storyRepository.findById(storyId)
+                .orElseThrow(StoryNotFoundException::new);
+            backlog.setStory(story);
+        } else {
+            backlog.setStory(null);
+        }
+
+        if (assigneeId != null) {
+            Member assignee = memberRepository.findById(assigneeId)
+                .orElseThrow(MemberNotFoundException::new);
+            backlog.setAssignee(assignee);
+        } else {
+            backlog.setAssignee(null);
+        }
+
+        return BacklogUpdateResponse.from(backlog);
+    }
+
     private Project findProject(Long memberId, Long projectId) {
         ProjectMember projectMember = projectMemberRepository
             .findByMemberIdAndProjectId(memberId, projectId)
             .orElseThrow(ProjectNotFoundException::new);
         return projectMember.getProject();
     }
+
 }
