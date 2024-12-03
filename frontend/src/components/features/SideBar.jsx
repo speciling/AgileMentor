@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import axios from 'axios';
 import { IoHome } from 'react-icons/io5';
 // eslint-disable-next-line import/no-unresolved
@@ -19,18 +18,23 @@ import { useNavigate } from 'react-router-dom';
 import { useProjects } from '../../provider/projectContext';
 
 const SideBar = () => {
-  const { setProjects, projects } = useProjects();
+  const {
+    setProjects,
+    projects,
+    selectedProjectId,
+    setSelectedProjectId,
+    members,
+    fetchMembers,
+  } = useProjects();
   const navigate = useNavigate();
 
+  // Fetch projects on component mount
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await axios.get(
           'https://api.agilementor.kr/api/projects',
           {
-            headers: {
-              Cookie: document.cookie,
-            },
             withCredentials: true,
           },
         );
@@ -44,12 +48,15 @@ const SideBar = () => {
     fetchProjects();
   }, [setProjects]);
 
-  const members = [
-    { id: 1, name: '지연우', isAdmin: true },
-    { id: 2, name: '오 탐', isAdmin: false },
-    { id: 3, name: '장현지', isAdmin: false },
-    { id: 4, name: '임지환', isAdmin: false },
-  ];
+  // Fetch members when selectedProjectId changes
+  useEffect(() => {
+    if (selectedProjectId) {
+      fetchMembers(selectedProjectId);
+    } else {
+      // Reset members when no project is selected
+      fetchMembers(null);
+    }
+  }, [selectedProjectId, fetchMembers]);
 
   return (
     <SidebarContainer>
@@ -57,7 +64,10 @@ const SideBar = () => {
         <CreateProjectButton />
       </CreateProjectButtonWrapper>
       <SelectProjectWrapper>
-        <SelectProject projects={projects} />
+        <SelectProject
+          projects={projects}
+          onSelectProject={(projectId) => setSelectedProjectId(projectId)}
+        />
       </SelectProjectWrapper>
       <DashboardLink onClick={() => navigate('/dashboard')}>
         <IoHomeIcon />
@@ -66,9 +76,11 @@ const SideBar = () => {
       <NavigateMenuWrapper>
         <NavigateMenu />
       </NavigateMenuWrapper>
-      <MemberWrapper>
-        <Member members={members} />
-      </MemberWrapper>
+      {selectedProjectId && (
+        <MemberWrapper>
+          <Member members={members} />
+        </MemberWrapper>
+      )}
       <DividerWrapper>
         <SettingButtonWrapper>
           <SettingButton onClick={() => console.log('클릭됨')} />
