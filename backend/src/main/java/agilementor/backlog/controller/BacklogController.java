@@ -38,4 +38,11 @@ public class BacklogController {
 
         return backlogService.getBacklogList(memberId, projectId);
     }
+
+    @GetMapping("/{backlogId}")
+    public BacklogGetResponse getBacklog(@PathVariable Long projectId,
+        @PathVariable Long backlogId, @SessionAttribute("memberId") Long memberId) {
+
+        return backlogService.getBacklog(memberId, projectId, backlogId);
+    }
 }

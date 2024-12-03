@@ -8,6 +8,7 @@ import agilementor.backlog.entity.Status;
 import agilementor.backlog.entity.Story;
 import agilementor.backlog.repository.BacklogRepository;
 import agilementor.backlog.repository.StoryRepository;
+import agilementor.common.exception.BacklogNotFoundException;
 import agilementor.common.exception.MemberNotFoundException;
 import agilementor.common.exception.ProjectNotFoundException;
 import agilementor.common.exception.SprintNotFoundException;
@@ -93,6 +94,16 @@ public class BacklogService {
             })
             .map(BacklogGetResponse::from)
             .toList();
+    }
+
+    public BacklogGetResponse getBacklog(Long memberId, Long projectId, Long backlogId) {
+
+        findProject(memberId, projectId);
+
+        Backlog backlog = backlogRepository.findById(backlogId)
+            .orElseThrow(BacklogNotFoundException::new);
+
+        return BacklogGetResponse.from(backlog);
     }
 
     private Project findProject(Long memberId, Long projectId) {

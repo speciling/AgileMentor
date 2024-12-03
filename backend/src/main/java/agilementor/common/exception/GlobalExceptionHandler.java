@@ -112,4 +112,12 @@ public class GlobalExceptionHandler {
             .body(new ExceptionResponse(exception.getMessage()));
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleBacklogNotFoundException(
+        BacklogNotFoundException exception) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
 }
