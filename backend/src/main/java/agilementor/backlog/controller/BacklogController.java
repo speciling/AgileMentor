@@ -67,4 +67,11 @@ public class BacklogController {
 
         backlogService.deleteBacklog(memberId, projectId, backlogId);
     }
+
+    @GetMapping("/active")
+    public List<BacklogGetResponse> getActiveBacklogList(@PathVariable Long projectId,
+        @SessionAttribute("memberId") Long memberId) {
+
+        return backlogService.getActiveBacklogList(memberId, projectId);
+    }
 }

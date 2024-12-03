@@ -25,6 +25,7 @@ import agilementor.sprint.repository.SprintRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -157,6 +158,24 @@ public class BacklogService {
             .orElseThrow(BacklogNotFoundException::new);
 
         backlogRepository.delete(backlog);
+    }
+
+    public List<BacklogGetResponse> getActiveBacklogList(Long memberId, Long projectId) {
+
+        Project project = findProject(memberId, projectId);
+
+        List<Sprint> sprintList = sprintRepository.findByProject_ProjectId(projectId);
+
+        Sprint activeSprint = sprintList.stream()
+            .filter(Sprint::isActivate)
+            .findFirst()
+            .orElseThrow(SprintNotFoundException::new);
+
+        List<Backlog> backlogList = backlogRepository.findByProjectAndSprint(project, activeSprint);
+
+        return backlogList.stream()
+            .map(BacklogGetResponse::from)
+            .toList();
     }
 
     private Project findProject(Long memberId, Long projectId) {
