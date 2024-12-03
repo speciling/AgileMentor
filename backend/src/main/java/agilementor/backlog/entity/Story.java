@@ -31,4 +31,7 @@ public class Story {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    public Long getStoryId() {
+        return storyId;
+    }
 }

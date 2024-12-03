@@ -7,6 +7,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -15,6 +17,7 @@ import jakarta.persistence.ManyToOne;
 public class Backlog {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long backlogId;
 
     @ManyToOne
@@ -45,4 +48,64 @@ public class Backlog {
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
+    protected Backlog() {}
+
+    public Backlog(String title, String description, Priority priority) {
+        this.title = title;
+        this.description = description;
+        this.status = Status.TODO;
+        this.priority = priority;
+    }
+
+    public Long getBacklogId() {
+        return backlogId;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public Sprint getSprint() {
+        return sprint;
+    }
+
+    public Story getStory() {
+        return story;
+    }
+
+    public Member getAssignee() {
+        return assignee;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public void setSprint(Sprint sprint) {
+        this.sprint = sprint;
+    }
+
+    public void setStory(Story story) {
+        this.story = story;
+    }
+
+    public void setAssignee(Member assignee) {
+        this.assignee = assignee;
+    }
 }

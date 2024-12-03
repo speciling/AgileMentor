@@ -104,4 +104,12 @@ public class GlobalExceptionHandler {
             .body(new ExceptionResponse(exception.getMessage()));
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleStoryNotFoundException(
+        StoryNotFoundException exception) {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(new ExceptionResponse(exception.getMessage()));
+    }
+
 }

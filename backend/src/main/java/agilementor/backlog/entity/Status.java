@@ -1,9 +1,9 @@
 package agilementor.backlog.entity;
 
 public enum Status {
-    TODO("Todo"),
-    IN_PROGRESS("InProgress"),
-    DONE("Done");
+    TODO("TODO"),
+    IN_PROGRESS("IN_PROGRESS"),
+    DONE("DONE");
 
     private final String value;
 
