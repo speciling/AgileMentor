@@ -1,13 +1,40 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FiLogOut } from 'react-icons/fi';
+import axios from 'axios';
+import { useProjects } from '../../../provider/projectContext';
 
-const LogoutButton = () => (
-  <Button>
-    <LogoutIcon />
-    프로젝트 나가기
-  </Button>
-);
+const LogoutButton = ({ projectId }) => {
+  const { fetchProjects } = useProjects();
+
+  const handleButtonClick = async () => {
+    try {
+      await axios.post(
+        `https://api.agilementor.kr/api/projects/${projectId}/leave`,
+        {},
+        { withCredentials: true }
+      );
+      alert('프로젝트에서 나갔습니다.');
+
+      fetchProjects();
+    } catch (error) {
+      console.error('Error handling logout:', error);
+      alert('작업 중 오류가 발생했습니다. 다시 시도해 주세요.');
+    }
+  };
+
+  return (
+    <Button onClick={handleButtonClick}>
+      <LogoutIcon />
+      프로젝트 나가기
+    </Button>
+  );
+};
+
+LogoutButton.propTypes = {
+  projectId: PropTypes.number.isRequired,
+};
 
 export default LogoutButton;
 

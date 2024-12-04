@@ -16,7 +16,7 @@ export const ProjectProvider = ({ children }) => {
       const response = await axios.get('https://api.agilementor.kr/api/projects', {
         withCredentials: true,
       });
-      setProjects(response.data); // 서버에서 프로젝트 목록 가져와 상태 업데이트
+      setProjects(response.data);
     } catch (error) {
       console.error('프로젝트 데이터를 가져오는 중 오류 발생:', error);
     }
