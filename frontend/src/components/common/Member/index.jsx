@@ -7,7 +7,7 @@ import MinModal from '@components/common/MinModal';
 import axios from 'axios';
 import { useProjects } from '../../../provider/projectContext';
 
-const Member = ({ members }) => {
+const Member = ({ members, isAdmin }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState('');
   const { selectedProjectId, fetchMembers } = useProjects();
@@ -86,7 +86,7 @@ const Member = ({ members }) => {
               {member.name}
               {member.isAdmin && <CrownIcon />}
             </MemberName>
-            {!member.isAdmin && (
+            {isAdmin && !member.isAdmin && (
               <KickButton onClick={() => handleKick(member.memberId)}>
                 추방
               </KickButton>
@@ -118,6 +118,7 @@ Member.propTypes = {
       isAdmin: PropTypes.bool.isRequired,
     }),
   ).isRequired,
+  isAdmin: PropTypes.bool.isRequired,
 };
 
 export default Member;
