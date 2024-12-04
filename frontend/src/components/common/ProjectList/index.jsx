@@ -13,7 +13,7 @@ const ICON_SIZE = 30;
 const FONT_SIZE = '0.8rem';
 
 const ProjectList = () => {
-  const { projects, setProjects } = useProjects();
+  const { projects, fetchProjects } = useProjects();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projectTitle, setProjectTitle] = useState('');
 
@@ -23,14 +23,14 @@ const ProjectList = () => {
     setProjectTitle('');
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (projectTitle.trim() === '') {
       alert('프로젝트 이름을 입력해 주세요.');
       return;
     }
 
-    axios
-      .post(
+    try {
+      const response = await axios.post(
         'https://api.agilementor.kr/api/projects',
         { title: projectTitle },
         {
@@ -39,17 +39,17 @@ const ProjectList = () => {
           },
           withCredentials: true,
         },
-      )
-      .then((response) => {
-        if (response.status === 201) {
-          const newProject = response.data;
-          setProjects([...projects, newProject]);
-          closeModal();
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+      );
+
+      if (response.status === 201) {
+        alert('새 프로젝트가 성공적으로 생성되었습니다.');
+        fetchProjects();
+        closeModal();
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('프로젝트 생성 중 오류가 발생했습니다.');
+    }
   };
 
   return (
