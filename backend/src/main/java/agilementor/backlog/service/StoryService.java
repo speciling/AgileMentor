@@ -9,6 +9,7 @@ import agilementor.backlog.entity.Story;
 import agilementor.backlog.repository.BacklogRepository;
 import agilementor.backlog.repository.StoryRepository;
 import agilementor.common.exception.ProjectNotFoundException;
+import agilementor.common.exception.StoryNotFoundException;
 import agilementor.project.entity.Project;
 import agilementor.project.entity.ProjectMember;
 import agilementor.project.repository.ProjectMemberRepository;
@@ -48,6 +49,15 @@ public class StoryService {
         return storyList.stream()
             .map(story -> StoryGetResponse.from(story, calculateStoryStatus(story)))
             .toList();
+    }
+
+    public StoryGetResponse getStory(Long memberId, Long projectId, Long storyId) {
+        Project project = getProject(memberId, projectId);
+
+        Story story = storyRepository.findByStoryIdAndProject(storyId, project)
+            .orElseThrow(StoryNotFoundException::new);
+
+        return StoryGetResponse.from(story, calculateStoryStatus(story));
     }
 
     private Project getProject(Long memberId, Long projectId) {

@@ -39,4 +39,11 @@ public class StoryController {
         return storyService.getStoryList(memberId, projectId);
     }
 
+    @GetMapping("/{storyId}")
+    public StoryGetResponse getStory(@PathVariable Long projectId, @PathVariable Long storyId,
+        @SessionAttribute("memberId") Long memberId) {
+
+        return storyService.getStory(memberId, projectId, storyId);
+    }
+
 }
