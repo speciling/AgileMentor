@@ -2,6 +2,7 @@ package agilementor.backlog.controller;
 
 import agilementor.backlog.dto.request.StoryCreateRequest;
 import agilementor.backlog.dto.response.StoryCreateResponse;
+import agilementor.backlog.dto.response.StoryGetResponse;
 import agilementor.backlog.service.StoryService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -29,6 +30,13 @@ public class StoryController {
         @SessionAttribute("memberId") Long memberId) {
 
         return storyService.createStory(memberId, projectId, storyCreateRequest);
+    }
+
+    @GetMapping
+    public List<StoryGetResponse> getStoryList(@PathVariable Long projectId,
+        @SessionAttribute("memberId") Long memberId) {
+
+        return storyService.getStoryList(memberId, projectId);
     }
 
 }
