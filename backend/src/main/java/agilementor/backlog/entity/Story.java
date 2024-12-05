@@ -50,4 +50,9 @@ public class Story {
     public String getDescription() {
         return description;
     }
+
+    public void update(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
 }

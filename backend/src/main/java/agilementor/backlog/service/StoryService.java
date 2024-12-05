@@ -1,8 +1,10 @@
 package agilementor.backlog.service;
 
 import agilementor.backlog.dto.request.StoryCreateRequest;
+import agilementor.backlog.dto.request.StoryUpdateRequest;
 import agilementor.backlog.dto.response.StoryCreateResponse;
 import agilementor.backlog.dto.response.StoryGetResponse;
+import agilementor.backlog.dto.response.StoryUpdateResponse;
 import agilementor.backlog.entity.Backlog;
 import agilementor.backlog.entity.Status;
 import agilementor.backlog.entity.Story;
@@ -13,11 +15,12 @@ import agilementor.common.exception.StoryNotFoundException;
 import agilementor.project.entity.Project;
 import agilementor.project.entity.ProjectMember;
 import agilementor.project.repository.ProjectMemberRepository;
-import jakarta.validation.Valid;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class StoryService {
 
     private final ProjectMemberRepository projectMemberRepository;
@@ -33,7 +36,7 @@ public class StoryService {
     }
 
     public StoryCreateResponse createStory(Long memberId, Long projectId,
-        @Valid StoryCreateRequest storyCreateRequest) {
+        StoryCreateRequest storyCreateRequest) {
 
         Project project = getProject(memberId, projectId);
         Story story = storyRepository.save(storyCreateRequest.toEntity(project));
@@ -58,6 +61,18 @@ public class StoryService {
             .orElseThrow(StoryNotFoundException::new);
 
         return StoryGetResponse.from(story, calculateStoryStatus(story));
+    }
+
+    public StoryUpdateResponse updateStory(Long memberId, Long projectId, Long storyId,
+        StoryUpdateRequest storyUpdateRequest) {
+        Project project = getProject(memberId, projectId);
+
+        Story story = storyRepository.findByStoryIdAndProject(storyId, project)
+            .orElseThrow(StoryNotFoundException::new);
+
+        story.update(storyUpdateRequest.title(), storyUpdateRequest.description());
+
+        return StoryUpdateResponse.from(story, calculateStoryStatus(story));
     }
 
     private Project getProject(Long memberId, Long projectId) {
