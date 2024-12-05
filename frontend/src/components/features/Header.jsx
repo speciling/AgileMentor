@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 // eslint-disable-next-line import/no-unresolved
 import { Common } from '@styles/globalStyle';
-import { Badge, IconButton, Menu, MenuItem, Typography, Divider, Button, Box } from '@mui/material';
+import { Badge, IconButton, Menu, MenuItem, Typography, Divider, Button, Avatar, Box } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useProjects } from '../../provider/projectContext';
 
@@ -12,8 +12,10 @@ export const HEADER_HEIGHT = '9vh';
 const Header = () => {
   const { user, fetchProjects } = useProjects();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [profileAnchorEl, setProfileAnchorEl] = useState(null);
   const [invitations, setInvitations] = useState([]);
   const open = Boolean(anchorEl);
+  const profileOpen = Boolean(profileAnchorEl);
 
   const removeInvitation = (invitationId) => {
     setInvitations((prev) => prev.filter((inv) => inv.invitationId !== invitationId));
@@ -71,6 +73,19 @@ const Header = () => {
     setAnchorEl(null);
   };
 
+  const handleProfileOpen = (event) => {
+    setProfileAnchorEl(event.currentTarget);
+  };
+
+  const handleProfileClose = () => {
+    setProfileAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    const logoutURL = 'https://api.agilementor.kr/api/auth/logout';
+    window.location.href = logoutURL;
+  };
+
   return (
     <HeaderContainer>
       <LogoContainer>
@@ -79,11 +94,79 @@ const Header = () => {
       </LogoContainer>
       <NotificationContainer>
         {user && (
-          <IconButton color="inherit" onClick={handleOpen}>
-            <Badge badgeContent={invitations.length} color="error">
-              <NotificationsIcon fontSize="large" />
-            </Badge>
-          </IconButton>
+          <>
+            <IconButton color="inherit" onClick={handleOpen}>
+              <Badge badgeContent={invitations.length} color="error">
+                <NotificationsIcon fontSize="large" />
+              </Badge>
+            </IconButton>
+            <Avatar
+              src={user.picture}
+              alt={user.name}
+              onClick={handleProfileOpen}
+              sx={{ cursor: 'pointer', marginLeft: 2 }}
+            />
+            <Menu
+              anchorEl={profileAnchorEl}
+              open={profileOpen}
+              onClose={handleProfileClose}
+              slotProps={{
+                paper: {
+                  style: {
+                    width: '200px',
+                    borderRadius: '10px',
+                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+                    padding: '8px',
+                  },
+                },
+              }}
+            >
+              <MenuItem
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  padding: '16px 8px',
+                  gap: '8px',
+                  borderBottom: '1px solid #e0e0e0',
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: '16px',
+                    color: '#333',
+                  }}
+                >
+                  {user.name}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '14px',
+                    color: '#666',
+                  }}
+                >
+                  {user.email}
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={handleLogout}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  padding: '12px',
+                  color: '#ff4d4f',
+                  fontWeight: 'bold',
+                  '&:hover': {
+                    backgroundColor: '#ffe5e7',
+                  },
+                }}
+              >
+                로그아웃
+              </MenuItem>
+            </Menu>
+          </>
         )}
         <Menu
           anchorEl={anchorEl}
