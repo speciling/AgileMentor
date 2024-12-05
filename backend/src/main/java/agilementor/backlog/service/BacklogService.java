@@ -167,7 +167,7 @@ public class BacklogService {
         Sprint activeSprint = sprintRepository.findByProjectAndIsActivateTrue(project)
             .orElseThrow(SprintNotFoundException::new);
 
-        List<Backlog> backlogList = backlogRepository.findByProjectAndSprint(project, activeSprint);
+        List<Backlog> backlogList = backlogRepository.findBySprint(activeSprint);
 
         return backlogList.stream()
             .map(BacklogGetResponse::from)

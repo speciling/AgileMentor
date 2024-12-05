@@ -12,7 +12,7 @@ public interface BacklogRepository extends JpaRepository<Backlog, Long> {
 
     List<Backlog> findByProject(Project project);
 
-    List<Backlog> findByProjectAndSprint(Project project, Sprint activeSprint);
+    List<Backlog> findBySprint(Sprint activeSprint);
 
     List<Backlog> findByAssigneeAndSprint(Member member, Sprint sprint);
 }
