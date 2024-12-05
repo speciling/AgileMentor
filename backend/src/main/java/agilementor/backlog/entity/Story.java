@@ -3,8 +3,6 @@ package agilementor.backlog.entity;
 import agilementor.project.entity.Project;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,10 +26,28 @@ public class Story {
     @Column(nullable = false)
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    protected Story() {
+    }
+
+    public Story(Project project, String title, String description) {
+        this.project = project;
+        this.title = title;
+        this.description = description;
+    }
 
     public Long getStoryId() {
         return storyId;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
