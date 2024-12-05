@@ -9,9 +9,9 @@ public record BacklogUpdateRequest(
     @NotNull String description,
     @NotNull Status status,
     @NotNull Priority priority,
-    Long sprintId,
-    Long storyId,
-    Long memberId
+    long sprintId,
+    long storyId,
+    long memberId
 ) {
 
 }
