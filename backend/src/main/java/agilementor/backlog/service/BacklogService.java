@@ -118,7 +118,7 @@ public class BacklogService {
         Long sprintId = backlogUpdateRequest.sprintId();
         Long storyId = backlogUpdateRequest.storyId();
         Long assigneeId = backlogUpdateRequest.memberId();
-        Backlog backlog = backlogRepository.findById(backlogId)
+        Backlog backlog = backlogRepository.findByBacklogIdAndProject(backlogId, project)
             .orElseThrow(BacklogNotFoundException::new);
 
         backlog.update(backlogUpdateRequest.title(), backlogUpdateRequest.description(),
@@ -152,9 +152,9 @@ public class BacklogService {
     }
 
     public void deleteBacklog(Long memberId, Long projectId, Long backlogId) {
-        findProject(memberId, projectId);
+        Project project = findProject(memberId, projectId);
 
-        Backlog backlog = backlogRepository.findById(backlogId)
+        Backlog backlog = backlogRepository.findByBacklogIdAndProject(backlogId, project)
             .orElseThrow(BacklogNotFoundException::new);
 
         backlogRepository.delete(backlog);
