@@ -6,6 +6,8 @@ import agilementor.backlog.dto.response.BacklogCreateResponse;
 import agilementor.backlog.dto.response.BacklogGetResponse;
 import agilementor.backlog.dto.response.BacklogUpdateResponse;
 import agilementor.backlog.entity.Backlog;
+import agilementor.backlog.entity.Priority;
+import agilementor.backlog.entity.Status;
 import agilementor.backlog.entity.Story;
 import agilementor.backlog.repository.BacklogRepository;
 import agilementor.backlog.repository.StoryRepository;
@@ -51,32 +53,23 @@ public class BacklogService {
     public BacklogCreateResponse createBacklog(Long memberId, Long projectId,
         BacklogCreateRequest backlogCreateRequest) {
 
+        String title = backlogCreateRequest.title();
+        String description = backlogCreateRequest.description();
+        Priority priority = backlogCreateRequest.priority();
+
         Long sprintId = backlogCreateRequest.sprintId();
         Long storyId = backlogCreateRequest.storyId();
         Long assigneeId = backlogCreateRequest.memberId();
+
         Project project = findProject(memberId, projectId);
-        Backlog backlog = backlogCreateRequest.toEntity();
+        Sprint sprint = sprintRepository.findById(sprintId).orElse(null);
+        Story story = storyRepository.findById(storyId).orElse(null);
+        Member assignee = memberRepository.findById(assigneeId).orElse(null);
 
-        backlog.setProject(project);
+        checkIsAttributesValid(projectId, sprint, story, assignee);
 
-        if (sprintId != null) {
-            Sprint sprint = sprintRepository.findByIdAndProject(sprintId, project)
-                .orElseThrow(SprintNotFoundException::new);
-            backlog.setSprint(sprint);
-        }
-
-        if (storyId != null) {
-            Story story = storyRepository.findById(storyId)
-                .orElseThrow(StoryNotFoundException::new);
-            backlog.setStory(story);
-        }
-
-        if (assigneeId != null) {
-            Member assignee = memberRepository.findById(assigneeId)
-                .orElseThrow(MemberNotFoundException::new);
-            backlog.setAssignee(assignee);
-        }
-
+        Backlog backlog = new Backlog(title, description, priority, project, sprint, story,
+            assignee);
         Backlog savedBacklog = backlogRepository.save(backlog);
 
         return BacklogCreateResponse.from(savedBacklog);
@@ -113,40 +106,25 @@ public class BacklogService {
     public BacklogUpdateResponse updateBacklog(Long memberId, Long projectId, Long backlogId,
         BacklogUpdateRequest backlogUpdateRequest) {
 
-        Project project = findProject(memberId, projectId);
+        String title = backlogUpdateRequest.title();
+        String description = backlogUpdateRequest.description();
+        Priority priority = backlogUpdateRequest.priority();
+        Status status = backlogUpdateRequest.status();
 
         Long sprintId = backlogUpdateRequest.sprintId();
         Long storyId = backlogUpdateRequest.storyId();
         Long assigneeId = backlogUpdateRequest.memberId();
+
+        Project project = findProject(memberId, projectId);
         Backlog backlog = backlogRepository.findByBacklogIdAndProject(backlogId, project)
             .orElseThrow(BacklogNotFoundException::new);
+        Sprint sprint = sprintRepository.findById(sprintId).orElse(null);
+        Story story = storyRepository.findById(storyId).orElse(null);
+        Member assignee = memberRepository.findById(assigneeId).orElse(null);
 
-        backlog.update(backlogUpdateRequest.title(), backlogUpdateRequest.description(),
-            backlogUpdateRequest.status(), backlogUpdateRequest.priority());
+        checkIsAttributesValid(projectId, sprint, story, assignee);
 
-        if (sprintId != null) {
-            Sprint sprint = sprintRepository.findByIdAndProject(sprintId, project)
-                .orElseThrow(SprintNotFoundException::new);
-            backlog.setSprint(sprint);
-        } else {
-            backlog.setSprint(null);
-        }
-
-        if (storyId != null) {
-            Story story = storyRepository.findById(storyId)
-                .orElseThrow(StoryNotFoundException::new);
-            backlog.setStory(story);
-        } else {
-            backlog.setStory(null);
-        }
-
-        if (assigneeId != null) {
-            Member assignee = memberRepository.findById(assigneeId)
-                .orElseThrow(MemberNotFoundException::new);
-            backlog.setAssignee(assignee);
-        } else {
-            backlog.setAssignee(null);
-        }
+        backlog.update(title, description, status, priority, project, sprint, story, assignee);
 
         return BacklogUpdateResponse.from(backlog);
     }
@@ -199,5 +177,21 @@ public class BacklogService {
             .flatMap(List::stream)
             .map(BacklogGetResponse::from)
             .toList();
+    }
+
+    private void checkIsAttributesValid(Long projectId, Sprint sprint, Story story,
+        Member assignee) {
+        if (sprint != null && !sprint.getProject().getProjectId().equals(projectId)) {
+            throw new SprintNotFoundException();
+        }
+
+        if (story != null && !story.getProject().getProjectId().equals(projectId)) {
+            throw new StoryNotFoundException();
+        }
+
+        if (assignee != null) {
+            projectMemberRepository.findByMemberIdAndProjectId(assignee.getMemberId(), projectId)
+                .orElseThrow(MemberNotFoundException::new);
+        }
     }
 }

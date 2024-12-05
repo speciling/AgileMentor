@@ -51,11 +51,16 @@ public class Backlog {
     protected Backlog() {
     }
 
-    public Backlog(String title, String description, Priority priority) {
+    public Backlog(String title, String description, Priority priority, Project project,
+        Sprint sprint, Story story, Member assignee) {
         this.title = title;
         this.description = description;
         this.status = Status.TODO;
         this.priority = priority;
+        this.project = project;
+        this.sprint = sprint;
+        this.story = story;
+        this.assignee = assignee;
     }
 
     public Long getBacklogId() {
@@ -114,10 +119,15 @@ public class Backlog {
         return status.equals(Status.DONE);
     }
 
-    public void update(String title, String description, Status status, Priority priority) {
+    public void update(String title, String description, Status status, Priority priority,
+        Project project, Sprint sprint, Story story, Member assignee) {
         this.title = title;
         this.description = description;
         this.status = status;
         this.priority = priority;
+        this.project = project;
+        this.sprint = sprint;
+        this.story = story;
+        this.assignee = assignee;
     }
 }

@@ -13,8 +13,4 @@ public record BacklogCreateRequest(
     Long memberId
 ) {
 
-    public Backlog toEntity() {
-        return new Backlog(title, description, priority);
-    }
-
 }
