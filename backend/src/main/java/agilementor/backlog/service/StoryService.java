@@ -75,6 +75,21 @@ public class StoryService {
         return StoryUpdateResponse.from(story, calculateStoryStatus(story));
     }
 
+    public void deleteStory(Long memberId, Long projectId, Long storyId) {
+        Project project = getProject(memberId, projectId);
+
+        Story story = storyRepository.findByStoryIdAndProject(storyId, project)
+            .orElseThrow(StoryNotFoundException::new);
+
+        List<Backlog> backlogList = backlogRepository.findByStory(story);
+
+        for (Backlog backlog : backlogList) {
+            backlog.setStory(null);
+        }
+
+        storyRepository.delete(story);
+    }
+
     private Project getProject(Long memberId, Long projectId) {
         ProjectMember projectMember = projectMemberRepository
             .findByMemberIdAndProjectId(memberId, projectId)
