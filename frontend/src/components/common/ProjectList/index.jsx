@@ -34,9 +34,6 @@ const ProjectList = () => {
         'https://api.agilementor.kr/api/projects',
         { title: projectTitle },
         {
-          headers: {
-            Cookie: document.cookie,
-          },
           withCredentials: true,
         },
       );

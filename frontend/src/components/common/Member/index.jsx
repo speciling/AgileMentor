@@ -31,9 +31,6 @@ const Member = ({ members, isAdmin }) => {
       `https://api.agilementor.kr/api/projects/${selectedProjectId}/invitations`,
       { email },
       {
-        headers: {
-          Cookie: document.cookie,
-        },
         withCredentials: true,
       },
     );
@@ -53,9 +50,6 @@ const Member = ({ members, isAdmin }) => {
     const response = await axios.delete(
       `https://api.agilementor.kr/api/projects/${selectedProjectId}/members/${memberId}`,
       {
-        headers: {
-          Cookie: document.cookie,
-        },
         withCredentials: true,
       },
     );

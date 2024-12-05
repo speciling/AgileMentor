@@ -22,7 +22,7 @@ export const ProjectProvider = ({ children }) => {
     }
   }, []);
 
-  const fetchSprints = async (projectId) => {
+  const fetchSprints = useCallback(async (projectId) => {
     if (!projectId) {
       console.warn('프로젝트 ID가 없습니다.');
       return;
@@ -32,9 +32,6 @@ export const ProjectProvider = ({ children }) => {
       const response = await axios.get(
         `https://api.agilementor.kr/api/projects/${projectId}/sprints`,
         {
-          headers: {
-            Cookie: document.cookie,
-          },
           withCredentials: true,
         },
       );
@@ -42,7 +39,7 @@ export const ProjectProvider = ({ children }) => {
     } catch (error) {
       console.error('스프린트 데이터를 가져오는 중 오류 발생:', error);
     }
-  };
+  }, []);
 
   const fetchMembers = useCallback(async (projectId) => {
     if (!projectId) {
@@ -55,9 +52,6 @@ export const ProjectProvider = ({ children }) => {
       const response = await axios.get(
         `https://api.agilementor.kr/api/projects/${projectId}/members`,
         {
-          headers: {
-            Cookie: document.cookie,
-          },
           withCredentials: true,
         },
       );
@@ -67,17 +61,16 @@ export const ProjectProvider = ({ children }) => {
     }
   }, []);
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       const response = await axios.get('https://api.agilementor.kr/api/members', {
-        headers: { Cookie: document.cookie },
         withCredentials: true,
       });
       setUser(response.data);
     } catch (err) {
       console.error('사용자 데이터를 가져오는 중 오류 발생:', err);
     }
-  };
+  }, []);
 
   const contextValue = useMemo(
     () => ({
@@ -94,7 +87,7 @@ export const ProjectProvider = ({ children }) => {
       user,
       fetchUser,
     }),
-    [projects, fetchProjects, selectedProjectId, sprints, members, user],
+    [projects, selectedProjectId, sprints, members, user, fetchProjects, fetchSprints, fetchMembers, fetchUser],
   );
 
   return (
