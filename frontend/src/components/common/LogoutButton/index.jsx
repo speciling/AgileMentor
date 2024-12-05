@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useProjects } from '../../../provider/projectContext';
 
 const LogoutButton = ({ projectId }) => {
-  const { fetchProjects } = useProjects();
+  const { fetchProjects, setSelectedProjectId, fetchMembers } = useProjects();
 
   const handleButtonClick = async () => {
     try {
@@ -17,6 +17,8 @@ const LogoutButton = ({ projectId }) => {
       );
       alert('프로젝트에서 나갔습니다.');
 
+      setSelectedProjectId(null); 
+      fetchMembers(null);
       fetchProjects();
     } catch (error) {
       console.error('Error handling logout:', error);
