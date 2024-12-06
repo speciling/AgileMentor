@@ -21,12 +21,12 @@ public class WebConfig implements WebMvcConfigurer {
             .allowCredentials(true);
     }
 
-    @Bean
-    public FilterRegistrationBean loginCheckFilter() {
-        FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
-        filterFilterRegistrationBean.setFilter(new SessionValidationFilter());
-        filterFilterRegistrationBean.setOrder(1);
-        filterFilterRegistrationBean.addUrlPatterns("/api/*");
-        return filterFilterRegistrationBean;
-    }
+//    @Bean
+//    public FilterRegistrationBean loginCheckFilter() {
+//        FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
+//        filterFilterRegistrationBean.setFilter(new SessionValidationFilter());
+//        filterFilterRegistrationBean.setOrder(1);
+//        filterFilterRegistrationBean.addUrlPatterns("/api/*");
+//        return filterFilterRegistrationBean;
+//    }
 }
