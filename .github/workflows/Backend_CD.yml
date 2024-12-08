@@ -27,9 +27,6 @@ jobs:
       - name: application.db.properties 파일 만들기
         run: echo "${{ secrets.APPLICATION_DB_PROPERTIES }}" > ./src/main/resources/application-db.properties
 
-      - name: gradlew 권한을 부여합니다.
-        run: chmod +x gradlew
-
       - name: jar 파일 만들기
         run: echo "${{ secrets.APPLICATION_DB_PROPERTIES }}" > ./agilementor.jar
 
