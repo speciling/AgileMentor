@@ -15,12 +15,6 @@ jobs:
       - name: 레포지토리 체크아웃
         uses: actions/checkout@v3
 
-      - name: application.oauth.properties 파일 만들기
-        run: echo "${{ secrets.APPLICATION_OAUTH_PROPERTIES }}" > ./src/main/resources/application-oauth.properties
-
-      - name: application.db.properties 파일 만들기
-        run: echo "${{ secrets.APPLICATION_DB_PROPERTIES }}" > ./src/main/resources/application-db.properties
-
       - name: jar 파일 만들기
         run: echo "${{ secrets.APPLICATION_DB_PROPERTIES }}" > ./agilementor.jar
 
