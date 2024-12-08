@@ -4,10 +4,6 @@ on:
   push:
     branches: [ develop ]
 
-defaults:
-  run:
-    working-directory: backend
-
 jobs:
   deploy:
     runs-on: ubuntu-22.04
