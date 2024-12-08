@@ -50,7 +50,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: "./agilementor.jar"
-          target: ~/server/
+          target: /home/ec2-user/server/
 
       - name: SSH로 EC2에 접속해 앱 실행하기
         uses: appleboy/ssh-action@v1.0.3
