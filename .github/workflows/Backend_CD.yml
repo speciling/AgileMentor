@@ -28,13 +28,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Gradle을 통해 빌드합니다.
-        run: ./gradlew build -x test
+        run: ./backend/gradlew build -x test
 
-      - name: jar 파일 만들기
-        run: echo "${{ secrets.APPLICATION_DB_PROPERTIES }}" > ./agilementor
-
-      - name: 현재 디렉토리 확인
-        run: ls -la ./
+      - name: 빌드된 파일 이름 변경하기
+        run: mv ./backend/build/libs/*SNAPSHOT.jar ./agilementor.jar
 
       - name: SCP로 EC2에 빌드된 파일 전송하기
         uses: appleboy/scp-action@v0.1.7
@@ -42,5 +39,14 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: ./agilementor
+          source: agilementor.jar
           target: ~/server
+
+      - name: SSH로 EC2에 접속해 앱 실행하기
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script_stop: true
+          script: sh ~/server/run.sh
