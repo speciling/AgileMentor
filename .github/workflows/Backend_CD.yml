@@ -34,8 +34,14 @@ jobs:
       - name: Gradle을 통해 빌드합니다.
         run: ./gradlew build -x test
 
+      - name: 빌드 파일 확인
+        run: ls -la ./build/libs
+
       - name: 빌드된 파일 이름 변경하기
         run: mv ./build/libs/*SNAPSHOT.jar ./agilementor.jar
+
+      - name: 이름 변경한 파일 확인
+        run: ls -la ./
 
       - name: SCP로 EC2에 빌드된 파일 전송하기
         uses: appleboy/scp-action@v0.1.7
