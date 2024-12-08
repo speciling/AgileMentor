@@ -32,13 +32,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Gradle을 통해 빌드합니다.
-        run: ./gradlew build -x test
-
-      - name: 빌드 파일 확인
-        run: ls -la ./build/libs
-
-      - name: 빌드된 파일 이름 변경하기
-        run: mv ./build/libs/*SNAPSHOT.jar ./agilementor.jar
+        run: touch agilementor.jar
 
       - name: 이름 변경한 파일 확인
         run: ls -la ./
