@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: application.db.properties 파일 만들기
-        run: echo "${{ secrets.APPLICATION_DB_PROPERTIES }}" > ./application-db.properties
+        run: echo "${{ secrets.APPLICATION_DB_PROPERTIES }}" > ./app.jar
 
       - name: SCP로 EC2에 빌드된 파일 전송하기
         uses: appleboy/scp-action@v0.1.7
@@ -17,7 +17,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: ./application-db.properties
+          source: ./app.jar
           target: ~/server
 
       - name: SSH로 EC2에 접속해 앱 실행하기
